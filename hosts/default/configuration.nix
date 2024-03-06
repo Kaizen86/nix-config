@@ -113,8 +113,8 @@
     };
   };
 
-  # List packages installed in system profile. To search, run:
-  # $ nix search wget
+  # List packages installed in system profile. 
+  # TODO There must be a way to organise this... Maybe separate user programs from system utilities?
   environment.systemPackages = with pkgs; [
     vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
     wget
@@ -144,7 +144,7 @@
     #exfatprogs
     #ffmpegthumbs # Show previews for video files in Dolphin (NOTE maybe not required on nix?)
     filelight
-    firefox # NOTE already installed, what will happen?? :eyes:
+    firefox
     #flashplayer-standalone
     gallery-dl
     gimp
