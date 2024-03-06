@@ -64,6 +64,12 @@
   console.keyMap = "uk";
 
   services = {
+    # Allow power button to shutdown system
+    logind.extraConfig = ''
+      # Shutdown system when power button is pressed
+      HandlePowerKey=poweroff
+    '';
+
     # X11 windowing system
     xserver = {
       enable = true;
