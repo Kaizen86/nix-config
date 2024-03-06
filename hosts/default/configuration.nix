@@ -68,10 +68,11 @@
     xserver = {
       enable = true;
     
-      # Enable the KDE Plasma Desktop Environment.
+      # Enable the KDE Plasma Desktop Environment as default option.
       displayManager.sddm.enable = true;
       desktopManager.plasma5.enable = true;
-    
+      displayManager.defaultSession = "plasmawayland";
+
       # Configure keymap in X11
       xkb = {
         layout = "gb";
