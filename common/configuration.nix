@@ -8,34 +8,13 @@
   imports =
     [
       # Include the results of the hardware scan.
-      ./hardware-configuration.nix
       #inputs.home-manager.nixosModules.default
       ./main-user.nix
     ];
 
-  # Bootloader.
-  boot.loader = {
-    efi = {
-      canTouchEfiVariables = true;
-      # assuming /boot is the mount point of the  EFI partition in NixOS (as the installation section recommends).
-      efiSysMountPoint = "/boot";
-    };
-    grub = {
-      enable = true;
-      # despite what the configuration.nix manpage seems to indicate,
-      # as of release 17.09, setting device to "nodev" will still call
-      # `grub-install` if efiSupport is true
-      # (the devices list is not used by the EFI grub install,
-      # but must be set to some value in order to pass an assert in grub.nix)
-      devices = [ "nodev" ];
-      efiSupport = true;
-      useOSProber = true;
-    };
-  };
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
-  networking.hostName = "tower"; # Define your hostname.
   # Enable networking
   networking.networkmanager.enable = true;
 
@@ -98,9 +77,6 @@
       # no need to redefine it in your config for now)
       #media-session.enable = true;
     };
-
-    # Enable the OpenSSH daemon.
-    openssh.enable = true;
   };
 
   # Enable sound with pipewire.
@@ -257,12 +233,6 @@
   environment.sessionVariables = rec { 
     GPG_TTY = "$(tty)";
   };
-
-  # Open ports in the firewall.
-  networking.firewall.allowedTCPPorts = [ 22 ];
-  # networking.firewall.allowedUDPPorts = [ ... ];
-  # Or disable the firewall altogether.
-  # networking.firewall.enable = false;
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
