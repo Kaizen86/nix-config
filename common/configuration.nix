@@ -211,6 +211,7 @@
     vice # Commodore Emulator
     vim
     #virtualbox
+    vlc
     vscodium
     wget
     whatsapp-for-linux
