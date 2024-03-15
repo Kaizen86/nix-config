@@ -4,7 +4,7 @@
   imports =
     [
       # Use common configuration
-      ../../common/configuration.nix
+      #../../common/configuration.nix
     ];
 
   # Simply install just the packages
