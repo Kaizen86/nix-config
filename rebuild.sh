@@ -16,5 +16,5 @@ if [ -z $host_id ]; then
 fi
 
 # Rebuild the system
-sudo nixos-rebuild switch --flake /home/kaizen/nix-config#$host_id
+sudo nixos-rebuild switch --flake ~/nix-config#$host_id
 
