@@ -98,9 +98,6 @@
   # List packages installed in system profile. 
   # TODO There must be a way to organise this... Maybe separate user programs from system utilities?
   environment.systemPackages = with pkgs; [
-    vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-    wget
-
     acpid # Power button forces shutdown
     adbfs-rootless # Mounting phone
     alsaequal # Equaliser
@@ -182,6 +179,8 @@
     plasma-systemmonitor
     prismlauncher # Alternative Minecraft launcher
     #posy-cursors # TODO Contribute this package perhaps?
+    python3
+    python311Packages.pip
     # TODO insert Python deps... somewhere. Probably not here.
     # cairo, matplotlib, opencv, pip?, pip-search?, psutil?, pyserial?
     qFlipper
