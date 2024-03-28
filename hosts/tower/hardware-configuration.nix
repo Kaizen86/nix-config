@@ -23,6 +23,16 @@
       fsType = "vfat";
     };
 
+  fileSystems."/run/media/kaizen/Nautilus" =
+    { device = "/dev/disk/by-uuid/994ab535-0d18-466b-943a-074b426c2e02";
+      fsType = "ext4";
+    };
+
+  fileSystems."/run/media/kaizen/Cuttlefish" =
+    { device = "/dev/disk/by-uuid/6874b558-83b0-4349-b358-15d5defee6c3";
+      fsType = "vfat";
+    };
+
   swapDevices = [ ];
 
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
