@@ -33,6 +33,9 @@
     };
   };
 
+  # Tell wayland to use AMD drivers
+  services.xserver.videoDrivers = [ "amdgpu" ];
+
   # Define hostname.
   networking.hostName = "tower";
 
