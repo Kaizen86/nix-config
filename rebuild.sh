@@ -1,5 +1,6 @@
 #!/run/current-system/sw/bin/bash
-# 
+# Updates the system according to this nix configuration.
+# Note: the shebang is for nix-os, use 'bash rebuild.sh' for other platforms. 
 
 # Find where this script is stored
 CONFIG_ROOT=$(dirname "$0")
@@ -15,6 +16,16 @@ if [ -z $host_id ]; then
   exit 1
 fi
 
-# Rebuild the system
-sudo nixos-rebuild switch --flake ~/nix-config#$host_id
+# Rebuild the system with the appropriate command
+case $host_id in
+  connor)
+    # nix-on-droid
+    nix-on-droid switch --flake ~/nix-config#$host_id
+    ;;
+
+  *)
+    # standard nix-os
+    sudo nixos-rebuild switch --flake ~/nix-config#$host_id
+    ;;
+esac
 
