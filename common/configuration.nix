@@ -15,6 +15,9 @@
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
+  # Make /tmp volatile
+  boot.tmp.useTmpfs = true;
+
   # Enable networking
   networking.networkmanager.enable = true;
 
