@@ -125,6 +125,7 @@
     #duf
     #dvd+rw-tools
     #exfatprogs
+    ffmpeg
     #ffmpegthumbs # Show previews for video files in Dolphin (NOTE maybe not required on nix?)
     filelight
     firefox
