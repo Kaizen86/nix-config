@@ -47,6 +47,7 @@
 
   services = {
     # Allow power button to shutdown system
+    # FIXME This doesn't work??
     logind.extraConfig = ''
       # Shutdown system when power button is pressed
       HandlePowerKey=poweroff
