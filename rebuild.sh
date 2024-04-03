@@ -18,3 +18,7 @@ fi
 # Rebuild the system
 sudo nixos-rebuild switch --flake /home/kaizen/nix-config#$host_id
 
+# For reasons I do not yet understand, nixos-rebuild needs .nix files to be tracked by Git, otherwise they will seem invisible.
+if git status | grep -q "Untracked files:"; then
+  echo -e "\nHeads up: some files are untracked by Git. This may cause you problems if they're important."
+fi
