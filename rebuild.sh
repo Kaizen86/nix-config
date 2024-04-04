@@ -1,6 +1,5 @@
-#!/run/current-system/sw/bin/bash
+#!/usr/bin/env bash
 # Updates the system according to this nix configuration.
-# Note: the shebang is for nix-os, use 'bash rebuild.sh' for other platforms. 
 
 # Find where this script is stored
 CONFIG_ROOT=$(dirname "$0")
