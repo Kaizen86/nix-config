@@ -35,6 +35,7 @@
     #bc
     #beep
     diffutils
+    dig
     dos2unix
     #duf
     gallery-dl
@@ -56,6 +57,7 @@
     nano
     nanorc
     ncdu # NCurses Disk Usage
+    ncurses # Provides clear and reset commands
     neofetch
     nmap
     nodePackages.http-server # Handy for quickly hosting a directory over HTTP
