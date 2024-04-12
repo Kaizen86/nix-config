@@ -24,15 +24,25 @@
     };
 
   fileSystems."/run/media/kaizen/Nautilus" =
-    { device = "/dev/disk/by-uuid/994ab535-0d18-466b-943a-074b426c2e02";
+    { device = "/dev/disk/by-label/Nautilus";
       fsType = "ext4";
+      options = [
+        "users" # Allow any user to mount/unmount
+        "nofail" # Don't enter Emergency Mode if this drive is missing
+      ];
     };
 
   fileSystems."/run/media/kaizen/Cuttlefish" =
-    { device = "/dev/disk/by-uuid/6874b558-83b0-4349-b358-15d5defee6c3";
-      fsType = "vfat";
+    { device = "/dev/disk/by-label/Cuttlefish";
+      fsType = "ext4";
+      options = [
+        "users" # Allow any user to mount/unmount
+        "nofail" # Don't enter Emergency Mode if this drive is missing
+      ];
     };
 
+  # This system has 64GB of RAM, so adding swap isn't really useful.
+  # If we run out of memory, just let the OOM reaper do its job lol
   swapDevices = [ ];
 
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
