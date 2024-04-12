@@ -39,6 +39,11 @@
   # Define hostname.
   networking.hostName = "tower";
 
+  # Activate Bluetooth on boot
+  # TODO: This should probably be set to true by default in some other file
+  hardware.bluetooth.enable = true;
+  hardware.bluetooth.powerOnBoot = true;
+
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
 
