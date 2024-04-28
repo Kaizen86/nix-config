@@ -61,11 +61,8 @@
     # X11 windowing system
     xserver = {
       enable = true;
-    
-      # Enable the KDE Plasma Desktop Environment as default option.
-      displayManager.sddm.enable = true;
+      # Enable the Plasma desktop environment (TODO: is this necessary?)
       desktopManager.plasma5.enable = true;
-      displayManager.defaultSession = "plasmawayland";
 
       # Configure keymap in X11
       xkb = {
@@ -73,6 +70,10 @@
         variant = "";
       };
     };
+
+    # Enable the KDE Plasma Desktop Environment as default option.
+    displayManager.sddm.enable = true;
+    displayManager.defaultSession = "plasmawayland";
 
     pipewire = {
       enable = true;
@@ -237,7 +238,7 @@
   #Enable gpg service and add the input tty env var
   programs.gnupg.agent = {
     enable = true;
-    pinentryFlavor = "curses";
+    pinentryPackage = pkgs.pinentry;
     enableSSHSupport = true;
   };
   environment.sessionVariables = rec { 
