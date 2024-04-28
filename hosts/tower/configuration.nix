@@ -44,6 +44,9 @@
   hardware.bluetooth.enable = true;
   hardware.bluetooth.powerOnBoot = true;
 
+  # Fix Steam glXChooseVisual error
+  hardware.opengl.driSupport32Bit = true;
+
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
 
