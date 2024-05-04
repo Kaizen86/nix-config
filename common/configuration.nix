@@ -126,6 +126,7 @@
     cool-retro-term
     deja-dup # Backup manager (TODO Load old config!)
     dejavu_fonts # DejaVu Sans/Serif/Mono fonts; broad coverage of Unicode
+    dig
     discord
     dos2unix
     #duf
@@ -133,6 +134,7 @@
     #exfatprogs
     ffmpeg
     #ffmpegthumbs # Show previews for video files in Dolphin (NOTE maybe not required on nix?)
+    file
     filelight
     firefox
     #flashplayer-standalone
@@ -163,6 +165,7 @@
     #libnbd # tom7/pingu
     libreoffice-fresh
     #lutris
+    lsof
     lynx # TUI web browser
     man-db
     man-pages
@@ -229,7 +232,7 @@
     xorg.xeyes
     yt-dlp
     zip
-];
+  ];
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
