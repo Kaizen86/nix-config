@@ -87,6 +87,17 @@
       # no need to redefine it in your config for now)
       #media-session.enable = true;
     };
+
+    avahi = {
+      enable = true;
+      nssmdns4 = true;
+      openFirewall = true;
+      publish = {
+        enable = true;
+        userServices = true;
+        addresses = true;
+      };
+    };
   };
 
   # Enable sound with pipewire.
