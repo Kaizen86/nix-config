@@ -20,7 +20,7 @@ in
     users.users.${cfg.userName} = {
       isNormalUser = true;
       description = "Kaizen";
-      extraGroups = [ "networkmanager" "wheel" ];
+      extraGroups = [ "networkmanager" "wheel" "plugdev" ];
       shell = pkgs.bash;
     };
   };

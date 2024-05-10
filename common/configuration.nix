@@ -258,4 +258,6 @@
   environment.sessionVariables = rec { 
     GPG_TTY = "$(tty)";
   };
+
+  hardware.hackrf.enable = true; # Create udev rules for HackRF devices
 }
