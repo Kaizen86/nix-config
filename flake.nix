@@ -32,6 +32,13 @@
               inputs.home-manager.nixosModules.default
             ];
           };
+          raspi = nixpkgs.lib.nixosSystem {
+            specialArgs = {inherit inputs;};
+            modules = [ 
+              ./hosts/raspi/configuration.nix
+              inputs.home-manager.nixosModules.default
+            ];
+          };
       };
     };
 }
