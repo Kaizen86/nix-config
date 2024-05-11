@@ -24,6 +24,7 @@ in
         "networkmanager" # Grant permission to change network settings
         "wheel" # Grant permission to execute sudo
         "plugdev" # Allow access to HackRF device
+        "video" # Allow access to RTL-SDR device
       ];
       shell = pkgs.bash;
     };

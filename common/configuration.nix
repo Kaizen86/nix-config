@@ -163,6 +163,9 @@
     gparted
     gnumake
     gnupg
+    gqrx
+    pkgs.rtl-sdr
+    libusb
     hackrf
     hollywood
     htop
@@ -265,4 +268,6 @@
   };
 
   hardware.hackrf.enable = true; # Create udev rules for HackRF devices
+  services.udev.packages = [ pkgs.rtl-sdr ];
+  boot.blacklistedKernelModules = [ "dvb_usb_rtl28xxu" ];
 }
