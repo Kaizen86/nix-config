@@ -23,6 +23,11 @@
   # Make /tmp volatile
   boot.tmp.useTmpfs = true;
 
+  # Enable all SysRq functions
+  boot.kernel.sysctl = {
+    "kernel.sysrq" = 1;
+  };
+
   # Enable networking
   networking.networkmanager.enable = true;
 
