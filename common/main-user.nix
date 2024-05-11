@@ -20,7 +20,11 @@ in
     users.users.${cfg.userName} = {
       isNormalUser = true;
       description = "Kaizen";
-      extraGroups = [ "networkmanager" "wheel" "plugdev" ];
+      extraGroups = [ 
+        "networkmanager" # Grant permission to change network settings
+        "wheel" # Grant permission to execute sudo
+        "plugdev" # Allow access to HackRF device
+      ];
       shell = pkgs.bash;
     };
   };
