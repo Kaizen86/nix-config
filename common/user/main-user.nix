@@ -28,6 +28,15 @@ in
       ];
       shell = pkgs.bash;
     };
+
+    home-manager = {
+      # TODO Find out where I goofed during Vimjoyer's tutorial
+      #specialArgs = { inherit inputs; };
+      users = {
+        "kaizen" = import ./home.nix;
+      };
+    };
+
   };
 }
 
