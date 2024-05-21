@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ config, pkgs, ... }:
 
 {
   imports =
@@ -77,6 +77,9 @@
     wget
     yt-dlp
     zip
+
+    curl
+    p7zip
   ];
 
   # Backup etc files instead of failing to activate generation if a file already exists in /etc
