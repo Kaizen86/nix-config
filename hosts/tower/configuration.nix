@@ -44,8 +44,13 @@
   hardware.bluetooth.enable = true;
   hardware.bluetooth.powerOnBoot = true;
 
+  programs.steam.enable = true;
   # Fix Steam glXChooseVisual error
   hardware.opengl.driSupport32Bit = true;
+  # Install gamemoderun
+  environment.systemPackages = [
+    pkgs.gamemode
+  ];
 
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
