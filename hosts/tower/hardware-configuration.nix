@@ -29,6 +29,7 @@
       options = [
         "users" # Allow any user to mount/unmount
         "nofail" # Don't enter Emergency Mode if this drive is missing
+        "exec" # Allow executing programs on this drive
       ];
     };
 
@@ -38,6 +39,7 @@
       options = [
         "users" # Allow any user to mount/unmount
         "nofail" # Don't enter Emergency Mode if this drive is missing
+        "exec" # Allow executing programs on this drive
       ];
     };
 
