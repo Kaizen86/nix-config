@@ -25,6 +25,7 @@ in
         "wheel" # Grant permission to execute sudo
         "plugdev" # Allow access to HackRF device
         "video" # Allow access to RTL-SDR device
+        "dialout" # Allow access to serial ports
       ];
       shell = pkgs.bash;
     };
