@@ -49,9 +49,9 @@ let
     filelight
     firefox
     gimp
-    gnome.ghex
+    ghex
     gnome.gnome-clocks
-    gnome.gnome-disk-utility
+    gnome-disk-utility
     gparted
     kdenlive
     kdiff3

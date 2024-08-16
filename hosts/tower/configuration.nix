@@ -46,7 +46,7 @@
 
   programs.steam.enable = true;
   # Fix Steam glXChooseVisual error
-  hardware.opengl.driSupport32Bit = true;
+  hardware.graphics.enable32Bit = true;
   # Install gamemoderun
   environment.systemPackages = [
     pkgs.gamemode

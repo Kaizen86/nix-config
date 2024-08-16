@@ -75,8 +75,7 @@
     };
   };
 
-  # Enable sound with pipewire.
-  sound.enable = true;
+  # Enable sound with pulseaudio.
   hardware.pulseaudio.enable = false;
   security.rtkit.enable = true;
 
