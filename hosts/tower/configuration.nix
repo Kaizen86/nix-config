@@ -9,8 +9,6 @@
     [
       # Include the results of the hardware scan.
       ./hardware-configuration.nix
-      # Use common configuration
-      ../../common
     ];
 
   # Bootloader.

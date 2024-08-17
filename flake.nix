@@ -14,24 +14,22 @@
     let
       system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${system};
+      modules = [
+         ./common
+         inputs.home-manager.nixosModules.default
+       ];
     in
     {
     
       nixosConfigurations = {
-          tower = nixpkgs.lib.nixosSystem {
-            specialArgs = {inherit inputs;};
-            modules = [ 
-              ./hosts/tower/configuration.nix
-              inputs.home-manager.nixosModules.default
-            ];
-          };
-          laptop = nixpkgs.lib.nixosSystem {
-            specialArgs = {inherit inputs;};
-            modules = [ 
-              ./hosts/laptop/configuration.nix
-              inputs.home-manager.nixosModules.default
-            ];
-          };
+        tower = nixpkgs.lib.nixosSystem {
+          specialArgs = {inherit inputs;};
+          modules = modules ++ [ ./hosts/tower/configuration.nix ];
+        };
+        laptop = nixpkgs.lib.nixosSystem {
+          specialArgs = {inherit inputs;};
+          modules = modules ++ [ ./hosts/laptop/configuration.nix ];
+        };
       };
     };
 }
