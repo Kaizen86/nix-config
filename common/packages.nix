@@ -39,7 +39,7 @@ let
 
   desktopApplications = with pkgs; [
     alsaequal # Equaliser
-    arduino
+    arduino-ide
     audacity
     bitwarden
     blender
