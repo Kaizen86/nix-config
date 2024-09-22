@@ -55,7 +55,7 @@ let
     gparted
     kdenlive
     kdiff3
-    #kicad
+    kicad
     #kicad-library
     #kicad-library-3d
     #krita
@@ -74,7 +74,7 @@ let
     #steam # TODO put this in a dedicated module
     #telegram-desktop
     thunderbird
-    transmission-qt
+    transmission_4-qt
     #vice # Commodore retro-computer emulator
     #virtualbox
     vlc
@@ -91,7 +91,7 @@ let
   ];
 
   pythonPackages = with pkgs; [
-    python3
+    python3Full
     python311Packages.pip
   ];
 
