@@ -45,9 +45,12 @@
   programs.steam.enable = true;
   # Fix Steam glXChooseVisual error
   hardware.graphics.enable32Bit = true;
-  # Install gamemoderun
-  environment.systemPackages = [
-    pkgs.gamemode
+
+  # Install packages
+  environment.systemPackages = with pkgs; [
+    gamemode # gamemoderun for Steam
+    bambu-studio
+    gqrx
   ];
 
   # Enable the OpenSSH daemon.
