@@ -62,4 +62,6 @@
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
 
+  programs.adb.enable = true;
+  users.users.kaizen.extraGroups = [ "adbusers" ];
 }
