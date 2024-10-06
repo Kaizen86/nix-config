@@ -72,7 +72,7 @@ let
     sidequest # Unoffical Oculus VR headset manager
     speedcrunch # Neat calculator
     #steam # TODO put this in a dedicated module
-    #telegram-desktop
+    telegram-desktop
     thunderbird
     transmission_4-qt
     #vice # Commodore retro-computer emulator
