@@ -50,7 +50,9 @@
   environment.systemPackages = with pkgs; [
     gamemode # gamemoderun for Steam
     bambu-studio
+    freecad
     gqrx
+    gnuradio
   ];
 
   # Enable the OpenSSH daemon.
