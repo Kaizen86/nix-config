@@ -49,6 +49,7 @@
   # Install packages
   environment.systemPackages = with pkgs; [
     gamemode # gamemoderun for Steam
+    cargo
     bambu-studio
     freecad
     gqrx
