@@ -60,6 +60,7 @@ let
     #kicad-library-3d
     #krita
     libreoffice-fresh
+    libsForQt5.kate
     #lutris
     mpv # Simple video player
     obs-studio #v4l2loopback-dkms # NOTE idk if OBS still needs the virtual webcam driver
