@@ -32,9 +32,7 @@ while [ "$1" ]; do
       shift
       ;;
     -*)
-      echo "${FUNCNAME[0]}: unrecognised option '$1'
-Try '${FUNCNAME[0]} --help' for more information"
-      exit 1
+      rebuild_args="$rebuild_args $1"
       ;;
     *)
       echo "Ignoring argument '$1'"
