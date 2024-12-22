@@ -36,4 +36,10 @@
 
   # Define hostname.
   networking.hostName = "laptop";
-}
+
+  # Install packages
+  environment.systemPackages = with pkgs; [
+    gqrx
+    gnuradio
+  ];
+ }
