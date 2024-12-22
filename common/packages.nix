@@ -11,6 +11,7 @@ let
 
   installOnEverything = with pkgs; [
     bat
+    binutils
     dig
     file
     git
@@ -27,7 +28,8 @@ let
     tree
     #unrar
     unrar
-    vim
+    usbutils
+    vim # *epic electric guitar riff*
     wget
     zip
   ];
