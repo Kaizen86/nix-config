@@ -64,6 +64,7 @@
     nodePackages.http-server # Handy for quickly hosting a directory over HTTP
     pinentry # Authentication for GPG
     # TODO insert Python deps... somewhere. Probably not here.
+    python3
     # cairo, matplotlib, opencv, pip?, pip-search?, psutil?, pyserial?
     rsync
     rustup
@@ -81,9 +82,9 @@
 
     curl
     p7zip
-    ffmpeg
     file
     gnused
+    exif
   ];
 
   # Backup etc files instead of failing to activate generation if a file already exists in /etc
