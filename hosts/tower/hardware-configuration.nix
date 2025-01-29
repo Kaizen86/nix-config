@@ -13,6 +13,16 @@
   boot.kernelModules = [ "kvm-amd" ];
   boot.extraModulePackages = [ ];
 
+  # Forward kernel and grub messages to the serial port
+  boot.kernelParams = [ "console=ttyS0,115200n8" ];
+  /*
+  boot.loader.grub.extraConfig = "
+    serial --speed=115200 --unit=0 --word=8 --parity=no --stop=1
+    terminal_input serial
+    terminal_output serial
+  ";
+  */
+
   fileSystems."/" =
     { device = "/dev/disk/by-uuid/be2af937-eeb5-4b79-8132-3b74cc0145f2";
       fsType = "ext4";
