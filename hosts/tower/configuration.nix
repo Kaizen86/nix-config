@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, inputs, ... }:
+{ config, pkgs, inputs, lib, ... }:
 
 {
   imports =
@@ -60,8 +60,15 @@
   services.openssh.enable = true;
 
   # Open ports in the firewall.
-  networking.firewall.allowedTCPPorts = [ 22 8080 ];
-  # networking.firewall.allowedUDPPorts = [ ... ];
+  networking.firewall.allowedTCPPorts = [
+    22 8080
+    # Bambu Studio
+    1990 2021 990 123
+  ] ++ lib.range 50000 50100;
+  networking.firewall.allowedUDPPorts = [
+    # Bambu Studio
+    123
+  ];
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
 
