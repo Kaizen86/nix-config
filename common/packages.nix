@@ -52,12 +52,12 @@ let
     firefox
     gimp
     ghex
-    gnome.gnome-clocks
+    gnome-clocks
     gnome-disk-utility
     gparted
     kdenlive
     kdiff3
-    kicad
+    #kicad
     #kicad-library
     #kicad-library-3d
     #krita
@@ -89,7 +89,7 @@ let
     dejavu_fonts # DejaVu Sans/Serif/Mono fonts; broad coverage of Unicode 
     liberation_ttf # Replacements for Arial, Times New Roman, and Courier New fonts
     minecraftia
-    noto-fonts-cjk # Noto Sans/Serif
+    noto-fonts-cjk-sans # Noto Sans/Serif
     noto-fonts-emoji
   ];
 

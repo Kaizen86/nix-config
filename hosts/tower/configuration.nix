@@ -50,7 +50,7 @@
   environment.systemPackages = with pkgs; [
     gamemode # gamemoderun for Steam
     cargo
-    bambu-studio
+    #bambu-studio
     freecad
     gqrx
     gnuradio

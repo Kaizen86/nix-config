@@ -26,7 +26,7 @@
   main-user.userName = "kaizen";
 
   services = {
-    # Allow power button to shutdown system
+    # Make power button _always_ shutdown system
     # FIXME This doesn't work??
     logind.extraConfig = ''
       # Shutdown system when power button is pressed
@@ -54,7 +54,7 @@
       enable = true;
       alsa.enable = true;
       alsa.support32Bit = true;
-      pulse.enable = true;
+      pulse.enable = true; # I think this is for compatibility?
       # If you want to use JACK applications, uncomment this
       #jack.enable = true;
 
@@ -63,6 +63,10 @@
       #media-session.enable = true;
     };
 
+    # Disable PulseAudio because I'm using Pipewire
+    pulseaudio.enable = false;
+
+    # Enable Multicast DNS to access machines by hostname
     avahi = {
       enable = true;
       nssmdns4 = true;
@@ -75,8 +79,7 @@
     };
   };
 
-  # Enable sound with pulseaudio.
-  hardware.pulseaudio.enable = false;
+  # Enable RealtimeKit so Pipewire can acquire realtime priority
   security.rtkit.enable = true;
 
   # Allow unfree packages
@@ -86,7 +89,9 @@
   # started in user sessions.
   # programs.mtr.enable = true;
   
-  #Enable gpg service and add the input tty env var
+  # TODO: Move the following to some other file(s)
+
+  #Enable gpg service and add the input tty environment variable
   programs.gnupg.agent = {
     enable = true;
     pinentryPackage = pkgs.pinentry;
