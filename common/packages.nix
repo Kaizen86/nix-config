@@ -26,8 +26,8 @@ let
     screen # Detachable sessions with names
     strace
     tree
-    #unrar
     unrar
+    unzip
     usbutils
     vim # *epic electric guitar riff*
     wget
