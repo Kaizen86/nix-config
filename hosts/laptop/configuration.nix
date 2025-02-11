@@ -37,6 +37,11 @@
   # Define hostname.
   networking.hostName = "laptop";
 
+  # Activate Bluetooth on boot
+  # TODO: This should probably be set to true by default in some other file
+  hardware.bluetooth.enable = true;
+  hardware.bluetooth.powerOnBoot = true;
+
   # Install packages
   environment.systemPackages = with pkgs; [
     gqrx
