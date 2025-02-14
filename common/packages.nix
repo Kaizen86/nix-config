@@ -44,7 +44,7 @@ let
     arduino-ide
     audacity
     bitwarden
-    blender
+    blender-hip
     cool-retro-term
     deja-dup
     discord
@@ -119,13 +119,13 @@ let
 
   systemTools = with pkgs; [
     acpid # Used to detect power button press for quick shutdown
-    #amdgpu_top
+    amdgpu_top
     #dvd+rw-tools
     #exfatprogs
     #libdvdcss
     #libisoburn
     ntfs3g # Allows mounting NTFS partitions (TODO This might be deprecated?)
-    radeontop
+    #radeontop
     s-tui # Fancy TUI graphs for system temperature
     #testdisk # Data recovery tool
   ];
