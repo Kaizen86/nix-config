@@ -51,6 +51,7 @@
     gamemode # gamemoderun for Steam
     cargo
     #bambu-studio
+    orca-slicer
     freecad
     gqrx
     gnuradio
