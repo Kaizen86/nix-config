@@ -75,6 +75,7 @@
     #sysbench
     tree
     #unrar
+    unzip
     vim
     wget
     yt-dlp
