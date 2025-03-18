@@ -40,6 +40,7 @@
     dos2unix
     #duf
     findutils
+    ffmpeg
     gallery-dl
     gcc
     gdb
