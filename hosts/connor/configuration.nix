@@ -39,6 +39,7 @@
     dig
     dos2unix
     #duf
+    findutils
     gallery-dl
     gcc
     gdb
