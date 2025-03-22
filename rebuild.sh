@@ -15,6 +15,13 @@ if [ -z $host_id ]; then
   exit 1
 fi
 
+readback() {
+  # Echo command before running it
+  echo $*
+  $*
+  return $?
+}
+
 # Parse any command-line options
 while [ "$1" ]; do
   case "$1" in
@@ -24,8 +31,8 @@ while [ "$1" ]; do
       exit
       ;;
     -u|--upgrade)
-      nix flake update
-      sudo nix-channel --update
+      readback nix flake update
+      readback sudo nix-channel --update
       #nix-env -u
       #rebuild_args="$rebuild_args -I $HOME/nix-config"
       rebuild_args="$rebuild_args --upgrade"
@@ -45,9 +52,8 @@ done
 if [ "$rebuild_args" ]; then
   echo Rebuilding with options: $rebuild_args
 fi
-rebuild_cmd=sudo nixos-rebuild switch --flake $config_root#$host_id $rebuild_args
-echo $rebuild_cmd
-$rebuild_cmd; return_code=$?
+readback sudo nixos-rebuild switch --flake $config_root#$host_id $rebuild_args
+return_code=$?
 
 # Only files tracked by Git will be added to the Nix store, which nixos-rebuild uses to read the config. Therefore, files not tracked by Git will appear to be invisible. Show a warning if git status reports untracked files.
 if git status | grep -q "Untracked files:"; then
