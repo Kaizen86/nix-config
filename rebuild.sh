@@ -2,16 +2,16 @@
 # 
 
 # Find where this script is stored
-CONFIG_ROOT=$(dirname "$0")
+config_root=$(dirname "$0")
 
 # Read what host configuration this machine should use
-if [ -f $CONFIG_ROOT/.host_id ]; then
-  host_id=$(< $CONFIG_ROOT/.host_id)
+if [ -f $config_root/.host_id ]; then
+  host_id=$(< $config_root/.host_id)
 fi
 # Check if the variable is empty
 if [ -z $host_id ]; then
   echo .host_id is missing or empty! It should contain one of the following:
-  ls $CONFIG_ROOT/hosts
+  ls $config_root/hosts
   exit 1
 fi
 
@@ -45,13 +45,13 @@ done
 if [ "$rebuild_args" ]; then
   echo Rebuilding with options: $rebuild_args
 fi
-echo sudo nixos-rebuild switch --flake /home/kaizen/nix-config#$host_id $rebuild_args
-sudo nixos-rebuild switch --flake /home/kaizen/nix-config#$host_id $rebuild_args
-return_code=$?
+rebuild_cmd=sudo nixos-rebuild switch --flake $config_root#$host_id $rebuild_args
+echo $rebuild_cmd
+$rebuild_cmd; return_code=$?
 
-# For reasons I do not yet understand, nixos-rebuild needs .nix files to be tracked by Git, otherwise they will seem invisible.
+# Only files tracked by Git will be added to the Nix store, which nixos-rebuild uses to read the config. Therefore, files not tracked by Git will appear to be invisible. Show a warning if git status reports untracked files.
 if git status | grep -q "Untracked files:"; then
-  echo -e "\nHeads up: some files are untracked by Git. This may cause you problems if they're important."
+  echo -e "\nHeads up: some files are untracked by Git. This may cause problems if they're important."
 fi
 
 exit $return_code
