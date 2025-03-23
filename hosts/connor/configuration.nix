@@ -44,14 +44,10 @@
     gallery-dl
     gcc
     gdb
-    git
-    gparted
     gnumake
     gnupg
-    hackrf
     hollywood
     htop
-    iotop
     #lftp
     lynx # TUI web browser
     man-db
