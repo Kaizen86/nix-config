@@ -8,9 +8,10 @@ Note: this is subject to change as I find the best way to organise stuff
 - [hosts] Device-specific configurations
      - [tower] Gaming PC :D
      - [laptop] kind of crap but it works fine
-(the following exist on separate branches for now)
-     - [raspi] dnsmask server (eventually™)
      - [connor] he's the Android sent by Cyberlife
+     - [raspi] dnsmasq server (eventually™)
+
+Note: raspi exists on a separate branch for now
 
 # Installing on a new machine
 
