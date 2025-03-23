@@ -22,6 +22,5 @@ These are my mental notes on how to add a new NixOS machine to this repo. If thi
 - Move `/etc/nixos/` contents to `hosts/newhost`
 - Symlink `/etc/nixos` --> `/home/kaizen/nix-config`
 - Add new entry to flake.nix
-- Write new host folder name in `.host_id`
 - Run ./rebuild.sh
 - If that worked, commit changes and push
