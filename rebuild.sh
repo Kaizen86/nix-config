@@ -4,17 +4,6 @@
 # Find where this script is stored
 config_root=$(dirname "$0")
 
-# Read what host configuration this machine should use
-if [ -f $config_root/.host_id ]; then
-  host_id=$(< $config_root/.host_id)
-fi
-# Check if the variable is empty
-if [ -z $host_id ]; then
-  echo .host_id is missing or empty! It should contain one of the following:
-  ls $config_root/hosts
-  exit 1
-fi
-
 readback() {
   # Echo command before running it
   echo $*
@@ -22,10 +11,10 @@ readback() {
   return $?
 }
 
-if [ "$host_id" == "connor" ]; then
+if [ "$USER" == "nix-on-droid" ]; then
   # Usual nixos-rebuild and nix-channel commands won't work on this host
   echo Using nix-on-droid specific command
-  readback nix-on-droid switch --flake $config_root#$host_id
+  readback nix-on-droid switch --flake $config_root#connor
   exit $?
 fi
 
@@ -59,7 +48,7 @@ done
 if [ "$rebuild_args" ]; then
   echo Rebuilding with options: $rebuild_args
 fi
-readback sudo nixos-rebuild switch --flake $config_root#$host_id $rebuild_args
+readback sudo nixos-rebuild switch --flake $config_root $rebuild_args
 return_code=$?
 
 # Only files tracked by Git will be added to the Nix store, which nixos-rebuild uses to read the config. Therefore, files not tracked by Git will appear to be invisible. Show a warning if git status reports untracked files.

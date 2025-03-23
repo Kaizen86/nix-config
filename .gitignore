@@ -1,3 +1,0 @@
-# This file is used by the rebuild script to identify what machine it's on.
-# If the wrong hardware-configuration is used, that would be quite bad.
-.host_id
