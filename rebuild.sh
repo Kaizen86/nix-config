@@ -1,5 +1,5 @@
-#!/run/current-system/sw/bin/bash
-# 
+#!/usr/bin/env bash
+# Updates the system according to this nix configuration.
 
 # Find where this script is stored
 config_root=$(dirname "$0")
@@ -21,6 +21,13 @@ readback() {
   $*
   return $?
 }
+
+if [ "$host_id" == "connor" ]; then
+  # Usual nixos-rebuild and nix-channel commands won't work on this host
+  echo Using nix-on-droid specific command
+  readback nix-on-droid switch --flake $config_root#$host_id
+  exit $?
+fi
 
 # Parse any command-line options
 while [ "$1" ]; do
