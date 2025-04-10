@@ -36,19 +36,20 @@
     # X11 windowing system
     xserver = {
       enable = true;
-      # Enable the Plasma desktop environment (TODO: is this necessary?)
-      desktopManager.plasma5.enable = true;
 
       # Configure keymap in X11
       xkb = {
         layout = "gb";
         variant = "";
       };
-    };
 
-    # Enable the KDE Plasma Desktop Environment as default option.
-    displayManager.sddm.enable = true;
-    displayManager.defaultSession = "plasmawayland";
+      # Enable the Plasma desktop environment
+      desktopManager.plasma6.enable = true;
+
+      # Enable the KDE Plasma Desktop Environment as default option.
+      displayManager.sddm.enable = true;
+      displayManager.defaultSession = "plasma";
+    };
 
     pipewire = {
       enable = true;
