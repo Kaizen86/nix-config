@@ -36,6 +36,7 @@ while [ "$1" ]; do
       ;;
     -*)
       rebuild_args="$rebuild_args $1"
+      shift
       ;;
     *)
       echo "Ignoring argument '$1'"
