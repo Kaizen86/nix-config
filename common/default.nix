@@ -43,13 +43,14 @@
         variant = "";
       };
 
-      # Enable the Plasma desktop environment
-      desktopManager.plasma6.enable = true;
-
-      # Enable the KDE Plasma Desktop Environment as default option.
-      displayManager.sddm.enable = true;
-      displayManager.defaultSession = "plasma";
     };
+
+    # Enable the Plasma desktop environment
+    desktopManager.plasma6.enable = true;
+
+    # Enable the KDE Plasma Desktop Environment as default option.
+    displayManager.sddm.enable = true;
+    displayManager.defaultSession = "plasma";
 
     pipewire = {
       enable = true;
