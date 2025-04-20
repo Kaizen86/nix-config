@@ -1,13 +1,27 @@
 #!/usr/bin/env bash
 # Updates the system according to this nix configuration.
 
+# If shit hits the breeze blender, here's how to reinstall the bootloader from a live usb!
+# mount /dev/sdXY /mnt
+# mount /dev/sdXZ /mnt/boot
+# nixos-install --root /mnt --no-root-password --flake /mnt/home/kaizen/nix-config#laptop
+
 # Find where this script is stored
 config_root=$(dirname "$0")
 
 readback() {
+  cmd=$*
+  # If running as root, strip any use of sudo.
+  # sudo doesn't work if PAM authentication is offline, such as
+  # when nixos-enter is used from the live installer to recover the system.
+  if [ $(id -u) -eq 0 ]; then
+    echo disabling sudo
+    cmd=$(echo $cmd | sed 's/^sudo\s*//')
+  fi
+
   # Echo command before running it
-  echo $*
-  $*
+  echo $cmd
+  $cmd
   return $?
 }
 
