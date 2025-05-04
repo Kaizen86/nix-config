@@ -66,6 +66,7 @@ let
     #lutris
     mpv # Simple video player
     obs-studio #v4l2loopback-dkms # NOTE idk if OBS still needs the virtual webcam driver
+    obsidian
     openscad # Funny code-based 3D design tool (thanks Steve <3)
     pavucontrol # PulseAudio Volume Controls
     plasma-systemmonitor
