@@ -48,30 +48,28 @@ let
     cool-retro-term
     deja-dup
     discord
-    filelight
     firefox
-    gimp
     ghex
+    gimp3
     gnome-clocks
     gnome-disk-utility
     gparted
-    kdenlive
+    kdePackages.filelight
+    kdePackages.kate
+    kdePackages.kdenlive
+    kdePackages.plasma-systemmonitor
     kdiff3
     #kicad
-    #kicad-library
-    #kicad-library-3d
     #krita
     libreoffice-fresh
-    libsForQt5.kate
     #lutris
     mpv # Simple video player
     obs-studio #v4l2loopback-dkms # NOTE idk if OBS still needs the virtual webcam driver
     obsidian
     openscad # Funny code-based 3D design tool (thanks Steve <3)
     pavucontrol # PulseAudio Volume Controls
-    plasma-systemmonitor
-    prismlauncher # Alternative Minecraft launcher
     # TODO figure out where cursor packages should sit (posy-cursors)
+    prismlauncher # Alternative Minecraft launcher
     qFlipper
     sidequest # Unoffical Oculus VR headset manager
     speedcrunch # Neat calculator
