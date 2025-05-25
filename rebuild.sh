@@ -35,12 +35,12 @@ fi
 # Parse any command-line options
 while [ "$1" ]; do
   case "$1" in
-    --help)
+    -h|--help)
       # todo add help text
       echo "$0"
       exit
       ;;
-    -u|--upgrade)
+    -u|--upgrade|--update)
       readback nix flake update
       readback sudo nix-channel --update
       #nix-env -u
@@ -63,7 +63,7 @@ done
 # This will require intervention - the flake won't know which target to build
 # Usually this happens when setting up a new system as the hostname will be 'nixos'
 if [ ! -d hosts/$(hostname) ]; then
-  echo Warning! The hostname does not exist as a folder inside hosts/
+  echo Warning! The hostname does not exist as a folder in 'hosts' directory.
   echo Assuming this is a new system and you\'re following the README
   echo to set it up, please specify which flake attribute to use.
   echo First make sure the attribute sets the system hostname to the folder name!
@@ -89,7 +89,7 @@ readback sudo nixos-rebuild switch --flake $config_root$attribute $rebuild_args
 return_code=$?
 
 # Only files tracked by Git will be added to the Nix store, which nixos-rebuild uses to read the config.
-# #Therefore, files not tracked by Git will appear to be invisible.
+# Therefore, files not tracked by Git will appear to be invisible.
 # Show a warning if git status reports untracked files.
 if git status | grep -q "Untracked files:"; then
   echo -e "\nHeads up: some files are untracked by Git. This may cause problems if they're important."
