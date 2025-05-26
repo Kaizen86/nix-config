@@ -31,4 +31,5 @@ if [ "$USER" == "nix-on-droid" ]; then
 fi
 
 readback sudo nix-collect-garbage -d 
-exit $?
+readback sudo nix-store --optimise
+
