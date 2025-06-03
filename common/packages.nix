@@ -18,6 +18,7 @@ let
     gnupg # TODO Enable+configure elsewhere
     htop
     iotop # Like top, but for disk I/O :)
+    killall
     lsof
     man man-db man-pages
     nano nanorc # Just in case
