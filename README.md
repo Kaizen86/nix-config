@@ -15,26 +15,31 @@ Note: raspi exists on a separate branch for now
 
 # Installing on a new machine
 
-These are my mental notes on how to add a new NixOS machine to this repo. If this doesn't make sense, I'm sorry >~<
+These are my mental notes on how to add a new NixOS machine to this repo. If this doesn't make sense, I'm sorry >&#x2060;~&#x2060;<
 
 - Clone the repo to /home/kaizen/nix-config
-```bash
-nix-shell -p git vim
-git clone https://github.com/Kaizen86/nix-config
-cd nix-config
-```
+     ```bash
+     nix-shell -p git vim
+     git clone https://github.com/Kaizen86/nix-config
+     cd nix-config
+     ```
 - Configure repo to use SSH
-```bash
-git remote set-url origin ssh://git@github.com/Kaizen86/nix-config
-```
-- Generate and add [SSH](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent)/[GPG](https://docs.github.com/en/authentication/managing-commit-signature-verification/generating-a-new-gpg-key) keys to Github
+     ```bash
+     git remote set-url origin ssh://git@github.com/Kaizen86/nix-config
+     ```
+- Generate and add [SSH](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent) & [GPG](https://docs.github.com/en/authentication/managing-commit-signature-verification/generating-a-new-gpg-key) keys to Github
 - Move `/etc/nixos/` contents to `hosts/newhost`
+     - (replace `newhost` with some unique identifier, of course)
 - Symlink `/etc/nixos` --> `/home/kaizen/nix-config`
-```bash
-sudo ln -sv /home/kaizen/nix-config /etc/nixos
-```
-- Edit `hosts/newhost/configuration.nix` to set hostname to `newhost`
+     ```bash
+     sudo ln -sv /home/kaizen/nix-config /etc/nixos
+     ```
+- Edit `hosts/newhost/configuration.nix` to set hostname to `newhost` (important!)
 - Add new entry to flake.nix output
+- Track changes with `git add .` (otherwise `hosts/newhost` won't be in the Nix store)
 - Run ./rebuild.sh
-- If that worked, commit changes and push
-
+- If that worked, commit changes and push:
+     ```bash
+     git commit -m "Add new host newhost"
+     git push
+     ```
