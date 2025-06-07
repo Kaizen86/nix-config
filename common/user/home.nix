@@ -1,6 +1,9 @@
 { config, pkgs, ... }:
 
 {
+  # Let Home Manager install and manage itself.
+  programs.home-manager.enable = true;
+
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
   home.username = "kaizen";
@@ -37,6 +40,11 @@
     # (pkgs.writeShellScriptBin "my-hello" ''
     #   echo "Hello, ${config.home.username}!"
     # '')
+
+    # MaKe and Change Directory
+    (pkgs.writeShellScriptBin "mkcd" ''
+        mkdir -p "$@" && cd "$@";
+     '')
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
@@ -71,9 +79,28 @@
   #  /etc/profiles/per-user/kaizen/etc/profile.d/hm-session-vars.sh
   #
   home.sessionVariables = {
-    # EDITOR = "emacs";
+    EDITOR = "vim";
+    # [username@hostname:~/folder]
+    # $
+    PS1 = "\\n\\[\\e[34;1m\\][\\[\\e]0;\\w\\a\\]\\u@\\h:\\w\\n\\[\\e[0m\\]\\$ ";
   };
 
-  # Let Home Manager install and manage itself.
-  programs.home-manager.enable = true;
+  home.shellAliases = {
+    ffmpeg = "ffmpeg --hide-banner";
+    music-dl = "yt-dlp -ciwx --audio-format flac --embed-thumbnail --add-metadata -o \%\(title\)s.\%\(ext\)s";
+    open = "xdg-open";
+    xxd = "xxd -a";
+  };
+
+  programs.bash = {
+    # Note: Bash must be explicitly enabled for shellAliases to work
+    # https://discourse.nixos.org/t/home-shellaliases-unable-to-set-aliases-using-home-manager/33940/4
+    enable = true;
+    # Note: environment variables are setup via .profile, which only applies to the login shell
+    # This sources the responsible script directly
+    # https://discourse.nixos.org/t/home-manager-doesnt-seem-to-recognize-sessionvariables/8488/7
+    initExtra = ''
+      . "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh"
+    '';
+  };
 }
