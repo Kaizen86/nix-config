@@ -61,6 +61,12 @@
     #   org.gradle.console=verbose
     #   org.gradle.daemon.idletimeout=3600000
     # '';
+
+    ".ssh/config".text = ''
+      Host kaizen86.uk
+      #User kaizen
+      Port 58913
+    '';
   };
 
   # Home Manager can also manage your environment variables through
