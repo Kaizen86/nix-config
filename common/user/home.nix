@@ -111,7 +111,7 @@ nnoremap <F3> :VTerm<CR>
   };
 
   home.shellAliases = {
-    ffmpeg = "ffmpeg --hide-banner";
+    ffmpeg = "ffmpeg --hide_banner";
     music-dl = "yt-dlp -ciwx --audio-format flac --embed-thumbnail --add-metadata -o \%\(title\)s.\%\(ext\)s";
     open = "xdg-open";
     xxd = "xxd -a";
