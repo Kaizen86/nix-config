@@ -72,19 +72,25 @@
 " Some may not be necessary
 set ai " Auto indenting on
 set tabstop=4 " Decrease width of tabs
+set shiftwidth=4 " Indentation depth (pads taps with spaces if greater than tabstop)
 set showbreak=> " Indicate when a line wraps
-set laststatus=2 " Make the bottom bar 2 lines tall so you can always see the status
-set showmode " Show the current mode
+"set noexpand tab " Always use tabs
+
 set belloff=all " Disable dinging
 
 " Move up/down by 'display lines so text wrapping is seamless
-map <up> gj
-map <down> gk
+map <up> gk
+map <down> gj
 
 " Creates a vertical split with a terminal on the right side
 command! Vterm :botright vert term
 cnoreabbrev vt :Vterm
 nnoremap <F3> :VTerm<CR>
+
+" Sometimes I hold Shift for slightly too long after pressing Colon
+command! W :w
+command! WQ :wq
+command! Wq :wq
     */
   };
 
