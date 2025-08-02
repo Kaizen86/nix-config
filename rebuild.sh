@@ -16,7 +16,7 @@ readback() {
   # when nixos-enter is used from the live installer to recover the system.
   if [ $(id -u) -eq 0 ]; then
     echo disabling sudo
-    cmd=$(echo $cmd | sed 's/^sudo\s*//')
+    cmd=$(sed 's/^sudo\s*//' <<< $cmd)
   fi
 
   # Echo command before running it
@@ -36,7 +36,7 @@ fi
 while [ "$1" ]; do
   case "$1" in
     -h|--help)
-      # todo add help text
+      # TODO Add help text
       echo "$0"
       exit
       ;;
@@ -44,7 +44,6 @@ while [ "$1" ]; do
       readback nix flake update
       readback sudo nix-channel --update
       #nix-env -u
-      #rebuild_args="$rebuild_args -I $HOME/nix-config"
       rebuild_args="$rebuild_args --upgrade"
       shift
       ;;
@@ -66,14 +65,14 @@ if [ ! -d hosts/$(hostname) ]; then
   echo Warning! The hostname does not exist as a folder in 'hosts' directory.
   echo Assuming this is a new system and you\'re following the README
   echo to set it up, please specify which flake attribute to use.
-  echo First make sure the attribute sets the system hostname to the folder name!
+  echo Make sure it sets the system hostname to the folder name so this persists!
   select attribute in $(ls hosts); do
     if [ -z "$attribute" ]; then
       # Invalid number
       echo Aborting.
       exit 1
     fi
-    attribute=\#$attribute # prepend hash (e.g foo -> #foo)
+    attribute=\#$attribute # flake attributes start with a hash
     break # Variable has been set; exit menu
   done
 else
