@@ -1,4 +1,4 @@
-{ lib, config, pkgs, ... }:
+{ lib, config, pkgs, inputs, ... }:
 
 let
   cfg = config.main-user;
@@ -31,8 +31,9 @@ in
     };
 
     home-manager = {
-      # TODO Find out where I goofed during Vimjoyer's tutorial
-      #specialArgs = { inherit inputs; };
+      # I don't know what the extraSpecialArgs is for; it works fine without that
+	  # I know it's for passing 'inputs' into home-manager, but I don't know why we do that...
+      extraSpecialArgs = { inherit inputs; };
       users = {
         "kaizen" = import ./home.nix;
       };
