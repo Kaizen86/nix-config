@@ -45,6 +45,11 @@
     (pkgs.writeShellScriptBin "mkcd" ''
         mkdir -p "$@" && cd "$@";
      '')
+    # Often I want to try out a program by installing it ephemerally
+    # This immediately starts the program after it finishes downloading
+    (pkgs.writeShellScriptBin "nix-tryout" ''
+        nix-shell -p $1 --command $1
+    '')
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
