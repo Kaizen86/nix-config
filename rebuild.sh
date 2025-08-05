@@ -80,18 +80,17 @@ else
   unset attribute
 fi
 
+# Only files tracked by Git will be added to the Nix store, which nixos-rebuild uses to read the config.
+# Therefore, files not tracked by Git will appear to be invisible.
+# Show a warning if git status reports untracked files.
+if git status | grep -q "Untracked files:"; then
+  echo -e "Heads up: some files are untracked by Git. This may cause problems if they're important.\n"
+fi
+
 # Rebuild the system and pass any additional arguments
 if [ "$rebuild_args" ]; then
   echo Rebuilding with options: $rebuild_args
 fi
 readback sudo nixos-rebuild switch --flake $config_root$attribute $rebuild_args
-return_code=$?
+exit $?
 
-# Only files tracked by Git will be added to the Nix store, which nixos-rebuild uses to read the config.
-# Therefore, files not tracked by Git will appear to be invisible.
-# Show a warning if git status reports untracked files.
-if git status | grep -q "Untracked files:"; then
-  echo -e "\nHeads up: some files are untracked by Git. This may cause problems if they're important."
-fi
-
-exit $return_code
