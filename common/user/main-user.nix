@@ -32,7 +32,7 @@ in
 
     home-manager = {
       # I don't know what the extraSpecialArgs is for; it works fine without that
-	  # I know it's for passing 'inputs' into home-manager, but I don't know why we do that...
+      # I know it's for passing 'inputs' into home-manager, but I don't know why we do that...
       extraSpecialArgs = { inherit inputs; };
       users = {
         "kaizen" = import ./home.nix;
