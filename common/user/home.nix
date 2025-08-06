@@ -41,10 +41,6 @@
     #   echo "Hello, ${config.home.username}!"
     # '')
 
-    # MaKe and Change Directory
-    (pkgs.writeShellScriptBin "mkcd" ''
-        mkdir -p "$@" && cd "$@";
-     '')
     # Often I want to try out a program by installing it ephemerally
     # This immediately starts the program after it finishes downloading
     (pkgs.writeShellScriptBin "nix-tryout" ''
@@ -109,11 +105,18 @@
     # Note: Bash must be explicitly enabled for shellAliases to work
     # https://discourse.nixos.org/t/home-shellaliases-unable-to-set-aliases-using-home-manager/33940/4
     enable = true;
-    # Note: environment variables are setup via .profile, which only applies to the login shell
-    # This sources the responsible script directly
-    # https://discourse.nixos.org/t/home-manager-doesnt-seem-to-recognize-sessionvariables/8488/7
+    # This gets run when the shell opens. Useful for defining functions
     initExtra = ''
+      # Note: environment variables are setup via .profile, which only applies to the login shell
+      # This sources the responsible script directly
+      # https://discourse.nixos.org/t/home-manager-doesnt-seem-to-recognize-sessionvariables/8488/7
       . "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh"
+
+      # MaKe then Change Directory
+      # This must be in initExtra because the cd cannot run in a subshell
+      function mkcd() {
+        mkdir -p "$@" && cd "$@";
+      }
     '';
   };
 }
