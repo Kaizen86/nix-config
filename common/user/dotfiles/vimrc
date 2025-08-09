@@ -29,7 +29,7 @@ set ai " Auto indenting on
 set tabstop=4 " Decrease width of tabs
 set shiftwidth=4 " Indentation depth (pads tabs with spaces if greater than tabstop)
 set showbreak=> " Indicate when a line wraps
-"set noexpand tab " Always use tabs
+"set noexpandtab " Always use tabs
 
 set belloff=all " Disable dinging
 
