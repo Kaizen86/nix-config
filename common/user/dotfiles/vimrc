@@ -47,3 +47,7 @@ command! W :w
 command! WQ :wq
 command! Wq :wq
 
+" Highlight all instances of a search, until the search is closed
+:set hlsearch
+:nnoremap <CR> :nohlsearch<CR><CR>
+
