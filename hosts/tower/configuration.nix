@@ -45,9 +45,7 @@
   hardware.bluetooth.enable = true;
   hardware.bluetooth.powerOnBoot = true;
 
-  programs.steam.enable = true;
-  # Fix Steam glXChooseVisual error
-  hardware.graphics.enable32Bit = true;
+  steam.enable = true;
 
   # Install packages
   environment.systemPackages = with pkgs; [
