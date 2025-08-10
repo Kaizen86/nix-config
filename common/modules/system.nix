@@ -1,4 +1,4 @@
-{ config, pkgs, inputs, ... }:
+{ ... }:
 
 {
   # TODO Allow all/parts of this to be overridden/disabled so it'll work with raspi and connor hosts!

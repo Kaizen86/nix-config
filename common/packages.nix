@@ -1,4 +1,4 @@
-{ pkgs, config, inputs, ... }:
+{ pkgs, ... }:
 # TODO install nix-inspect to make my life easier
 
 # Pattern adapted from https://github.com/JRMurr/NixOsConfig/blob/main/common/programs.nix :3
@@ -35,6 +35,7 @@ let
     zip
   ];
 
+  # FIXME this is unused, perhaps I made too many categories to keep track of...
   devTools = with pkgs; [
     gnumake
     rustup
