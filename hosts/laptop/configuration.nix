@@ -42,6 +42,9 @@
   hardware.bluetooth.enable = true;
   hardware.bluetooth.powerOnBoot = true;
 
+  # Set GPG key
+  programs.git.config.user.signingkey = "8142D3E03705FD1A";
+
   # Install packages
   environment.systemPackages = with pkgs; [
     gqrx

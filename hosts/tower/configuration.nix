@@ -47,6 +47,9 @@
 
   steam.enable = true;
 
+  # Set GPG key
+  programs.git.config.user.signingkey = "029A86F4E8D375F2";
+
   # Install packages
   environment.systemPackages = with pkgs; [
     gamemode # gamemoderun for Steam
