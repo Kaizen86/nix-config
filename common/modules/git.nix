@@ -13,6 +13,10 @@
       commit.gpgsign = true; # Use GPG by default
 
       core.autoclrf = "input"; # Converts CRLF to LF when pulling
+
+      alias = {
+        tree = "log --oneline --all --graph";
+      };
     };
   };
 }
