@@ -4,7 +4,7 @@
   config.programs.git = {
     enable = lib.mkDefault true;
     # Default configuration, override as appropriate
-    config = lib.mkDefault {
+    config = {
       user = {
         name = "Kaizen86";
         email = "danielbridgewater87@gmail.com";
