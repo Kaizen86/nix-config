@@ -14,7 +14,6 @@ let
     binutils
     dig
     file
-    git
     gnupg # TODO Enable+configure elsewhere
     htop
     iotop # Like top, but for disk I/O :)
@@ -75,7 +74,6 @@ let
     qFlipper
     sidequest # Unoffical Oculus VR headset manager
     speedcrunch # Neat calculator
-    #steam # TODO put this in a dedicated module
     telegram-desktop
     thunderbird
     transmission_4-qt
