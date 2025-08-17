@@ -5,13 +5,7 @@
 { lib, pkgs, ... }:
 
 {
-  imports =
-    [
-      # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-    ];
-
-  # Bootloader.
+  # Bootloader
   boot.loader = {
     efi = {
       canTouchEfiVariables = true;

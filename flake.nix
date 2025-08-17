@@ -29,11 +29,11 @@
       nixosConfigurations = {
         tower = nixpkgs.lib.nixosSystem {
           specialArgs = {inherit inputs;};
-          modules = modules ++ [ ./hosts/tower/configuration.nix ];
+          modules = modules ++ [ ./hosts/tower ];
         };
         laptop = nixpkgs.lib.nixosSystem {
           specialArgs = {inherit inputs;};
-          modules = modules ++ [ ./hosts/laptop/configuration.nix ];
+          modules = modules ++ [ ./hosts/laptop ];
         };
       };
 
@@ -45,7 +45,7 @@
            # And when I try to bring in home-manager, something in nix-on-droid complains that environment.pathsToLink doesn't exist.
            # I'm nowhere near experienced enough to go about fixing complex issues inside nix-on-droid!
            # This host will have to be set up completely independently... it kinda defeats the point :(
-           modules = [ ./hosts/connor/configuration.nix ];
+           modules = [ ./hosts/connor ];
         };
       };
 
