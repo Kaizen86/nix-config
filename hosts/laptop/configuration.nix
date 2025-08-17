@@ -36,6 +36,11 @@
   hardware.bluetooth.enable = true;
   hardware.bluetooth.powerOnBoot = true;
 
+  steam = {
+    enable = true;
+    allow-game-transfer = false;
+  };
+
   # Set GPG key
   programs.git.config.user.signingkey = "8142D3E03705FD1A";
 
