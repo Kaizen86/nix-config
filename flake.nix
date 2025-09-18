@@ -15,13 +15,13 @@
     };
   };
 
-  outputs = { nixpkgs, nix-on-droid, ... }@inputs:
+  outputs = { nixpkgs, home-manager, nix-on-droid, ... }@inputs:
     let
       system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${system};
       modules = [
          ./common
-         inputs.home-manager.nixosModules.default
+         home-manager.nixosModules.default
        ];
     in
     {
