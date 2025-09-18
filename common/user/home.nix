@@ -110,7 +110,8 @@
       # Note: environment variables are setup via .profile, which only applies to the login shell
       # This sources the responsible script directly
       # https://discourse.nixos.org/t/home-manager-doesnt-seem-to-recognize-sessionvariables/8488/7
-      . "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh"
+      # EDIT: Somehow I fixed this when adding plasma-manager? lol
+      #. "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh"
 
       # MaKe then Change Directory
       # This must be in initExtra because the cd cannot run in a subshell
@@ -118,5 +119,17 @@
         mkdir -p "$@" && cd "$@";
       }
     '';
+  };
+
+  programs.plasma = {
+    enable = true;
+
+    workspace = {
+      # Use Posy's cursors
+      cursor = {
+        theme = "Posy_Cursor_Black";
+        size = 32; # Normal size, please
+      };
+    };
   };
 }

@@ -70,6 +70,7 @@ let
     openscad # Funny code-based 3D design tool (thanks Steve <3)
     pavucontrol # PulseAudio Volume Controls
     # TODO figure out where cursor packages should sit (posy-cursors)
+    posy-cursors
     prismlauncher # Alternative Minecraft launcher
     qFlipper
     sidequest # Unoffical Oculus VR headset manager
