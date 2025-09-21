@@ -121,6 +121,13 @@
     '';
   };
 
+  # TODO: Put this into its own file somehow; it's getting crowded in here!
+  # This may involve a refactor... Currently the import chain looks like this:
+  # default.nix -> main-user.nix -> home.nix
+  # Adding another link to the chain would be too messy for my liking...
+  # Organising things with a folder or extending default.nix would be preferable.
+
+  # Adapted from github:nix-community/plasma-manager/examples/home.nix
   programs.plasma = {
     enable = true;
 
@@ -131,5 +138,64 @@
         size = 32; # Normal size, please
       };
     };
+
+    panels = [
+      # Primary taskbar
+      {
+        location = "bottom";
+        floating = false; # I tried using this but it feels too weird to me
+
+        # See github:nix-community/plasma-manager/modules/widgets for a list of supported widgets and their options
+        widgets = [
+          # Application Launcher
+          {
+            kickoff = {
+              sortAlphabetically = true; # idk what this does, i just copied from the example
+              icon = "usermenu-up"; # Upwards arrow like a caret (^), which I quite like the look of
+            };
+          }
+
+          # Taskbar
+          {
+            iconTasks = {
+              # Declaratively pin applications, yEAAA!!
+              # See /run/current-system/sw/share/applications for a list
+              launchers = [
+                "preferred://filemanager"
+                #"preferred://terminal" # Supposed to work but doesn't? https://discuss.kde.org/t/any-documentation-for-preferred-uri-schema/30689/5
+                "applications:org.kde.konsole.desktop"
+                "preferred://browser"
+                "applications:org.kde.kate.desktop"
+                "applications:discord.desktop"
+                "applications:steam.desktop"
+                "applications:org.telegram.desktop.desktop"
+              ];
+            };
+          }
+
+          # Margin separator before the system tray
+          # Removing this makes the clock/Show Desktop button bigger
+          "org.kde.plasma.marginsseparator"
+
+          {
+            systemTray = {
+              # TODO: Play around with the options
+            };
+          }
+
+          {
+            digitalClock = {
+              # TODO: Specify values instead of relying on defaults
+              # That said, the defaults are working just fine
+            };
+          }
+
+          # Right-most Show Desktop button
+          "org.kde.plasma.showdesktop"
+        ];
+      }
+    ];
+
   };
+
 }
