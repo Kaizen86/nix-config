@@ -22,7 +22,7 @@
     };
   };
 
-  outputs = { nixpkgs, home-manager, plasma-manager, nix-on-droid, ... }@inputs:
+  outputs = { nixpkgs, home-manager, plasma-manager, ... }@inputs:
     let
       system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${system};
@@ -50,7 +50,7 @@
       };
 
       nixOnDroidConfigurations = {
-        connor = nix-on-droid.lib.nixOnDroidConfiguration {
+        connor = inputs.nix-on-droid.lib.nixOnDroidConfiguration {
            pkgs = import nixpkgs { system = "aarch64-linux"; };
            # I have attempted to include ./common and home-manager for connor host but it just isn't happening.
            # Too much is missing: nix.settings, nixpkgs.config, programs, environment.systemPackages, services, hardware, boot
