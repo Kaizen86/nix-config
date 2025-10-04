@@ -50,4 +50,6 @@
     freecad
     nil # Nix language server (TODO: put this into a dev-tools module)
   ];
- }
+
+  services.printing.enable = true;
+}
