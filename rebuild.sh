@@ -68,12 +68,12 @@ done
 # Check if hostname not in hosts folder
 # This will require intervention - the flake won't know which target to build
 # Usually this happens when setting up a new system as the hostname will be 'nixos'
-if [ ! -d hosts/$(hostname) ]; then
+if [ ! -d nixos/hosts/$(hostname) ]; then
   echo Warning! The hostname does not exist as a folder in 'hosts' directory.
   echo Assuming this is a new system and you\'re following the README
   echo to set it up, please specify which flake attribute to use.
   echo Make sure it sets the system hostname to the folder name so this persists!
-  select attribute in $(ls hosts); do
+  select attribute in $(ls nixos/hosts); do
     if [ -z "$attribute" ]; then
       # Invalid number
       echo Aborting.
