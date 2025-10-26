@@ -36,17 +36,50 @@
         }
       ];
 
-    nixos_hosts_path = ./nixos/hosts;
-    # Automatically discover hosts in ./nixos/hosts
-    # Note: This will also include any files, which could be used for single-file hosts (but why would you??)
-    nixos_hosts = map
-      # 3. Convert names into a path: [ /home/user/somewhere/foo ]
-      (dir: nixpkgs.lib.path.append nixos_hosts_path dir )
-      # 2. Get names of those directories: [ "foo" ]
-      (builtins.attrNames
-        # 1. Get files/directories in cwd: { "foo" = "directory"; }
-        (builtins.readDir nixos_hosts_path)
-      );
+      customLib = rec {
+        readDirByType = (type: path:
+          map
+          # 4. Convert names to full path: [ /a/b/c/bar ];
+          (n: nixpkgs.lib.path.append path n)
+          # 3. Get the file names as a list: [ "bar" ]
+          (builtins.attrNames
+            # 2. Select by desired type: { "bar" = "regular"; }
+            (nixpkgs.lib.filterAttrs
+              (n: v: v == type)
+              # 1. Get files/directories in some path: { "foo" = "directory"; "bar" = "regular"; }
+              (builtins.readDir path)
+            )
+          )
+        );
+
+        readDirByTypeExcluding = (type: path: excluding:
+          map
+          # 5. Convert names to full path: [ /a/b/c/bar ];
+          (n: nixpkgs.lib.path.append path n)
+          # 4. Filter excluded names
+          (builtins.filter
+            (n: builtins.any (i: n!=i) excluding)
+            # 3. Get the file names as a list: [ "bar" "baz" ]
+            (builtins.attrNames
+              # 2. Select by desired type: { "bar" = "regular"; "baz" = "regular"; }
+              (nixpkgs.lib.filterAttrs
+                (n: v: v == type)
+                # 1. Get files/directories in some path: { "foo" = "directory"; "bar" = "regular"; "baz" = "regular"; }
+                (builtins.readDir path)
+              )
+            )
+          )
+        );
+
+        # Shortcuts for files/directories
+        listFiles = readDirByType "regular";
+        listDirs  = readDirByType "directory";
+        listFilesExcluding = readDirByTypeExcluding "regular";
+        listDirsExcluding  = readDirByTypeExcluding "directory";
+      };
+
+      # Automatically discover hosts in ./nixos/hosts
+      nixos_hosts = customLib.listDirs ./nixos/hosts;
 
     in {
       nixosConfigurations = builtins.listToAttrs
@@ -54,7 +87,7 @@
           (path: {
             name = builtins.baseNameOf path;
             value = nixpkgs.lib.nixosSystem {
-              specialArgs = { inherit inputs; };
+              specialArgs = { inherit inputs; inherit customLib; };
               modules = modules ++ [ path ];
             };
           })
