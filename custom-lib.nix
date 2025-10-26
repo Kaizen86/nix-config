@@ -1,18 +1,22 @@
 { lib }:
 
 rec {
+  filterAttrNames = (pred: set:
+    # 3. Get the file names as a list: [ "bar" ]
+    (builtins.attrNames
+      # 2. Select by desired type: { "bar" = "regular"; }
+      (lib.filterAttrs pred set)
+    )
+  );
+
   readDirByType = (type: path:
     map
     # 4. Convert names to full path: [ /a/b/c/bar ];
     (n: lib.path.append path n)
-    # 3. Get the file names as a list: [ "bar" ]
-    (builtins.attrNames
-      # 2. Select by desired type: { "bar" = "regular"; }
-      (lib.filterAttrs
-        (n: v: v == type)
-        # 1. Get files/directories in some path: { "foo" = "directory"; "bar" = "regular"; }
-        (builtins.readDir path)
-      )
+    (filterAttrNames
+      (n: v: v==type)
+      # 1. Get files/directories in some path: { "foo" = "directory"; "bar" = "regular"; }
+      (builtins.readDir path)
     )
   );
 
@@ -24,13 +28,10 @@ rec {
     (builtins.filter
       (n: builtins.any (i: n!=i) excluding)
       # 3. Get the file names as a list: [ "bar" "baz" ]
-      (builtins.attrNames
-        # 2. Select by desired type: { "bar" = "regular"; "baz" = "regular"; }
-        (lib.filterAttrs
-          (n: v: v == type)
-          # 1. Get files/directories in some path: { "foo" = "directory"; "bar" = "regular"; "baz" = "regular"; }
-          (builtins.readDir path)
-        )
+      (filterAttrNames
+        (n: v: v == type)
+        # 1. Get files/directories in some path: { "foo" = "directory"; "bar" = "regular"; "baz" = "regular"; }
+        (builtins.readDir path)
       )
     )
   );
