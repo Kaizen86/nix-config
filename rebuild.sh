@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 # Updates the system according to this nix configuration.
+set -eo pipefail
 
 # If shit hits the breeze blender, here's how to reinstall the bootloader from a live usb!
 # mount /dev/sdXY /mnt

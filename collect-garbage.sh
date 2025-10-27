@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 # Delete old systems profiles
+set -euo pipefail
 
 # Find where this script is stored
 config_root=$(dirname "$0")

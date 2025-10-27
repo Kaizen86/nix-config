@@ -1,4 +1,12 @@
 #!/usr/bin/env bash
-nix build --print-out-paths --no-link .#nixosConfigurations.$(hostname).config.system.build.toplevel
-nix run github:utdemir/nix-tree -- .#nixosConfigurations.$(hostname).config.system.build.toplevel
+set -eu
+
+if [ "$USER" == "nix-on-droid" ]; then
+  echo Unsupported
+  exit 1
+fi
+
+flake=".#nixosConfigurations.$(hostname).config.system.build.toplevel"
+nix build --print-out-paths --no-link $flake
+nix run github:utdemir/nix-tree -- $flake
 
