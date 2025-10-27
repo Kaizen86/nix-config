@@ -57,6 +57,7 @@
       nixOnDroidConfigurations = {
         connor = inputs.nix-on-droid.lib.nixOnDroidConfiguration {
            pkgs = import nixpkgs { system = "aarch64-linux"; };
+           extraSpecialArgs = { inherit customLib; };
            # I have attempted to include ./common and home-manager for connor host but it just isn't happening.
            # Too much is missing: nix.settings, nixpkgs.config, programs, environment.systemPackages, services, hardware, boot
            # And when I try to bring in home-manager, something in nix-on-droid complains that environment.pathsToLink doesn't exist.

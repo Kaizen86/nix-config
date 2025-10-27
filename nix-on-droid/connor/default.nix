@@ -1,9 +1,5 @@
-{ ... }:
+{ customLib, ... }:
 
 {
-  imports = [
-    ./configuration.nix
-    ./packages.nix
-    #./modules # TODO organise into separate files
-  ];
+  imports = customLib.listFilesExcluding ./. [ "default.nix" ];
 }
