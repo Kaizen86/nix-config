@@ -36,7 +36,7 @@ fi
 if [ "$USER" == "nix-on-droid" ]; then
   # Usual nixos-rebuild and nix-channel commands won't work on this host
   echo Using nix-on-droid specific command
-  readback nix-on-droid switch --flake $config_root#connor
+  readback nix-on-droid switch --flake $config_root#connor $*
   exit $?
 fi
 
