@@ -36,10 +36,7 @@
         }
       ];
 
-      customLib = import ./custom-lib.nix { lib = nixpkgs.lib; };
-
-      # Automatically discover hosts in ./nixos/hosts
-      nixos_hosts = customLib.listDirs ./nixos/hosts;
+      customLib = import ./lib { inherit nixpkgs; };
 
     in {
       nixosConfigurations = builtins.listToAttrs
@@ -47,11 +44,12 @@
           (path: {
             name = builtins.baseNameOf path;
             value = nixpkgs.lib.nixosSystem {
-              specialArgs = { inherit inputs; inherit customLib; };
+              specialArgs = { inherit inputs customLib; };
               modules = modules ++ [ path ];
             };
           })
-          nixos_hosts
+          # Automatically discover hosts in ./nixos/hosts
+          (customLib.fs.listDirs ./nixos/hosts)
         );
 
       nixOnDroidConfigurations = {
