@@ -153,7 +153,7 @@
           {
             kickoff = {
               sortAlphabetically = true; # idk what this does, i just copied from the example
-              icon = "usermenu-up"; # Upwards arrow like a caret (^), which I quite like the look of
+              icon = "ime-emoji"; # I can't fucking believe there's a built-in ">:3" icon holy shit lmao
             };
           }
 
