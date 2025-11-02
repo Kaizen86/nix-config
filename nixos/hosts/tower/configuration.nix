@@ -34,11 +34,6 @@
   # Define hostname.
   networking.hostName = "tower";
 
-  # Activate Bluetooth on boot
-  # TODO: This should probably be set to true by default in some other file
-  hardware.bluetooth.enable = true;
-  hardware.bluetooth.powerOnBoot = true;
-
   programs = {
     # Set GPG key
     git.config.user.signingkey = "029A86F4E8D375F2";
@@ -73,6 +68,7 @@
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
 
+  # Install ADB
   programs.adb.enable = true;
   users.users.kaizen.extraGroups = [ "adbusers" ];
 }

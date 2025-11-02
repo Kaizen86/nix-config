@@ -31,11 +31,6 @@
   # Define hostname.
   networking.hostName = "laptop";
 
-  # Activate Bluetooth on boot
-  # TODO: This should probably be set to true by default in some other file
-  hardware.bluetooth.enable = true;
-  hardware.bluetooth.powerOnBoot = true;
-
   # Enable Natural Scrolling
   # TODO: Move this into a modules/home.nix module for organisation
   home-manager.users.kaizen.programs.plasma.input.touchpads = [
