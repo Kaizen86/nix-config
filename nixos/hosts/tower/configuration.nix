@@ -28,9 +28,6 @@
   # Tell wayland to use AMD drivers
   services.xserver.videoDrivers = [ "amdgpu" ];
 
-  # Install NetworkManager for WiFi
-  networking.networkmanager.enable = true;
-
   # Define hostname.
   networking.hostName = "tower";
 

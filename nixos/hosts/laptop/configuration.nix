@@ -25,9 +25,6 @@
     };
   };
 
-  # Install NetworkManager for WiFi
-  networking.networkmanager.enable = true;
-
   # Define hostname.
   networking.hostName = "laptop";
 

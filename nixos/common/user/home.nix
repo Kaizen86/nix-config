@@ -132,6 +132,7 @@
     enable = true;
 
     workspace = {
+      colorScheme = "BreezeDark";
       # Use Posy's cursors
       cursor = {
         theme = "Posy_Cursor_Black";
@@ -142,8 +143,9 @@
     panels = [
       # Primary taskbar
       {
-        location = "bottom";
+        location = "left"; # Gives slightly more space to applications
         floating = false; # I tried using this but it feels too weird to me
+        height = 50;
 
         # See github:nix-community/plasma-manager/modules/widgets for a list of supported widgets and their options
         widgets = [
@@ -185,8 +187,8 @@
 
           {
             digitalClock = {
-              # TODO: Specify values instead of relying on defaults
-              # That said, the defaults are working just fine
+              # Use DD/MM because there's not enough room for the year when the panel is vertical
+              date.format.custom = "dd/MM";
             };
           }
 

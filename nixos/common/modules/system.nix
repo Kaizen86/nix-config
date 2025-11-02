@@ -29,4 +29,7 @@
  
   # Configure console keymap
   console.keyMap = "uk";
+
+  # Enable networking service
+  networking.networkmanager.enable = true;
 }
