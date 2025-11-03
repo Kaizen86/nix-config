@@ -1,5 +1,5 @@
 { customLib, ... }:
 
 {
-  imports = customLib.listFilesExcluding ./. [ "default.nix" ];
+  imports = customLib.fs.listFilesExcluding ./. [ "default.nix" ];
 }
