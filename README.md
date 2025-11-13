@@ -43,3 +43,12 @@ These are my mental notes on how to add a new NixOS machine to this repo. If thi
      git commit -m "Add new host newhost"
      git push
      ```
+
+# Workflow
+When making a change to the config, follow this order:
+1. `git add` any new files to track them
+2. Run either `./rebuild.sh` or `nix flake check` to make sure the change works
+3. Once you're happy with a change, `git commit` it
+4. Repeat for however many changes you're making
+5. Once you've run `./rebuild.sh` and are entirely happy none of the commits need amending, `git push` them so all devices can use the new config.
+
