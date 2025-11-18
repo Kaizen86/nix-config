@@ -28,10 +28,13 @@ endif
 set ai " Auto indenting on
 set tabstop=4 " Decrease width of tabs
 set shiftwidth=4 " Indentation depth (pads tabs with spaces if greater than tabstop)
+"set noexpandtab " Always use tabs for indenting
+
+set rnu " Show relative line numbers
 set showbreak=> " Indicate when a line wraps
 "set noexpandtab " Always use tabs
 
-set belloff=all " Disable dinging
+set belloff=all " Silence dinging
 
 " Move up/down by display lines so text wrapping is seamless
 map <up> gk
