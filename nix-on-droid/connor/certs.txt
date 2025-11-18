@@ -1,0 +1,10 @@
+  523  curl --insecure -vvI https://kaizen86.uk 2>&1 | awk 'BEGIN { cert=0 } /^\* SSL connection/ { cert=1 } /^\*/ { if (cert) print }'
+  524  pwd
+  525  vim hosts/connor/configuration.nix 
+  526  vim hosts/connor/packages.nix 
+  527  ./rebuild.sh 
+  528  openssl s_client -connect www.kauzen86.um:443 </dev/null 2>/dev/null | openssl x509 -inform pem -text
+  529  openssl s_client -connect www.kaizen86.uk:443 </dev/null 2>/dev/null | openssl x509 -inform pem -text
+  530  history.
+  531  history
+  532  history | tail >certs.txt

@@ -1,5 +1,16 @@
-{ customLib, ... }:
+{ lib, customLib, ... }:
 
-{
-  imports = customLib.fs.listFilesExcluding ./. [ "default.nix" ];
-}
+let
+  files = customLib.fs.listFilesExcluding ./. [ "default.nix" ];
+
+in
+  {
+    imports = builtins.filter
+      (path:
+        builtins.match
+          ".*\.nix$"
+          (builtins.baseNameOf path)
+        != null
+      )
+      files;
+  }

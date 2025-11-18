@@ -78,5 +78,8 @@
     file
     gnused
     exif
+    openssl
+    jq
+    rustlings
   ];
 }
