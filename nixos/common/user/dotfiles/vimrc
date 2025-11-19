@@ -31,6 +31,7 @@ set shiftwidth=4 " Indentation depth (pads tabs with spaces if greater than tabs
 "set noexpandtab " Always use tabs for indenting
 
 set rnu " Show relative line numbers
+set nuw=3 " Reduce padding of relative line numbers to 2 digits (+1 right space)
 set showbreak=> " Indicate when a line wraps
 "set noexpandtab " Always use tabs
 
