@@ -1,6 +1,5 @@
 {
   description = "Nixos config flake";
-
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-25.05";
 
@@ -16,10 +15,13 @@
     };
 
     # For 'connor' host
+    # Must use an older version because it hasn't been updated for 25.05 yet; attempting will cause rebuilds to fail due to its home-manager tweaks
+    nixpkgs-droid.url = "github:nixos/nixpkgs/nixos-24.05";
     nix-on-droid = {
       url = "github:nix-community/nix-on-droid/release-24.05";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "nixpkgs-droid";
     };
+
   };
 
   outputs = { nixpkgs, home-manager, plasma-manager, ... }@inputs:
@@ -54,13 +56,10 @@
 
       nixOnDroidConfigurations = {
         connor = inputs.nix-on-droid.lib.nixOnDroidConfiguration {
-           pkgs = import nixpkgs { system = "aarch64-linux"; };
+           pkgs = import inputs.nixpkgs-droid { system = "aarch64-linux"; };
            extraSpecialArgs = { inherit customLib; };
-           # I have attempted to include ./common and home-manager for connor host but it just isn't happening.
-           # Too much is missing: nix.settings, nixpkgs.config, programs, environment.systemPackages, services, hardware, boot
-           # And when I try to bring in home-manager, something in nix-on-droid complains that environment.pathsToLink doesn't exist.
-           # I'm nowhere near experienced enough to go about fixing complex issues inside nix-on-droid!
-           # This host will have to be set up completely independently... it kinda defeats the point :(
+           # I have attempted to include ./common for connor host but it just isn't happening. This makes sense; it's not a NixOS system.
+           # I did at least manage to get its tweaked version of home-manager working for some user preferences. (the home.nix config import is in nix-on-droid/connor/configuration.nix)
            modules = [ ./nix-on-droid/connor ];
         };
       };
