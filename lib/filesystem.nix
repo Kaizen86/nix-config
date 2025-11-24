@@ -7,12 +7,12 @@ rec {
   readDir = (path:
     let
       dirListing = builtins.readDir path;
-	  itemNames = builtins.attrNames dirListing;
+      itemNames = builtins.attrNames dirListing;
     in
       # Convert names to full path
       map
         (n: lib.path.append path n)
-		itemNames
+        itemNames
   );
 
   # Filter names from an attribute set where the predicate (n: v: ...) returns true.
