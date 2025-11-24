@@ -80,6 +80,5 @@
     exif
     openssl
     jq
-    rustlings
   ];
 }
