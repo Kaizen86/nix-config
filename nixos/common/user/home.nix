@@ -46,6 +46,11 @@
     (pkgs.writeShellScriptBin "nix-tryout" ''
         nix-shell -p $1 --command $1
     '')
+
+    # Pipe grep output to less, with colours enabled
+    (pkgs.writeShellScriptBin "grepless" ''
+        grep --color=always -rn $* | less -R
+    '')
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
@@ -133,11 +138,15 @@
 
     workspace = {
       colorScheme = "BreezeDark";
-      # Use Posy's cursors
+      # Use Posy's cursors (installed via environment.systemPackages)
       cursor = {
         theme = "Posy_Cursor_Black";
         size = 32; # Normal size, please
       };
+
+      # Select items when single-clicking, not open
+      # Windows behaviour
+      clickItemTo = "select";
     };
 
     panels = [
