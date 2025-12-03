@@ -180,6 +180,7 @@
                 "applications:discord.desktop"
                 "applications:steam.desktop"
                 "applications:org.telegram.desktop.desktop"
+                "obsidian.desktop"
               ];
             };
           }
