@@ -180,7 +180,7 @@
                 "applications:discord.desktop"
                 "applications:steam.desktop"
                 "applications:org.telegram.desktop.desktop"
-                "obsidian.desktop"
+                "applications:obsidian.desktop"
               ];
             };
           }
@@ -197,7 +197,7 @@
 
           {
             digitalClock = {
-              # Use DD/MM because there's not enough room for the year when the panel is vertical
+              # Use day/month because there's not enough room for the year when the panel is vertical
               date.format.custom = "dd/MM";
             };
           }
