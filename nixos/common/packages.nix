@@ -21,7 +21,7 @@ let
     lsof
     man man-db man-pages
     nano nanorc # Just in case
-    pinentry # Authentication for GPG
+    #pinentry # Authentication for GPG
     rsync
     screen # Detachable sessions with names
     strace
@@ -44,7 +44,7 @@ let
     alsaequal # Equaliser
     arduino-ide
     audacity
-    bitwarden
+    bitwarden-desktop
     blender-hip
     cool-retro-term
     deja-dup
@@ -82,7 +82,7 @@ let
     #virtualbox
     vlc
     vscodium
-    whatsapp-for-linux
+    wasistlos # WhatsApp for linux
   ];
 
   fontPackages = with pkgs; [
@@ -90,12 +90,12 @@ let
     liberation_ttf # Replacements for Arial, Times New Roman, and Courier New fonts
     minecraftia
     noto-fonts-cjk-sans # Noto Sans/Serif
-    noto-fonts-emoji
+    noto-fonts-color-emoji
   ];
 
   pythonPackages = with pkgs; [
-    python3Full
-    python311Packages.pip
+    python314
+    python313Packages.pip # 3.14 pip fails to build at time of writing
   ];
 
   niceToHave = with pkgs; [

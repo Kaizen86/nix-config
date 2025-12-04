@@ -27,10 +27,8 @@
   services = {
     # Make power button _always_ shutdown system
     # FIXME This doesn't work??
-    logind.extraConfig = ''
-      # Shutdown system when power button is pressed
-      HandlePowerKey=poweroff
-    '';
+	# wow is that a CamelCase in my Nix? who put that there >w<
+    logind.settings.Login.powerKey = "poweroff";
 
     # X11 windowing system
     xserver = {
@@ -95,7 +93,7 @@
   #Enable gpg service and add the input tty environment variable
   programs.gnupg.agent = {
     enable = true;
-    pinentryPackage = pkgs.pinentry;
+    pinentryPackage = pkgs.pinentry-curses;
     enableSSHSupport = true;
   };
   environment.sessionVariables = rec { 
