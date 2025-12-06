@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, pkgs-old, ... }:
 let
   bambu = config.programs.bambu-studio;
   orca = config.programs.orca-slicer;
@@ -10,7 +10,7 @@ in {
 
   config.environment.systemPackages = 
     (if bambu.enable then [ pkgs.bambu-studio ] else []) ++
-    (if orca.enable  then [ pkgs.orca-slicer ]  else []);
+    (if orca.enable  then [ pkgs-old.orca-slicer ]  else []);
 
   config.networking.firewall = lib.mkIf (bambu.enable or orca.enable) {
     # Open necessary ports in the firewall for communicating with the printer.

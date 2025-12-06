@@ -14,6 +14,9 @@
       inputs.home-manager.follows = "home-manager";
     };
 
+    # Some software (orca-slicer) does not work on 25.11 yet
+    nixpkgs-25-05.url = "github:nixos/nixpkgs/nixos-25.05";
+
     # For 'connor' host
     # Must use an older version because it hasn't been updated for 25.05 yet; attempting will cause rebuilds to fail due to its home-manager tweaks
     nixpkgs-droid.url = "github:nixos/nixpkgs/nixos-24.05";
@@ -40,13 +43,18 @@
 
       customLib = import ./lib { inherit nixpkgs; };
 
+      specialArgs = {
+        inherit inputs customLib;
+        pkgs-old = inputs.nixpkgs-25-05;
+      };
+
     in {
       nixosConfigurations = builtins.listToAttrs
         (map
           (path: {
             name = builtins.baseNameOf path;
             value = nixpkgs.lib.nixosSystem {
-              specialArgs = { inherit inputs customLib; };
+              inherit specialArgs;
               modules = modules ++ [ path ];
             };
           })
