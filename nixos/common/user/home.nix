@@ -42,9 +42,24 @@
     # '')
 
     # Often I want to try out a program by installing it ephemerally
-    # This immediately starts the program after it finishes downloading
+    # This immediately starts the program with arguments after it finishes downloading
+	# Optionally allows specifying a different command name by passing --
     (pkgs.writeShellScriptBin "nix-tryout" ''
-        nix-shell -p $1 --command $1
+        package="$1"
+        shift
+        case "$1" in
+            "--")
+                shift
+                command="$1"
+                shift
+                ;;
+            *)
+                command="$package"
+                ;;
+        esac
+        args="$*"
+        #echo package=$package command=$command args=$args
+        nix-shell -p "$package" --command "$command $args"
     '')
 
     # Pipe grep output to less, with colours enabled
