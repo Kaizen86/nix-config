@@ -21,7 +21,6 @@ let
     lsof
     man man-db man-pages
     nano nanorc # Just in case
-    #pinentry # Authentication for GPG
     rsync
     screen # Detachable sessions with names
     strace
