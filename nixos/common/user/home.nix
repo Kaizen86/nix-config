@@ -163,6 +163,7 @@
       # Windows behaviour
       clickItemTo = "select";
     };
+    session.sessionRestore.restoreOpenApplicationsOnLogin = "whenSessionWasManuallySaved";
 
     panels = [
       # Primary taskbar
