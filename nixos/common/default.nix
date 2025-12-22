@@ -101,6 +101,13 @@
   };
 
   hardware.hackrf.enable = true; # Create udev rules for HackRF devices
-  services.udev.packages = [ pkgs.rtl-sdr ];
+  services.udev = {
+    enable = true;
+    packages = [ pkgs.rtl-sdr ];
+    # Allow launcher.keychron.com to access devices through chromium
+    extraRules = ''
+      SUBSYSTEM=="hidraw", MODE:="666"
+    '';
+  };
   boot.blacklistedKernelModules = [ "dvb_usb_rtl28xxu" ];
 }
