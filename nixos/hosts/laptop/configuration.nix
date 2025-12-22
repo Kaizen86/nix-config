@@ -58,4 +58,7 @@
   ];
 
   services.printing.enable = true;
+
+  # Roblox
+  services.flatpak.enable = true;
 }

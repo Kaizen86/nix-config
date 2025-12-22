@@ -165,6 +165,12 @@
     };
     session.sessionRestore.restoreOpenApplicationsOnLogin = "whenSessionWasManuallySaved";
 
+    # Meta+Shift+K
+    input.keyboard.layouts = [
+      { layout = "gb"; }
+      { layout = "us"; }
+    ];
+
     panels = [
       # Primary taskbar
       {
