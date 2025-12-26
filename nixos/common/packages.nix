@@ -93,8 +93,8 @@ let
   ];
 
   pythonPackages = with pkgs; [
-    python314
-    python313Packages.pip # 3.14 pip fails to build at time of writing
+    python313
+    python313Packages.pip
   ];
 
   niceToHave = with pkgs; [
