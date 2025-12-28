@@ -41,9 +41,9 @@
     #   echo "Hello, ${config.home.username}!"
     # '')
 
-    # Often I want to try out a program by installing it ephemerally
-    # This immediately starts the program with arguments after it finishes downloading
-	# Optionally allows specifying a different command name by passing --
+    # Often I want to try out a program by installing it ephemerally.
+    # This function immediately starts the program with arguments after it finishes downloading.
+    # Optionally allows specifying a different command name by passing --
     (pkgs.writeShellScriptBin "nix-tryout" ''
         package="$1"
         shift
@@ -57,7 +57,7 @@
                 command="$package"
                 ;;
         esac
-        args="$*"
+        args="$@"
         #echo package=$package command=$command args=$args
         nix-shell -p "$package" --command "$command $args"
     '')
@@ -125,7 +125,7 @@
     # Note: Bash must be explicitly enabled for shellAliases to work
     # https://discourse.nixos.org/t/home-shellaliases-unable-to-set-aliases-using-home-manager/33940/4
     enable = true;
-    # This gets run when the shell opens. Useful for defining functions
+    # This gets run when the shell opens. Useful for defining functions which can't run in subshells.
     initExtra = ''
       # Note: environment variables are setup via .profile, which only applies to the login shell
       # This sources the responsible script directly
@@ -134,9 +134,22 @@
       #. "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh"
 
       # MaKe then Change Directory
-      # This must be in initExtra because the cd cannot run in a subshell
       function mkcd() {
         mkdir -p "$@" && cd "$@";
+      }
+
+      # After cloning a Git repository, cd into it.
+      function git() {
+        # Identify path to git executable to avoid infinite recursion
+        local git="$(which -a git | tail -n 1)"
+
+        # Run Git and check exit code
+        "$git" "$@"; local git_exit=$?
+        [ $git_exit -ne 0 ] && return $git_exit
+
+        if [ "$1" == "clone" ]; then
+          cd $(basename "''${!#}" .git)
+        fi
       }
     '';
   };
