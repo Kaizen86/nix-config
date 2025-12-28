@@ -58,6 +58,8 @@
     openvpn networkmanager-openvpn # Needed for Surfshark
   ];
 
+  programs.orca-slicer.enable = true;
+
   services.printing.enable = true;
 
   # Roblox

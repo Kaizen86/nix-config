@@ -42,12 +42,12 @@
   environment.systemPackages = with pkgs; [
     gamemode # gamemoderun for Steam
     cargo
-    #bambu-studio
-    orca-slicer
     freecad
     gqrx
     gnuradio
   ];
+
+  programs.orca-slicer.enable = true;
 
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
@@ -55,12 +55,6 @@
   # Open ports in the firewall.
   networking.firewall.allowedTCPPorts = [
     22 8080
-    # Bambu Studio
-    1990 2021 990 123
-  ] ++ lib.range 50000 50100;
-  networking.firewall.allowedUDPPorts = [
-    # Bambu Studio
-    123
   ];
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
