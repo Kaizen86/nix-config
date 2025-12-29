@@ -9,6 +9,11 @@ set -eo pipefail
 
 # Find where this script is stored
 config_root=$(dirname "$0")
+# Command to use for nixos-rebuild, can be overridden
+# switch is the default (build+activate+add GRUB menuentry)
+# boot: build and wait for reboot to activate (good for system upgrades)
+# test: build and activate but do not add GRUB menuentry
+rebuild_cmd=switch
 
 readback() {
   cmd=$*
@@ -51,7 +56,8 @@ while [ "$1" ]; do
     -u|--upgrade|--update)
       readback nix flake update
       readback sudo nix-channel --update
-      #nix-env -u
+
+      rebuild_cmd=boot # Don't switch immediately
       rebuild_args="$rebuild_args --upgrade"
       shift
       ;;
@@ -60,7 +66,7 @@ while [ "$1" ]; do
       shift
       ;;
     *)
-      echo "Ignoring argument '$1'"
+      rebuild_cmd="$1"
       shift
       ;;
   esac
@@ -89,9 +95,12 @@ else
 fi
 
 # Rebuild the system and pass any additional arguments
-if [ "$rebuild_args" ]; then
-  echo Rebuilding with options: $rebuild_args
+readback sudo nixos-rebuild $rebuild_cmd --flake $config_root$attribute $rebuild_args
+rebuild_exit=$?
+
+if [ $rebuild_cmd == "boot" ]; then
+  echo System will use new configuration on reboot!
 fi
-readback sudo nixos-rebuild switch --flake $config_root$attribute $rebuild_args
-exit $?
+
+exit $rebuild_exit
 
