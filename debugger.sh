@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# Launches "nix build" with the --debugger flag to stop at breakpoints or errors.
 set -eu
 
 if [ "$USER" == "nix-on-droid" ]; then

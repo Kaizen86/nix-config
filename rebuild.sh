@@ -9,10 +9,11 @@ set -eo pipefail
 
 # Find where this script is stored
 config_root=$(dirname "$0")
-# Command to use for nixos-rebuild, can be overridden
+# Command to use for nixos-rebuild, can be overridden by providing command-line argument
 # switch is the default (build+activate+add GRUB menuentry)
 # boot: build and wait for reboot to activate (good for system upgrades)
 # test: build and activate but do not add GRUB menuentry
+# repl: build and enter REPL for debugging
 rebuild_cmd=switch
 
 readback() {
