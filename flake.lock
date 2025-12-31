@@ -107,22 +107,6 @@
         "type": "github"
       }
     },
-    "nixpkgs-25-05": {
-      "locked": {
-        "lastModified": 1766399428,
-        "narHash": "sha256-vS6LSOMDOB3s+L6tqw9IGujxnmUAZQnEG+Vi640LayI=",
-        "owner": "nixos",
-        "repo": "nixpkgs",
-        "rev": "a6c3a6141ec1b367c58ead3f7f846c772a25f4e5",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nixos",
-        "ref": "nixos-25.05",
-        "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
     "nixpkgs-docs": {
       "locked": {
         "lastModified": 1705957679,
@@ -253,7 +237,6 @@
         "home-manager": "home-manager",
         "nix-on-droid": "nix-on-droid",
         "nixpkgs": "nixpkgs",
-        "nixpkgs-25-05": "nixpkgs-25-05",
         "nixpkgs-droid": "nixpkgs-droid",
         "plasma-manager": "plasma-manager"
       }
