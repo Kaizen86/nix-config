@@ -64,7 +64,7 @@
 
     # Pipe grep output to less, with colours enabled
     (pkgs.writeShellScriptBin "grepless" ''
-        grep --color=always -rn $* | less -R
+        grep --color=always -rn "$@" | less -R
     '')
   ];
 
@@ -109,9 +109,6 @@
   #
   home.sessionVariables = {
     EDITOR = "vim";
-    # [username@hostname:~/folder]
-    # $
-    PS1 = "\\n\\[\\e[34;1m\\][\\[\\e]0;\\w\\a\\]\\u@\\h:\\w\\n\\[\\e[0m\\]\\$ ";
   };
 
   home.shellAliases = {
@@ -151,6 +148,13 @@
           cd $(basename "''${!#}" .git)
         fi
       }
+
+    # PS1 is set here so it overrides config.programs.bash.promptInit
+    # (which we cannot set from home-manager)
+    # This prompt produces the following:
+    # [username@hostname:~/folder]
+    # $
+    export PS1="\\n\\[\\e[32;1m\\][\\u@\\h:\\w] (''${SHLVL})\\n\\[\\e[0m\\]\\$ ";
     '';
   };
 
