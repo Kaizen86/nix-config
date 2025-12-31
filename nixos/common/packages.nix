@@ -3,13 +3,13 @@
 
 # Pattern adapted from https://github.com/JRMurr/NixOsConfig/blob/main/common/programs.nix :3
 # FIXME Some of these should get their own module so they can be installed properly!
-let
+with pkgs; let
   # TODO setup some kind of equivalent
   #myOpts = config.myOptions;
   #gcfg = myOpts.graphics;
   #mcfg = myOpts.musicPrograms;
 
-  installOnEverything = with pkgs; [
+  installOnEverything = [
     bat
     binutils
     dig
@@ -34,12 +34,12 @@ let
   ];
 
   # FIXME this is unused, perhaps I made too many categories to keep track of...
-  devTools = with pkgs; [
+  devTools = [
     gnumake
     rustup
   ];
 
-  desktopApplications = with pkgs; [
+  desktopApplications = [
     alsaequal # Equaliser
     arduino-ide
     audacity
@@ -84,7 +84,7 @@ let
     wasistlos # WhatsApp for linux
   ];
 
-  fontPackages = with pkgs; [
+  fontPackages = [
     dejavu_fonts # DejaVu Sans/Serif/Mono fonts; broad coverage of Unicode 
     liberation_ttf # Replacements for Arial, Times New Roman, and Courier New fonts
     minecraftia
@@ -92,12 +92,15 @@ let
     noto-fonts-color-emoji
   ];
 
-  pythonPackages = with pkgs; [
+  pythonPackages = [
     python313
     python313Packages.pip
+    # failed experiment to stop sphinx from failing to build the docs :(
+    #(python315.overrideAttrs { passthru.doc=null; })
+    #python315Packages.pip
   ];
 
-  niceToHave = with pkgs; [
+  niceToHave = [
     adbfs-rootless # Mounting android phone
     dos2unix
     ffmpeg
@@ -116,7 +119,7 @@ let
     yt-dlp
   ];
 
-  systemTools = with pkgs; [
+  systemTools = [
     acpid # Used to detect power button press for quick shutdown
     amdgpu_top
     #dvd+rw-tools
