@@ -66,6 +66,7 @@
     (pkgs.writeShellScriptBin "grepless" ''
         grep --color=always -rn "$@" | less -R
     '')
+
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
@@ -149,12 +150,18 @@
         fi
       }
 
-    # PS1 is set here so it overrides config.programs.bash.promptInit
-    # (which we cannot set from home-manager)
-    # This prompt produces the following:
-    # [username@hostname:~/folder]
-    # $
-    export PS1="\\n\\[\\e[32;1m\\][\\u@\\h:\\w] (''${SHLVL})\\n\\[\\e[0m\\]\\$ ";
+      function cdup() {
+        for i in seq $1; do
+          cd ..
+        done
+      }
+
+      # PS1 is set here so it overrides config.programs.bash.promptInit
+      # (which we cannot set from home-manager)
+      # This prompt produces the following:
+      # [username@hostname:~/folder]
+      # $
+      export PS1="\\n\\[\\e[32;1m\\][\\u@\\h:\\w] (''${SHLVL})\\n\\[\\e[0m\\]\\$ ";
     '';
   };
 
