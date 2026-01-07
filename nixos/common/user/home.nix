@@ -138,7 +138,7 @@
       # After cloning a Git repository, cd into it.
       function git() {
         # Identify path to git executable to avoid infinite recursion
-        local git="$(which -a git | tail -n 1)"
+        local git="$(type -P git)"
 
         # Run Git and check exit code
         "$git" "$@"; local git_exit=$?
