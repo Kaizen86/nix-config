@@ -63,6 +63,9 @@
   programs.adb.enable = true;
   users.users.kaizen.extraGroups = [ "adbusers" ];
 
+  # Roblox
+  services.flatpak.enable = true;
+
   home-manager.users.kaizen = {
     # For some reason, one of my motherboard's USB hubs keeps timing out,
     # leading the kernel to assume it's died and stops trying to talk to it.
