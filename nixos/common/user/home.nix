@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 
 {
   # Let Home Manager install and manage itself.
@@ -183,9 +183,8 @@
     session.sessionRestore.restoreOpenApplicationsOnLogin = "whenSessionWasManuallySaved";
 
     # Meta+Shift+K
-    input.keyboard.layouts = [
+    input.keyboard.layouts = lib.mkDefault [
       { layout = "gb"; }
-      { layout = "us"; }
     ];
 
     panels = [
