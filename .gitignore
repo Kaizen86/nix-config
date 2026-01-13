@@ -1,2 +1,5 @@
 # Ignore Vim swap files
 **/*.swp
+
+# Using debugger.sh tends to produce a 'result' symlink
+result
