@@ -14,6 +14,8 @@
       inputs.home-manager.follows = "home-manager";
     };
 
+    nix-flatpak.url = "github:gmodena/nix-flatpak/?ref=latest";
+
     # For 'connor' host
     # Must use an older version because it hasn't been updated for 25.05 yet; attempting will cause rebuilds to fail due to its home-manager tweaks
     nixpkgs-droid.url = "github:nixos/nixpkgs/nixos-24.05";
@@ -24,7 +26,7 @@
 
   };
 
-  outputs = { nixpkgs, home-manager, plasma-manager, ... }@inputs:
+  outputs = { nixpkgs, home-manager, ... }@inputs:
     let
       system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${system};
@@ -34,8 +36,11 @@
         home-manager.nixosModules.home-manager {
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
-          home-manager.sharedModules = [ plasma-manager.homeModules.plasma-manager ];
+          home-manager.sharedModules = with inputs; [
+            plasma-manager.homeModules.plasma-manager
+          ];
         }
+        inputs.nix-flatpak.nixosModules.nix-flatpak
       ];
 
       customLib = import ./lib { inherit nixpkgs; };
