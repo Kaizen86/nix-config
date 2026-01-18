@@ -47,6 +47,13 @@
     openvpn networkmanager-openvpn # Needed for Surfshark
   ];
 
+  home-manager.users.kaizen.programs.dolphin = {
+    enable = true;
+    foo.bar = "MUAHAHAHA!!!";
+
+    interface.foldersAndTabs.startupLocation = "/";
+  };
+
   # Roblox
   services.flatpak.enable = true;
 

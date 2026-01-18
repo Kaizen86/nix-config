@@ -237,17 +237,14 @@
         ]
       },
       "locked": {
-        "lastModified": 1785762349,
-        "narHash": "sha256-jZhZkzAwc7f3exzcTDJWP2WCAchCv0iNC3UF/QsahdQ=",
-        "owner": "nix-community",
-        "repo": "plasma-manager",
-        "rev": "a19a2a029fa180911bd89c554dca1616e10f4c1d",
-        "type": "github"
+        "lastModified": 1786831109,
+        "narHash": "sha256-VIi7TN0Y9GHXnfF8bmrqfpPVOvffc7Sf7bKF8g7v+0k=",
+        "path": "/home/kaizen/Projects/by-type/nix/plasma-manager",
+        "type": "path"
       },
       "original": {
-        "owner": "nix-community",
-        "repo": "plasma-manager",
-        "type": "github"
+        "path": "/home/kaizen/Projects/by-type/nix/plasma-manager",
+        "type": "path"
       }
     },
     "root": {
