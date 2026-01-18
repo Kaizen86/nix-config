@@ -9,7 +9,7 @@
     };
 
     plasma-manager = {
-      url = "github:nix-community/plasma-manager";
+      url = "path:/home/kaizen/Documents/plasma-manager";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.home-manager.follows = "home-manager";
     };

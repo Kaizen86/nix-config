@@ -41,7 +41,6 @@
     }
   ];
 
-
   programs = {
     # Set GPG key
     git.config.user.signingkey = "8142D3E03705FD1A";
@@ -58,9 +57,12 @@
     openvpn networkmanager-openvpn # Needed for Surfshark
   ];
 
-  programs.orca-slicer.enable = true;
+  #home-manager.users.kaizen.programs.dolphin = {
+  #  enable = true;
+  #  foo.bar = "MUAHAHAHA!!!";
 
-  services.printing.enable = true;
+  #  interface.foldersAndTabs.startupLocation = "/";
+  #};
 
   # Roblox
   services.flatpak.enable = true;
