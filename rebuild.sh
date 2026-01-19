@@ -35,14 +35,16 @@ readback() {
 # Only files tracked by Git will be added to the Nix store, which nixos-rebuild uses to read the config.
 # Therefore, files not tracked by Git will appear to be invisible.
 # Show a warning if git status reports untracked files.
+pushd "$config_root" > /dev/null
 if git status | grep -q "Untracked files:"; then
   echo -e "Heads up: some files are untracked by Git. This may cause problems if they're important.\n"
 fi
+popd > /dev/null
 
 if [ "$USER" == "nix-on-droid" ]; then
   # Usual nixos-rebuild and nix-channel commands won't work on this host
   echo Using nix-on-droid specific command
-  readback nix-on-droid switch --flake $config_root#connor $*
+  readback nix-on-droid switch --flake "$config_root#connor" $*
   exit $?
 fi
 
@@ -96,7 +98,7 @@ else
 fi
 
 # Rebuild the system and pass any additional arguments
-readback sudo nixos-rebuild $rebuild_cmd --flake $config_root$attribute $rebuild_args
+readback sudo nixos-rebuild $rebuild_cmd --flake "$config_root$attribute" $rebuild_args
 rebuild_exit=$?
 
 if [ $rebuild_cmd == "boot" ]; then
