@@ -29,13 +29,11 @@ These are my mental notes on how to add a new NixOS machine to this repo. If thi
      git remote set-url origin ssh://git@github.com/Kaizen86/nix-config
      ```
 - Generate and add [SSH](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent) & [GPG](https://docs.github.com/en/authentication/managing-commit-signature-verification/generating-a-new-gpg-key) keys to Github
-- Move `/etc/nixos/` contents to `./nixos/hosts/newhost/`
+- Move `/etc/nixos/` contents into `./nixos/hosts/newhost/`
      - (replace `newhost` with a unique identifier, of course)
-- Symlink `/etc/nixos` --> `/home/kaizen/nix-config`
-     ```bash
-     sudo ln -sv /home/kaizen/nix-config /etc/nixos
-     ```
-- Edit `hosts/newhost/configuration.nix` to set hostname to `newhost` (important!)
+- Edit `./nixos/hosts/newhost/configuration.nix` to set hostname to `newhost` (important!)
+- Copy `default.nix` from another host into `newhost`
+     - TODO remove this requirement; it's silly
 - Track changes with `git add .` (otherwise `nixos/hosts/newhost` won't be in the Nix store)
 - Run `./rebuild.sh boot`
 - If that worked, commit changes and push:
