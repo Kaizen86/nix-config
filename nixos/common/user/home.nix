@@ -165,6 +165,40 @@
     '';
   };
 
+  xdg.mimeApps = {
+    enable = true;
+
+    associations.added = {
+      "audio/flac" = [ "umpv.desktop" "mpv.desktop" "vlc.desktop" "audacity.desktop" "org.kde.elisa.desktop" ];
+      "audio/vnd.wave" = [ "umpv.desktop" " mpv.desktop" " audacity.desktop" " org.kde.elisa.desktop" " vlc.desktop"];
+      "text/plain" = [ "org.kde.kate.desktop" "writer.desktop" "okularApplication_txt.desktop" "org.kde.kwrite.desktop" "codium.desktop" ];
+      "x-scheme-handler/bitwarden" = "bitwarden.desktopBitwarden.desktop";
+      "x-scheme-handler/curseforge" = "org.prismlauncher.PrismLauncher.desktop";
+      "x-scheme-handler/sidequest" = "SideQuest.desktop";
+      "x-scheme-handler/tg" = "org.telegram.desktop.desktop";
+      "x-scheme-handler/tonsite" = "org.telegram.desktop.desktop";
+    };
+
+    defaultApplications = {
+      "audio/flac" = "umpv.desktop";
+      "audio/vnd.wave" = "umpv.desktop";
+      "text/plain" = "org.kde.kate.desktop";
+      "x-scheme-handler/bitwarden" = "bitwarden.desktop";
+      "x-scheme-handler/curseforge" = "org.prismlauncher.PrismLauncher.desktop";
+      "x-scheme-handler/sidequest" = "SideQuest.desktop";
+      "x-scheme-handler/tg" = "org.telegram.desktop.desktop";
+      "x-scheme-handler/tonsite" = "org.telegram.desktop.desktop";
+      "x-scheme-handler/heroic" = "com.heroicgameslauncher.hgl.desktop";
+
+      # Default browser
+      "text/html" = "firefox.desktop";
+      "x-scheme-handler/http" = "firefox.desktop";
+      "x-scheme-handler/https" = "firefox.desktop";
+      "x-scheme-handler/about" = "firefox.desktop";
+      "x-scheme-handler/unknown" = "firefox.desktop";
+    };
+  };
+
   # TODO: Put this into its own file somehow; it's getting crowded in here!
   # This may involve a refactor... Currently the import chain looks like this:
   # default.nix -> main-user.nix -> home.nix
