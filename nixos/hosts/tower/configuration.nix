@@ -45,6 +45,7 @@
     freecad
     gqrx
     gnuradio
+    chromium # for launcher.keychron.com
   ];
 
   programs.orca-slicer.enable = true;
@@ -62,6 +63,11 @@
   # Install ADB
   programs.adb.enable = true;
   users.users.kaizen.extraGroups = [ "adbusers" ];
+
+  # Allow launcher.keychron.com to access devices through chromium
+  services.udev.extraRules = ''
+    SUBSYSTEM=="hidraw", MODE:="666"
+  '';
 
   home-manager.users.kaizen = {
     # For some reason, one of my motherboard's USB hubs keeps timing out,

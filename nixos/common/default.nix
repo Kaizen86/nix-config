@@ -104,10 +104,6 @@
   services.udev = {
     enable = true;
     packages = [ pkgs.rtl-sdr ];
-    # Allow launcher.keychron.com to access devices through chromium
-    extraRules = ''
-      SUBSYSTEM=="hidraw", MODE:="666"
-    '';
   };
   boot.blacklistedKernelModules = [ "dvb_usb_rtl28xxu" ];
 }
