@@ -124,45 +124,7 @@
     # https://discourse.nixos.org/t/home-shellaliases-unable-to-set-aliases-using-home-manager/33940/4
     enable = true;
     # This gets run when the shell opens. Useful for defining functions which can't run in subshells.
-    initExtra = ''
-      # Note: environment variables are setup via .profile, which only applies to the login shell
-      # This sources the responsible script directly
-      # https://discourse.nixos.org/t/home-manager-doesnt-seem-to-recognize-sessionvariables/8488/7
-      # EDIT: Somehow I fixed this when adding plasma-manager? lol
-      #. "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh"
-
-      # MaKe then Change Directory
-      function mkcd() {
-        mkdir -p "$@" && cd "$@";
-      }
-
-      # After cloning a Git repository, cd into it.
-      function git() {
-        # Identify path to git executable to avoid infinite recursion
-        local git="$(type -P git)"
-
-        # Run Git and check exit code
-        "$git" "$@"; local git_exit=$?
-        [ $git_exit -ne 0 ] && return $git_exit
-
-        if [ "$1" == "clone" ]; then
-          cd $(basename "''${!#}" .git)
-        fi
-      }
-
-      function cdup() {
-        for i in $(seq $1); do
-          cd ..
-        done
-      }
-
-      # PS1 is set here so it overrides config.programs.bash.promptInit
-      # (which we cannot set from home-manager)
-      # This prompt produces the following:
-      # [username@hostname:~/folder]
-      # $
-      export PS1="\\n\\[\\e[32;1m\\][\\u@\\h:\\w] (''${SHLVL})\\n\\[\\e[0m\\]\\$ ";
-    '';
+    initExtra = builtins.readFile ./dotfiles/bashrc;
   };
 
   xdg.mimeApps = {

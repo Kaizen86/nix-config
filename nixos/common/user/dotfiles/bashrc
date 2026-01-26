@@ -1,0 +1,32 @@
+# MaKe then Change Directory
+function mkcd() {
+	mkdir -p "$@" && cd "$@";
+}
+
+# After cloning a Git repository, cd into it.
+function git() {
+	# Identify path to git executable to avoid infinite recursion
+	local git="$(type -P git)"
+
+	# Run Git and check exit code
+	"$git" "$@"; local git_exit=$?
+	[ $git_exit -ne 0 ] && return $git_exit
+
+	if [ "$1" == "clone" ]; then
+	cd $(basename "${!#}" .git)
+	fi
+}
+
+function cdup() {
+	for i in $(seq $1); do
+		cd ..
+	done
+}
+
+# PS1 is set here so it overrides config.programs.bash.promptInit
+# (which we cannot set from home-manager)
+# This prompt produces the following:
+# [username@hostname:~/folder]
+# $
+export PS1="\n\[\e[32;1m\][\u@\h:\w] ($SHLVL)\n\[\e[0m\]\$ "
+
