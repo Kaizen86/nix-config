@@ -28,5 +28,14 @@ function cdup() {
 # This prompt produces the following:
 # [username@hostname:~/folder]
 # $
-export PS1="\n\[\e[32;1m\][\u@\h:\w] ($SHLVL)\n\[\e[0m\]\$ "
+#export PROMPT_COMMAND="[ ! -z $SHLVL ] && [ $SHLVL -gt 1 ] && export PS1_CMD1=\" ($SHLVL)\""
+#export PS1="\n\[\e[32;1m\][\u@\h:\w]${PS1_CMD1}\n\[\e[0m\]\$ "
 
+function _prompt_command() {
+	[ -z $1 ] && lvl=0 || lvl=$1
+	lvl=$((lvl+1))
+	[ $lvl -gt 1 ] && out=" ($lvl)"
+	export PS1_CMD1="$out"
+}
+export PROMPT_COMMAND='_prompt_command $SHLVL'
+export PS1="\n\[\e[32;1m\][\u@\h:\w]${PS1_CMD1}\n\[\e[0m\]\$ "
