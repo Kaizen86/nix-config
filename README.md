@@ -2,15 +2,14 @@
 
 Note: this is subject to change as I find the best way to organise stuff
 
-- [nixos] Applies to everything running NixOS
-    - [common] Configurations shared across all hosts
-        - [modules] Program/system configs
-        - [user] Contains user account configs & home-manager
-    - [hosts] Device-specific configurations
-        - [laptop] terrible battery life but works well enough
-        - [tower] My gaming PC :D
-- [nix-on-droid] Imports NixOS home-manager options but otherwise separate
-    - [connor] he's the Android sent by Cyberlife
+- [common] Configurations shared across all hosts
+    - [modules] Program/system configs
+    - [user] Contains user account configs & home-manager
+- [hosts] Device-specific configurations
+    - [laptop] terrible battery life but works well enough
+    - [tower] My gaming PC :D
+- [non-nixos] Hosts which do are not x64 NixOS systems; they follow different rules.
+    - [connor] he's the Android sent by Cyberlife! Imports `/common/user/home.nix` but otherwise entirely separate.
 
 <!-- Unsure what I'll do with the raspi. I haven't touched it for a long time... -->
 

@@ -21,7 +21,7 @@
       !builtins.elem name [ "username" "homeDirectory" "plasma" ]
     )
     # hack: relative import! eww
-    (import ../../nixos/common/user/home.nix
+    (import ../../common/user/home.nix
       { inherit pkgs lib; }
     );
   #home-manager.useGlobalPkgs = true; # don't need this i think...

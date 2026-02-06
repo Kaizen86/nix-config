@@ -17,7 +17,8 @@
     nix-flatpak.url = "github:gmodena/nix-flatpak/?ref=latest";
 
     # For 'connor' host
-    # Must use an older version because it hasn't been updated for 25.05 yet; attempting will cause rebuilds to fail due to its home-manager tweaks
+    # Must use an older version because it hasn't been updated for 25.05 yet; attempting will cause rebuilds to fail due to its home-manager tweaks.
+	# Supposedly, there's a way to get 24.11 working by manually upgrading from 24.05, but I haven't figured out how to do that. I'm happy to wait.
     nixpkgs-droid.url = "github:nixos/nixpkgs/nixos-24.05";
     nix-on-droid = {
       url = "github:nix-community/nix-on-droid/release-24.05";
@@ -31,7 +32,7 @@
       system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${system};
       modules = [
-        ./nixos/common
+        ./common
 
         home-manager.nixosModules.home-manager {
           home-manager.useGlobalPkgs = true;
@@ -59,8 +60,8 @@
               modules = modules ++ [ path ];
             };
           })
-          # Automatically discover hosts in ./nixos/hosts
-          (customLib.fs.listDirs ./nixos/hosts)
+          # Automatically discover host folders
+          (customLib.fs.listDirs ./hosts)
         );
 
       nixOnDroidConfigurations = {
@@ -68,8 +69,8 @@
            pkgs = import inputs.nixpkgs-droid { system = "aarch64-linux"; };
            extraSpecialArgs = { inherit customLib; };
            # I have attempted to include ./common for connor host but it just isn't happening. This makes sense; it's not a NixOS system.
-           # I did at least manage to get its tweaked version of home-manager working for some user preferences. (the home.nix config import is in nix-on-droid/connor/configuration.nix)
-           modules = [ ./nix-on-droid/connor ];
+           # I did at least manage to get its tweaked version of home-manager working for most user preferences. (the home.nix config import is in non-nixos/connor/configuration.nix)
+           modules = [ ./non-nixos/connor ];
         };
       };
 
