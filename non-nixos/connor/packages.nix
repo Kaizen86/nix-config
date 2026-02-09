@@ -24,7 +24,7 @@
     #xz
     #zip
     #unzip
-    gawk
+    gawk # Used by bash autocompletes
 
     bat
     #bc
@@ -37,31 +37,31 @@
     ffmpeg
     gallery-dl
     gcc
-    gdb
-    gnumake
-    gnupg
+    #gdb
+    #gnumake
+    #gnupg
     hollywood
     htop
     #lftp
-    lynx # TUI web browser
+    #lynx # TUI web browser
     man-db
     man-pages
     #mono # Run .NET programs under Linux
-    nano
-    nanorc
+    #nano
+    #nanorc
     ncdu # NCurses Disk Usage
     ncurses # Provides clear and reset commands
     neofetch
     nmap
     nodePackages.http-server # Handy for quickly hosting a directory over HTTP
-    pinentry # Authentication for GPG
+    #pinentry # Authentication for GPG
     # TODO insert Python deps... somewhere. Probably not here.
     python3
     # cairo, matplotlib, opencv, pip?, pip-search?, psutil?, pyserial?
     rsync
     rustup
-    screen # Detachable sessions with names
-    speedtest-cli
+    #screen # Detachable sessions with names
+    #speedtest-cli
     #sshfs
     strace
     #sysbench
@@ -77,8 +77,8 @@
     p7zip
     file
     gnused
-    exif
-    openssl
-    jq
+    #exif
+    #openssl
+    #jq
   ];
 }

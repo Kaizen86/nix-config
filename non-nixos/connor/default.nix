@@ -5,6 +5,7 @@ let
 
 in
   {
+    # TODO: this would be helpful to have in customLib
     imports = builtins.filter
       (path:
         builtins.match
