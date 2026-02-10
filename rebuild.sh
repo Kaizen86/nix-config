@@ -49,7 +49,7 @@ if [ "$USER" == "nix-on-droid" ]; then
 fi
 
 # Parse any command-line options
-while [ "$1" ]; do
+while [ $# -gt 0 ]; do
   case "$1" in
     -h|--help)
       # TODO Add help text
@@ -58,21 +58,18 @@ while [ "$1" ]; do
       ;;
     -u|--upgrade|--update)
       readback nix flake update
-      readback sudo nix-channel --update
 
       rebuild_cmd=boot # Don't switch immediately
       rebuild_args="$rebuild_args --upgrade"
-      shift
       ;;
     -*)
-      rebuild_args="$rebuild_args $1"
-      shift
+      rebuild_args+=" $1"
       ;;
     *)
       rebuild_cmd="$1"
-      shift
       ;;
   esac
+  shift
 done
 
 # Check if hostname not in hosts folder
