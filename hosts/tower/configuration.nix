@@ -50,6 +50,8 @@
 
   programs.orca-slicer.enable = true;
 
+  # Install Tailscale so I can access the management pages of my web server
+  services.tailscale.enable = true;
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
 
