@@ -66,20 +66,35 @@ query_nixpkgs_branches() {
   set +e; nix-shell -p jq --command "jq -rs <$tmpfile 'add | map(.name)[] | match(\"^nixos-.*\").string'"; err=$?; set -e
   if [ $err -ne 0 ]; then
     # Note: jq error message emits newline character; no need to use \n here
-    echo -n "Error parsing GitHub API response! ($err)" >&2
+    echo "Error parsing GitHub API response! ($err)" >&2
   fi
   rm $tmpfile
   echo >&2
 }
 
 function extract_channel_version_number() {
-  # Gets the version number from some branch in nixpkgs and stores the result in a global array
+  # Gets the version number from some branch name in nixpkgs and stores the major/minor numbers in an array declared by the caller.
   # Usage: extract_channel_version_number <$branch> <output_array>
 
-  #local _branch=${1//\"/} # Remove quotes from jq output
-  local _version=${1/*-/} # Remove prefix, such as 'nixos-'
-  _version=${_version/-*$/} # Remove any suffix, such as '-small'
-  local -a _version_numbers="(${_version/./ })" # Create array, splitting by '.'
+  local _IFS_TMP="$IFS"
+  IFS='-'
+  local _words=($1)
+  IFS="$_IFS_TMP"
+
+  local _field
+  for _field in ${_words[@]} _end; do
+    if [[ $_field =~ ^[0-9]{2}\.[0-9]{2}$ ]]; then
+      break
+    fi
+  done
+
+  local -a _version_numbers
+  if [ $_field != _end ]; then
+    # Create array, splitting by '.'
+    # Leave empty if loop did not break
+	_version_numbers=(${_field/./ })
+  fi
+
   # Copy to globally-declared array, named in $2
   local _out_array_name=$2
   eval "$_out_array_name=(${_version_numbers[@]})"
@@ -90,19 +105,17 @@ function read_flake_locked_channel() {
   set +e; nix-shell -p jq --command "jq -r <flake.lock .nodes.nixpkgs.original.ref"; err=$?; set -e
   if [ $err -ne 0 ]; then
     # Note: jq error message emits newline character; no need to use \n here
-    echo -n "Error reading nixpkgs channel from flake.lock! ($err)" >&2
+    echo "Error reading nixpkgs channel from flake.lock! ($err)" >&2
   fi
   
 }
 
 #for branch in $(query_nixpkgs_branches); do
 for branch in $(<branches.txt); do
-  echo $branch >> branches.txt
-  continue
+  echo $branch
 
   declare -a version
   extract_channel_version_number $branch version
-
   for i in ${version[@]}; do
     echo $i
   done
