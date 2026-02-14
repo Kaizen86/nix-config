@@ -110,15 +110,57 @@ function read_flake_locked_channel() {
   
 }
 
-#for branch in $(query_nixpkgs_branches); do
-for branch in $(<branches.txt); do
-  echo $branch
+function compare_channel_versions() {
+  # Accepts 2 arrays, each representing a channel version (created by extract_channel_version_number) and compares if $1 is *less than* $2.
+  # If it is, stdout will be "true", else "false"
+  local x_name=$1[@] y_name=$2[@]
+  local x=("${!x_name}") y=("${!y_name}")
 
-  declare -a version
-  extract_channel_version_number $branch version
-  for i in ${version[@]}; do
-    echo $i
+  local i a b
+  local len="${#x[@]}"
+  # Compare each version number from left to right
+  for i in $(seq 0 $((len-1))); do
+    a="${x[i]}"; b="${y[i]}"
+    if [ "$a" -lt "$b" ]; then
+      echo true; return
+    elif [ "$a" -gt "$b" ]; then
+      echo false; return
+    fi
   done
-done
+  # Not less or greater; must be equal
+  echo false
+}
 
+function check_for_channel_updates() {
+  # Main logic
+  #flake_ref=$(read_flake_locked_channel)
+  flake_ref="nixos-24.05"
+  declare -a current_version
+  extract_channel_version_number $flake_ref current_version
+  
+  latest_channel=$flake_ref
+  #for branch in $(query_nixpkgs_branches); do
+  for branch in $(<branches.txt); do
+    echo $branch
+    # Skip "-small" nixos channels for servers
+    [[ $branch =~ .*-small ]] && continue
+  
+    declare -a branch_version
+    extract_channel_version_number $branch branch_version
+    # Skip branch if there's no version number
+    [ ${#branch_version[@]} -eq 0 ] && continue
+  
+    is_greater=$(compare_channel_versions current_version branch_version)
+    [ $is_greater == "true" ] && latest_channel=$branch
+  done
+  
+  if [ $flake_ref != $latest_channel ]; then
+    echo "Wahey! There's a new NixOS channel available!"
+    echo "$flake_ref --> $latest_channel"
+  else
+    echo "You are using the latest channel :)"
+  fi
+}
+
+check_for_channel_updates
 
