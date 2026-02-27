@@ -1,6 +1,23 @@
 #!/usr/bin/env bash
 set -euo pipefail
-tmpfile=/tmp/nixpkgs-branches
+tmpfile=/tmp/nixpkgs-branches-page
+
+# This script checks for any NixOS flake channel updates, and can automatically
+# modify the "nixpkgs.url" line in flake.nix to use the latest channel.
+# Written by Kaizen86 for aghostbehindu
+
+
+# Check if this script has been run recently to warn against polling GitHub's API
+if [ -e "$tmpfile" ]; then
+  # File exists, but boot.tmp.cleanOnBoot is false by default, so also check modification time
+  last_run=$(stat -c %Y "$tmpfile") # Last modification since Epoch
+  now=$(date +%s) # Current Epoch
+  if [ $((now-last_run)) -lt 3600 ]; then # cooldown is 1 hour
+    echo "This script has recently been run. Be careful not to get rate-limited..."
+	echo "Channel updates only happen every 6 months. You may want './rebuild.sh -u' instead."
+    sleep 4
+  fi
+fi
 
 gh_api_nixpkgs_branches() {
   # Gets information in JSON about remote Nixpkgs branches on GitHub
@@ -66,7 +83,7 @@ query_nixpkgs_branches() {
     echo "Error parsing GitHub API response! ($err)" >&2
     exit 1
   fi
-  rm $tmpfile
+  # $tmpfile is not deleted so we can tell if there has been a recent API request
   echo >&2
 }
 
