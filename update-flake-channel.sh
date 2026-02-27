@@ -4,7 +4,7 @@ tmpfile=/tmp/nixpkgs-branches-page
 
 # This script checks for any NixOS flake channel updates, and can automatically
 # modify the "nixpkgs.url" line in flake.nix to use the latest channel.
-# Written by Kaizen86 for aghostbehindu
+# Written by Kaizen86 for Aghostbehindu
 
 
 # Check if this script has been run recently to warn against polling GitHub's API
@@ -56,7 +56,7 @@ count_nixpkgs_branches() {
   grep <<<"$response" -F 'header: link: <https://' | rev | cut -d'>' -f2 | cut -d'=' -f 1 | rev
 }
 
-query_nixpkgs_branches() {
+query_nixos_branches() {
   [ -e "$tmpfile" ] && rm "$tmpfile"
   # Download all branch pages
   echo -n "Querying nixpkgs branches." >&2
@@ -168,7 +168,7 @@ fi
 flake_ref_variant="$(get_channel_variant $flake_ref)"
 
 latest_channel=0.0 # Initialise to 0
-remote_branches="$(query_nixpkgs_branches)"
+remote_branches="$(query_nixos_branches)"
 echo Compatible branches on remote:
 for branch in $remote_branches; do
   #echo $branch # Uncomment to print ALL the remote branches
@@ -182,7 +182,7 @@ for branch in $remote_branches; do
   # Skip branch if there's no version number
   [ ${#branch_version[@]} -eq 0 ] && continue
 
-  is_gt_or_eq=$(compare_channel_versions current_version branch_version)
+  is_gt_or_eq=$(compare_channel_versions branch_version current_version)
   [ $is_gt_or_eq == "true" ] && latest_channel=$branch
 done
 
@@ -214,8 +214,9 @@ while true; do
 done
 
 
-regex='(nixpkgs\.url\s*=\s*".*nixpkgs\/)'$flake_ref'(".*)/$1'$latest_channel'$2'
-set +e; nix-shell -p gnused --command "sed --in-place 's/$regex/m' flake.nix"; err=$?; set -e
+regex='(nixpkgs\.url\s*=\s*".*nixpkgs\/)'$flake_ref'(".*)/\1'$latest_channel'\2'
+echo $regex
+set +e; nix-shell -p gnused --command "sed -E --in-place 's/$regex/m' flake.nix"; err=$?; set -e
 if [ $err -ne 0 ]; then
   # Empty stdout means an error
   # Therefore, echo to stderr
