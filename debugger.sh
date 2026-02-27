@@ -8,7 +8,6 @@ if [ "$USER" == "nix-on-droid" ]; then
 fi
 
 debug="nix build --no-link --debugger "$@" .#nixosConfigurations.$(hostname).config.system.build.toplevel"
-#(echo ":st" && cat) | sh -c "$debug"
 
 nix-shell -p expect --command "expect -c '
   log_user 0
