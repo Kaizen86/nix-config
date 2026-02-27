@@ -26,16 +26,13 @@ gh_api_nixpkgs_branches() {
 # Genius code from https://kymidd.medium.com/lets-do-devops-get-all-github-repo-branches-even-if-there-s-thousands-482c0e299ab4
 # Slightly modified to work in 2026
 count_nixpkgs_branches() {
-  echo 289
-  return
-
   local response err
   set +e; response=$(gh_api_nixpkgs_branches -vvv "?per_page=1"); err=$?; set -e
   if [ $err -ne 0 ]; then
     # Empty stdout means an error
     # Therefore, echo to stderr
     echo "Error counting nixpkgs branches! ($err)" >&2
-    return
+    exit 1
   fi
 
   # Pluck the number of branches from a hyperlink, very clever!
@@ -45,7 +42,7 @@ count_nixpkgs_branches() {
 query_nixpkgs_branches() {
   [ -e "$tmpfile" ] && rm "$tmpfile"
   # Download all branch pages
-  echo -n "Querying nixpkgs branches" >&2
+  echo -n "Querying nixpkgs branches." >&2
   local page
   for page in $(seq 1 $((1+$(count_nixpkgs_branches)/100))); do
     echo -n . >&2
@@ -54,10 +51,10 @@ query_nixpkgs_branches() {
     set +e; gh_api_nixpkgs_branches -L "?per_page=100&page=$page" >> $tmpfile; err=$?; set -e
     if [ $err -ne 0 ]; then
       echo -e "\nError querying nixpkgs branches! ($err)" >&2
-      return
+      exit 1
     fi
 
-    sleep 0.5
+    sleep 0.5 # Don't flood the server
   done
 
   # Filter to just nixos channels and extract the branch names using jq
@@ -67,14 +64,15 @@ query_nixpkgs_branches() {
   if [ $err -ne 0 ]; then
     # Note: jq error message emits newline character; no need to use \n here
     echo "Error parsing GitHub API response! ($err)" >&2
+    exit 1
   fi
   rm $tmpfile
   echo >&2
 }
 
-function extract_channel_version_number() {
+function get_channel_version_number() {
   # Gets the version number from some branch name in nixpkgs and stores the major/minor numbers in an array declared by the caller.
-  # Usage: extract_channel_version_number <$branch> <output_array>
+  # Usage: get_channel_version_number <$branch> <output_array>
 
   local _IFS_TMP="$IFS"
   IFS='-'
@@ -106,12 +104,13 @@ function read_flake_locked_channel() {
   if [ $err -ne 0 ]; then
     # Note: jq error message emits newline character; no need to use \n here
     echo "Error reading nixpkgs channel from flake.lock! ($err)" >&2
+    exit 1
   fi
-  
+
 }
 
 function compare_channel_versions() {
-  # Accepts 2 arrays, each representing a channel version (created by extract_channel_version_number) and compares if $1 is *less than* $2.
+  # Accepts 2 arrays, each representing a channel version (created by get_channel_version_number) and compares if $1 is *greater or equal* to $2.
   # If it is, stdout will be "true", else "false"
   local x_name=$1[@] y_name=$2[@]
   local x=("${!x_name}") y=("${!y_name}")
@@ -122,45 +121,94 @@ function compare_channel_versions() {
   for i in $(seq 0 $((len-1))); do
     a="${x[i]}"; b="${y[i]}"
     if [ "$a" -lt "$b" ]; then
-      echo true; return
-    elif [ "$a" -gt "$b" ]; then
       echo false; return
+    elif [ "$a" -gt "$b" ]; then
+      echo true; return
     fi
   done
   # Not less or greater; must be equal
-  echo false
+  echo true
 }
 
-function check_for_channel_updates() {
-  # Main logic
-  #flake_ref=$(read_flake_locked_channel)
-  flake_ref="nixos-24.05"
-  declare -a current_version
-  extract_channel_version_number $flake_ref current_version
-  
-  latest_channel=$flake_ref
-  #for branch in $(query_nixpkgs_branches); do
-  for branch in $(<branches.txt); do
-    echo $branch
-    # Skip "-small" nixos channels for servers
-    [[ $branch =~ .*-small ]] && continue
-  
-    declare -a branch_version
-    extract_channel_version_number $branch branch_version
-    # Skip branch if there's no version number
-    [ ${#branch_version[@]} -eq 0 ] && continue
-  
-    is_greater=$(compare_channel_versions current_version branch_version)
-    [ $is_greater == "true" ] && latest_channel=$branch
-  done
-  
-  if [ $flake_ref != $latest_channel ]; then
-    echo "Wahey! There's a new NixOS channel available!"
-    echo "$flake_ref --> $latest_channel"
-  else
-    echo "You are using the latest channel :)"
+function get_channel_variant() {
+  # e.g 'nixos-12.34-small' variant is 'small', while 'nixos-12.34' has no variant
+  local regex='-([a-z0-9]+)$'
+  if [[ $1 =~ $regex ]]; then
+    echo "${BASH_REMATCH[1]}"
   fi
 }
 
-check_for_channel_updates
+# Main logic
+flake_ref=$(read_flake_locked_channel)
+declare -a current_version
+get_channel_version_number $flake_ref current_version
+# If channel does not list a version number, it might be "nixos-unstable" or similar
+if [ ${#current_version[@]} -eq 0 ]; then
+  echo "Error while getting current version number; '$flake_ref' does not appear to have a number." >&2
+  exit 1
+fi
+# Detect if it ends with "-small" or similar
+flake_ref_variant="$(get_channel_variant $flake_ref)"
 
+latest_channel=0.0 # Initialise to 0
+remote_branches="$(query_nixpkgs_branches)"
+echo Compatible branches on remote:
+for branch in $remote_branches; do
+  #echo $branch # Uncomment to print ALL the remote branches
+  # Only compare similar variants, e.g don't try going from nixos-XX.XX to nixos-YY.YY-small
+  branch_variant=$(get_channel_variant $branch)
+  [[ "$branch_variant" != "$flake_ref_variant" ]] && continue
+  echo -e "\t$branch" # Only show branches we're checking for upgrades
+
+  declare -a branch_version
+  get_channel_version_number $branch branch_version
+  # Skip branch if there's no version number
+  [ ${#branch_version[@]} -eq 0 ] && continue
+
+  is_gt_or_eq=$(compare_channel_versions current_version branch_version)
+  [ $is_gt_or_eq == "true" ] && latest_channel=$branch
+done
+
+# Sanity check
+if [ $latest_channel == 0.0 ]; then
+  echo "... No compatible branches found? Something has gone wrong." >&2
+  echo "(flake_ref='$flake_ref', flake_ref_variant='$flake_ref_variant', last remote branch checked is '$branch')" >&2
+  exit 1
+fi
+
+# No action needed
+if [ $flake_ref == $latest_channel ]; then
+  echo "You are using the latest stable channel :)"
+  exit 0
+fi
+
+# Ask if automatic upgrade should be attempted
+echo "Neat, there's a new NixOS channel available!"
+echo "$flake_ref --> $latest_channel"
+
+# https://stackoverflow.com/a/226724
+set -- $(locale LC_MESSAGES)
+yesexpr="$1"; noexpr="$2"; yesword="$3"; noword="$4"
+while true; do
+    read -p "Update flake.nix (${yesword} / ${noword})? " yn
+    if [[ "$yn" =~ $yesexpr ]]; then break; fi
+    if [[ "$yn" =~ $noexpr ]]; then exit 1; fi
+    echo "Answer ${yesword} / ${noword}."
+done
+
+
+regex='(nixpkgs\.url\s*=\s*".*nixpkgs\/)'$flake_ref'(".*)/$1'$latest_channel'$2'
+set +e; nix-shell -p gnused --command "sed --in-place 's/$regex/m' flake.nix"; err=$?; set -e
+if [ $err -ne 0 ]; then
+  # Empty stdout means an error
+  # Therefore, echo to stderr
+  echo "Error encountered while modifying flake.nix! ($err)" >&2
+  exit 1
+fi
+
+echo -e "Summary of changes:\n"
+git diff flake.nix
+
+echo -e '\nTo undo these changes, run "git restore flake.nix"'
+echo 'Or run "./rebuild.sh --upgrade" to use the new version!'
+echo Be prepared to fix any breaking changes in your config.
