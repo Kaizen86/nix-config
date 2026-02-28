@@ -46,6 +46,7 @@
     gqrx
     gnuradio
     chromium # for launcher.keychron.com
+    prismlauncher
   ];
 
   programs.orca-slicer.enable = true;
