@@ -113,7 +113,7 @@
   };
 
   home.shellAliases = {
-    ffmpeg = "ffmpeg --hide_banner";
+    ffmpeg = "ffmpeg -hide_banner";
     music-dl = "yt-dlp -ciwx --audio-format flac --embed-thumbnail --add-metadata -o \%\(title\)s.\%\(ext\)s";
     open = "xdg-open";
     xxd = "xxd -a";
