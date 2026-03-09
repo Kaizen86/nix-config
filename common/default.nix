@@ -100,6 +100,9 @@
     GPG_TTY = "$(tty)";
   };
 
+  programs.surfshark.enable = true;
+  programs.ktailctl.enable = true;
+
   hardware.hackrf.enable = true; # Create udev rules for HackRF devices
   services.udev = {
     enable = true;
