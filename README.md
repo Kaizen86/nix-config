@@ -30,7 +30,9 @@ These are my mental notes on how to add a new NixOS machine to this repo. If thi
 - Generate and add [SSH](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent) & [GPG](https://docs.github.com/en/authentication/managing-commit-signature-verification/generating-a-new-gpg-key) keys to Github
 - Move `/etc/nixos/` contents into `./nixos/hosts/newhost/`
      - (replace `newhost` with a unique identifier, of course)
-- Edit `./nixos/hosts/newhost/configuration.nix` to set hostname to `newhost` (important!)
+- Edit `./nixos/hosts/newhost/configuration.nix` to:
+     - Set `networking.hostName` to `newhost` (important!)
+     - Set `programs.git.config.user.signingkey` to the GPG public key fingerprint, for Git commits
 - Copy `default.nix` from another host into `newhost`
      - TODO remove this requirement; it's silly
 - Track changes with `git add .` (otherwise `nixos/hosts/newhost` won't be in the Nix store)
