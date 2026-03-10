@@ -35,7 +35,7 @@ These are my mental notes on how to add a new NixOS machine to this repo. If thi
      - Set `programs.git.config.user.signingkey` to the GPG public key fingerprint, for Git commits
 - Copy `default.nix` from another host into `newhost`
      - TODO remove this requirement; it's silly
-- Track changes with `git add .` (otherwise `nixos/hosts/newhost` won't be in the Nix store)
+- Track changes with `git add hosts` (otherwise `hosts/newhost` won't be in the Nix store)
 - Run `./rebuild.sh boot`
 - If that worked, commit changes and push:
      ```bash
