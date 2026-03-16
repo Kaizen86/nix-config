@@ -19,7 +19,7 @@ These are my mental notes on how to add a new NixOS machine to this repo. If thi
 
 - Clone the repo to `/home/kaizen/nix-config`
      ```bash
-     nix-shell -p git vim
+     nix shell nixpkgs#{git,vim}
      git clone https://github.com/Kaizen86/nix-config
      cd nix-config
      ```
