@@ -47,6 +47,7 @@
     gnuradio
     chromium # for launcher.keychron.com
     prismlauncher
+    heroic
   ];
 
   programs.orca-slicer.enable = true;
