@@ -16,6 +16,8 @@
 
       alias = {
         tree = "log --oneline --all --graph";
+        # Credit to @supraerror on the Nix Cult Discord server lmaooo
+        bs = ''!git commit -m "$(curl -s --connect-timeout 4 https://www.whatthecommit.com/index.txt || echo 'wip')"'';
       };
     };
   };
