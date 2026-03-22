@@ -58,8 +58,8 @@
                 ;;
         esac
         args="$@"
-        #echo package=$package command=$command args=$args
-        nix shell nixpkgs#"$package" --command "$command $args"
+        #echo package=\"$package\" command=\"$command\" args=\"$args\"
+        nix shell nixpkgs#"$package" --command $command $args
     '')
 
     # Pipe grep output to less, with colours enabled
