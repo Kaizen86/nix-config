@@ -1,6 +1,24 @@
 { pkgs, lib, ... }:
 
-{
+let
+  # hack: relative imports! eww
+  pluckCommon = relpath: import (../../common + relpath) { inherit pkgs lib; };
+  homeCfg = lib.filterAttrsRecursive
+    (name: value:
+      # Some home-manager configuration keys are not valid in nix-on-droid, so filter them out before ingesting
+      !builtins.elem name [ "username" "homeDirectory" "plasma" ]
+    )
+    (pluckCommon /user/home.nix);
+
+  gitCfg = {
+    programs.git = {
+      enable = true;
+      settings = (pluckCommon /modules/git.nix).config.programs.git.config
+	    // { commit.gpgsign = false; }; # No GPG on mobile, thx
+    };
+  };
+
+in {
   # Backup etc files instead of failing to activate generation if a file already exists in /etc
   environment.etcBackupExtension = ".bak";
 
@@ -15,15 +33,7 @@
   # Set your time zone
   #time.timeZone = "Europe/Berlin";
 
-  home-manager.config = lib.filterAttrsRecursive
-    (name: value:
-      # Some home-manager configuration keys are not valid in nix-on-droid, so filter them out before ingesting
-      !builtins.elem name [ "username" "homeDirectory" "plasma" ]
-    )
-    # hack: relative import! eww
-    (import ../../common/user/home.nix
-      { inherit pkgs lib; }
-    );
+  home-manager.config = homeCfg // gitCfg;
   #home-manager.useGlobalPkgs = true; # don't need this i think...
   home-manager.useUserPackages = true;
 }
