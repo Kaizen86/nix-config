@@ -17,12 +17,11 @@
     nix-flatpak.url = "github:gmodena/nix-flatpak/?ref=latest";
 
     # For 'connor' host
-    # Must use an older version because it hasn't been updated for 25.05 yet; attempting will cause rebuilds to fail due to its home-manager tweaks.
-	# Supposedly, there's a way to get 24.11 working by manually upgrading from 24.05, but I haven't figured out how to do that. I'm happy to wait.
-    nixpkgs-droid.url = "github:nixos/nixpkgs/nixos-24.05";
     nix-on-droid = {
-      url = "github:nix-community/nix-on-droid/release-24.05";
-      inputs.nixpkgs.follows = "nixpkgs-droid";
+      url = "github:nix-community/nix-on-droid";
+      inputs.nixpkgs.follows = "nixpkgs";
+      # Override to not use 24.05
+      inputs.home-manager.follows = "home-manager";
     };
 
   };
@@ -64,7 +63,7 @@
 
       nixOnDroidConfigurations = {
         connor = inputs.nix-on-droid.lib.nixOnDroidConfiguration {
-           pkgs = import inputs.nixpkgs-droid { system = "aarch64-linux"; };
+           pkgs = import inputs.nixpkgs { system = "aarch64-linux"; };
            extraSpecialArgs = { inherit customLib; };
            # I have attempted to include ./common for connor host but it just isn't happening. This makes sense; it's not a NixOS system.
            # I did at least manage to get its tweaked version of home-manager working for most user preferences. (the home.nix config import is in non-nixos/connor/configuration.nix)
