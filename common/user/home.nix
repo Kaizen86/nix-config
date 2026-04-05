@@ -78,6 +78,17 @@
         exit $?
     '')
 
+    # Display meta information about a package
+    (pkgs.writeShellScriptBin "nix-query" ''
+        package=$1
+        if [ -z "$package" ]; then
+            echo No package specified
+            exit 1
+        fi
+
+        nix-instantiate --eval --strict --expr "(import <nixpkgs> {}).$package.meta"
+    '')
+
     # Pipe grep output to less, with colours enabled
     (pkgs.writeShellScriptBin "grepless" ''
         grep --color=always -rn "$@" | less -R
