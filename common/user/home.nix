@@ -86,7 +86,12 @@
             exit 1
         fi
 
-        nix-instantiate --eval --strict --expr "(import <nixpkgs> {}).$package.meta"
+        nix eval --impure --raw --pretty --expr "
+            let
+              nixpkgs = import <nixpkgs> {};
+              lib = nixpkgs.lib;
+            in
+              lib.generators.toPretty {} nixpkgs.$package.meta"
     '')
 
     # Pipe grep output to less, with colours enabled
