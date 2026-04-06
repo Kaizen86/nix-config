@@ -48,6 +48,7 @@ with pkgs; let
     cool-retro-term
     deja-dup
     discord
+    easyeffects
     firefox
     ghex
     gimp3
