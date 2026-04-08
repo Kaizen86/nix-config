@@ -117,9 +117,10 @@
     # '';
 
     ".ssh/config".text = ''
-      Host kaizen86.uk
-      #User kaizen
+      Host punyoracle
+      Hostname 145.241.222.171
       Port 58913
+      User kaizen
     '';
 
     ".vimrc".source = dotfiles/vimrc;
