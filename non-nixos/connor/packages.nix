@@ -17,12 +17,12 @@
     #gnugrep
     #gnupg
     #gnused
-    #gnutar
+    gnutar
     #bzip2
-    #gzip
+    gzip
     #xz
-    #zip
-    #unzip
+    zip
+    unzip
     gawk # Used by bash autocompletes
 
     bat
@@ -66,7 +66,6 @@
     #sysbench
     tree
     #unrar
-    unzip
     vim
     wget
     yt-dlp
