@@ -44,6 +44,7 @@
     openssh
     #openssl
     p7zip
+    pay-respects
     #pinentry # Authentication for GPG
     python3
     # TODO insert Python deps... somewhere. Probably not here.

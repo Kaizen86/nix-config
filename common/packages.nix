@@ -113,6 +113,7 @@ with pkgs; let
     minicom # Fancy serial port client
     nmap
     nodePackages.http-server # Handy for quickly hosting a directory over HTTP
+    pay-respects # Bad command corrector
     scrcpy # Show&control Android screen over ADB
     speedtest-cli
     #sshfs
