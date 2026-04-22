@@ -3,48 +3,36 @@
 {
   # Simply install just the packages
   environment.packages = with pkgs; [
-    # User-facing stuff that you really really want to have
-    vim # or some other editor, e.g. nano or neovim
-    gnugrep
-    openssh
-    # Some common stuff that people expect to have
-    #diffutils
-    #findutils
-    #utillinux
-    #tzdata
-    #hostname
-    #man
-    #gnugrep
-    #gnupg
-    #gnused
-    gnutar
-    #bzip2
-    gzip
-    #xz
-    zip
-    unzip
-    gawk # Used by bash autocompletes
-
     bat
     #bc
     #beep
+    #bzip2
+    curl
     diffutils
     dig
     dos2unix
     #duf
-    findutils
+    #exif
     ffmpeg
+    file
+    findutils
     gallery-dl
+    gawk # Used by bash autocompletes
     gcc
     #gdb
+    gnugrep
     #gnumake
     #gnupg
+    gnused
+    gnutar
+    gzip
     hollywood
+    #hostname
     htop
+    #jq
     #lftp
     #lynx # TUI web browser
-    man-db
-    man-pages
+    man
     #mono # Run .NET programs under Linux
     #nano
     #nanorc
@@ -53,9 +41,12 @@
     neofetch
     nmap
     nodePackages.http-server # Handy for quickly hosting a directory over HTTP
+    openssh
+    #openssl
+    p7zip
     #pinentry # Authentication for GPG
-    # TODO insert Python deps... somewhere. Probably not here.
     python3
+    # TODO insert Python deps... somewhere. Probably not here.
     # cairo, matplotlib, opencv, pip?, pip-search?, psutil?, pyserial?
     rsync
     rustup
@@ -65,18 +56,14 @@
     strace
     #sysbench
     tree
+    #tzdata
     #unrar
+    unzip
+    utillinux
     vim
     wget
+    #xz
     yt-dlp
     zip
-
-    curl
-    p7zip
-    file
-    gnused
-    #exif
-    #openssl
-    #jq
   ];
 }
