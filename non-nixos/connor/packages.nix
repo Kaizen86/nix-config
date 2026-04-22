@@ -60,7 +60,7 @@
     #tzdata
     #unrar
     unzip
-    utillinux
+    util-linux
     vim
     wget
     #xz
