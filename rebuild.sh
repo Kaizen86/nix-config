@@ -44,7 +44,7 @@ popd > /dev/null
 if [ "$USER" == "nix-on-droid" ]; then
   # Usual nixos-rebuild and nix-channel commands won't work on this host
   echo Using nix-on-droid specific command
-  readback nix-on-droid switch --flake "$config_root#connor" $*
+  time readback nix-on-droid switch --flake "$config_root#connor" $*
   exit $?
 fi
 
@@ -95,7 +95,7 @@ else
 fi
 
 # Rebuild the system and pass any additional arguments
-readback sudo nixos-rebuild $rebuild_cmd --flake "$config_root$attribute" $rebuild_args
+time readback sudo nixos-rebuild $rebuild_cmd --flake "$config_root$attribute" $rebuild_args
 rebuild_exit=$?
 
 if [ $rebuild_cmd == "boot" ]; then

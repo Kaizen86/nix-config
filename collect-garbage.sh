@@ -24,13 +24,13 @@ readback() {
 if [ "$USER" == "nix-on-droid" ]; then
   # On Android, 'nix-store --optimise' won't work as creating hard links is forbidden
   echo Using nix-on-droid specific command
-  readback nix-collect-garbage -d 
+  time readback nix-collect-garbage -d
   exit $?
 fi
 
 # This took me far too long to figure out, but the command must be run as root, otherwise it can't touch most links
 # https://www.reddit.com/r/NixOS/comments/unwip2/deleting_old_system_profiles_what_am_i_missing/
 
-readback sudo nix-collect-garbage -d 
-readback sudo nix-store --optimise
+time readback sudo nix-collect-garbage -d
+time readback sudo nix-store --optimise
 
