@@ -121,6 +121,11 @@
       Hostname 145.241.222.171
       Port 58913
       User kaizen
+
+      Host rpi
+      Hostname 192.168.1.50
+      Port 58913
+      User kaizen
     '';
 
     ".vimrc".source = dotfiles/vimrc;
