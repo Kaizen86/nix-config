@@ -18,7 +18,8 @@ function git() {
 }
 
 function cdup() {
-	for i in $(seq $1); do
+	[ -z "$1" ] && travel=1 || travel=$1
+	for i in $(seq $travel); do
 		cd ..
 	done
 }
