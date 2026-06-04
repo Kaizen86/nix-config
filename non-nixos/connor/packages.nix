@@ -29,6 +29,7 @@
     hollywood
     #hostname
     htop
+    http-server # Handy for quickly hosting a directory over HTTP
     #jq
     #lftp
     #lynx # TUI web browser
@@ -40,7 +41,6 @@
     ncurses # Provides clear and reset commands
     neofetch
     nmap
-    nodePackages.http-server # Handy for quickly hosting a directory over HTTP
     openssh
     #openssl
     p7zip

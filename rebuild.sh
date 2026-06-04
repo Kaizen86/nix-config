@@ -58,9 +58,7 @@ while [ $# -gt 0 ]; do
       ;;
     -u|--upgrade|--update)
       readback nix flake update
-
       rebuild_cmd=boot # Don't switch immediately
-      rebuild_args="$rebuild_args --upgrade"
       ;;
     -*)
       rebuild_args+=" $1"

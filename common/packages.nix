@@ -43,8 +43,8 @@ with pkgs; let
     alsaequal # Equaliser
     arduino-ide
     audacity
-    bitwarden-desktop
-    blender-hip
+    #bitwarden-desktop # FIXME: https://github.com/NixOS/nixpkgs/issues/526914
+    pkgsRocm.blender # Enable HIP (AMD GPU) support
     cool-retro-term
     deja-dup
     discord
@@ -55,6 +55,7 @@ with pkgs; let
     gnome-clocks
     gnome-disk-utility
     gparted
+    karere # WhatsApp for linux
     kdePackages.filelight
     kdePackages.kate
     kdePackages.kdenlive
@@ -82,11 +83,10 @@ with pkgs; let
     #virtualbox
     vlc
     vscodium
-    wasistlos # WhatsApp for linux
   ];
 
   fontPackages = [
-    dejavu_fonts # DejaVu Sans/Serif/Mono fonts; broad coverage of Unicode 
+    dejavu_fonts # DejaVu Sans/Serif/Mono fonts; broad coverage of Unicode
     liberation_ttf # Replacements for Arial, Times New Roman, and Courier New fonts
     minecraftia
     noto-fonts-cjk-sans # Noto Sans/Serif
@@ -108,11 +108,11 @@ with pkgs; let
     gallery-dl
     hollywood # lmao
     #lftp
+    http-server # Handy for quickly hosting a directory over HTTP
     ncdu # NCurses Disk Usage
     lynx
     minicom # Fancy serial port client
     nmap
-    nodePackages.http-server # Handy for quickly hosting a directory over HTTP
     pay-respects # Bad command corrector
     scrcpy # Show&control Android screen over ADB
     speedtest-cli
@@ -136,8 +136,8 @@ with pkgs; let
 
 in {
   environment.systemPackages =
-    installOnEverything ++ 
-    desktopApplications ++ 
+    installOnEverything ++
+    desktopApplications ++
     fontPackages ++
     pythonPackages ++
     niceToHave ++

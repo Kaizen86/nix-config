@@ -40,6 +40,7 @@
 
   # Install packages
   environment.systemPackages = with pkgs; [
+    android-tools # adb
     gamemode # gamemoderun for Steam
     cargo
     freecad
@@ -65,8 +66,7 @@
   # networking.firewall.enable = false;
 
   # Install ADB
-  programs.adb.enable = true;
-  users.users.kaizen.extraGroups = [ "adbusers" ];
+  #users.users.kaizen.extraGroups = [ "adbusers" ];
 
   # Allow launcher.keychron.com to access devices through chromium
   services.udev.extraRules = ''
