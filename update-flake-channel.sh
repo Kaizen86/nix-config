@@ -214,15 +214,20 @@ while true; do
 done
 
 
-regex='(nixpkgs\.url\s*=\s*".*nixpkgs\/)'$flake_ref'(".*)/\1'$latest_channel'\2'
-echo $regex
-set +e; nix-shell -p gnused --command "sed -E --in-place 's/$regex/m' flake.nix"; err=$?; set -e
-if [ $err -ne 0 ]; then
-  # Empty stdout means an error
-  # Therefore, echo to stderr
-  echo "Error encountered while modifying flake.nix! ($err)" >&2
-  exit 1
-fi
+apply_regex() {
+	regex=$1
+	echo $regex
+	set +e; nix-shell -p gnused --command "sed -E --in-place 's~$regex~m' flake.nix"; err=$?; set -e
+	if [ $err -ne 0 ]; then
+	  # Empty stdout means an error
+	  # Therefore, echo to stderr
+	  echo "Error encountered while modifying flake.nix! ($err)" >&2
+	  exit 1
+	fi
+}
+
+apply_regex '(nixpkgs\.url\s*=\s*".*nixpkgs/)[^"]*~\1'"$flake_ref"
+apply_regex '(home-manager/release-)[^"]*~\1'"$latest_channel"
 
 echo -e "Summary of changes:\n"
 git diff flake.nix
@@ -230,3 +235,4 @@ git diff flake.nix
 echo -e '\nTo undo these changes, run "git restore flake.nix"'
 echo 'Or run "./rebuild.sh --upgrade" to use the new version!'
 echo Be prepared to fix any breaking changes in your config.
+
