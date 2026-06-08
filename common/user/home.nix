@@ -152,6 +152,8 @@
 
   home.shellAliases = {
     ffmpeg = "ffmpeg -hide_banner";
+    ffprobe = "ffprobe -hide_banner";
+    ssh-load = "eval $(ssh-agent) && ssh-add";
     music-dl = "yt-dlp -ciwx --audio-format flac --embed-thumbnail --add-metadata -o \%\(title\)s.\%\(ext\)s";
     open = "xdg-open";
     xxd = "xxd -a";
