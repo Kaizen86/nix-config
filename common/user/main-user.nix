@@ -41,9 +41,12 @@ in
 
     # Hacky workaround to make the profile picture show on the login screen
     # Hard link to ~/.face.icon symlink will 'create' a symlink to the nix store path
+    # FIXME: this does not work on first activation because it runs *before* home-manager! :(
+    /*
     system.activationScripts.linkMainUserAvatar = lib.stringAfter [ "var" ] ''
       ln -f /home/${cfg.userName}/.face.icon /var/lib/AccountsService/icons/${cfg.userName}
     '';
+    */
   };
 }
 
