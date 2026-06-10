@@ -1,10 +1,10 @@
-{ lib, pkgs, ... }@inputs:
+{ pkgs, ... }@inputs:
 
 let
   # hack: relative imports! eww
   pluckCommon = relpath: import
     (../../common + relpath)
-	{ inherit lib pkgs; };
+	inputs;
 
   extendedInputs = inputs // {
     inherit pluckCommon;
