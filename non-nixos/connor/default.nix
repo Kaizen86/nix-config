@@ -1,17 +1,20 @@
-{ lib, customLib, ... }:
+{ lib, pkgs, ... }@inputs:
 
 let
-  files = customLib.fs.listFilesExcluding ./. [ "default.nix" ];
+  # hack: relative imports! eww
+  pluckCommon = relpath: import
+    (../../common + relpath)
+	{ inherit lib pkgs; };
 
-in
-  {
-    # TODO: this would be helpful to have in customLib
-    imports = builtins.filter
-      (path:
-        builtins.match
-          ".*\.nix$"
-          (builtins.baseNameOf path)
-        != null
-      )
-      files;
-  }
+  extendedInputs = inputs // {
+    inherit pluckCommon;
+  };
+
+in {
+  imports = map
+    (f: import f extendedInputs)
+    [
+      ./configuration.nix
+      ./packages.nix
+    ];
+}

@@ -1,8 +1,6 @@
-{ pkgs, lib, ... }:
+{ pkgs, lib, pluckCommon, ... }:
 
 let
-  # hack: relative imports! eww
-  pluckCommon = relpath: import (../../common + relpath) { inherit pkgs lib; };
   homeCfg = lib.filterAttrsRecursive
     (name: value:
       # Some home-manager configuration keys are not valid in nix-on-droid, so filter them out before ingesting
