@@ -7,24 +7,18 @@ let
     base = {
       description = "Only the essentials, never leave $HOME without them :)";
       pkgs = [
-        bat
         binutils
-        dig
-        file
         gnupg # TODO Enable+configure elsewhere
         htop
-        iotop # Like top, but for disk I/O :)
         killall
         lsof
         man man-db man-pages
         nano nanorc # Just in case
         rsync
-        screen # Detachable sessions with names
         strace
         tree
         unrar
         unzip
-        usbutils
         vim # *epic electric guitar riff*
         wget
         zip
@@ -64,8 +58,6 @@ let
         obsidian
         openscad # Funny code-based 3D design tool (thanks Steve <3)
         pavucontrol # PulseAudio Volume Controls
-        # TODO figure out where cursor packages should sit (posy-cursors)
-        posy-cursors
         prismlauncher # Alternative Minecraft launcher
         qFlipper
         sidequest # Unoffical Oculus VR headset manager
@@ -74,54 +66,56 @@ let
         thunderbird
         transmission_4-qt
         #vice # Commodore retro-computer emulator
-        #virtualbox
+        #virtualbox # TODO Needs its own module
         vlc
         vscodium
       ];
     };
 
-    fontPackages = {
-      description = "Fonts to improve graphical applications";
+    fontsAndCursors = {
+      description = "Packages to improve GUI experience";
       pkgs = [
         dejavu_fonts # DejaVu Sans/Serif/Mono fonts; broad coverage of Unicode
         liberation_ttf # Replacements for Arial, Times New Roman, and Courier New fonts
         minecraftia
         noto-fonts-cjk-sans # Noto Sans/Serif
         noto-fonts-color-emoji
-      ];
-    };
-
-    pythonPackages = {
-      description = "lol i'm boutta remove this in the next commit";
-      pkgs = [
-        python313
-        python313Packages.pip
-        # failed experiment to stop sphinx from failing to build the docs :(
-        #(python315.overrideAttrs { passthru.doc=null; })
-        #python315Packages.pip
+        posy-cursors # My favourite cursors ^-^
       ];
     };
 
     niceToHave = {
       description = "Non-essential CLI programs, but I generally like to have them around";
       pkgs = [
-        adbfs-rootless # Mounting android phone
+        bat # Like cat but with syntax highlighting :)
+        dig # DNS diagnosics
         dos2unix
         ffmpeg
+        file
         gallery-dl
         hollywood # lmao
-        #lftp
         http-server # Handy for quickly hosting a directory over HTTP
-        ncdu # NCurses Disk Usage
-        lynx
+        #lftp
+        lynx # TUI web browser, because why not?
         minicom # Fancy serial port client
+        ncdu # NCurses Disk Usage
         nmap
         pay-respects # Bad command corrector
-        scrcpy # Show&control Android screen over ADB
+        python315
+        screen # Detachable sessions with names
         speedtest-cli
         #sshfs
         #sysbench
         yt-dlp
+      ];
+    };
+
+    androidTools = {
+      enable = false;
+      description = "Programs which communicate with Android devices over ADB";
+      pkgs = [
+        adbfs-rootless # Mount filesystem via ADB and FUSE
+        scrcpy # View and control over USB
       ];
     };
 
@@ -132,12 +126,14 @@ let
         amdgpu_top
         #dvd+rw-tools
         #exfatprogs
+        iotop # Like top, but for disk I/O :)
         #libdvdcss
         #libisoburn
         ntfs3g # Allows mounting NTFS partitions (TODO This might be deprecated?)
         #radeontop
         s-tui # Fancy TUI graphs for system temperature
         #testdisk # Data recovery tool
+        usbutils
       ];
     };
   };
@@ -146,7 +142,7 @@ let
 
 in with lib; {
   options.packageSets =
-    lib.mapAttrs (n: {description,pkgs}: {
+    lib.mapAttrs (n: {description, pkgs, enable?true}: {
       enable = mkOption {
         type = types.bool;
         inherit description;

@@ -38,7 +38,9 @@
     steam.enable = true;
   };
 
-  # Install packages
+  packageSets.androidTools.enable = true;
+
+  # Install extra packages
   environment.systemPackages = with pkgs; [
     android-tools # adb
     gamemode # gamemoderun for Steam
