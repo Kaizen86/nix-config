@@ -17,14 +17,19 @@
     nix-flatpak.url = "github:gmodena/nix-flatpak/?ref=latest";
 
     # For 'connor' host
-    # Must use an older version because it hasn't been updated for 25.05 yet; attempting will cause rebuilds to fail due to its home-manager tweaks.
-	# Supposedly, there's a way to get 24.11 working by manually upgrading from 24.05, but I haven't figured out how to do that. I'm happy to wait.
-    nixpkgs-droid.url = "github:nixos/nixpkgs/nixos-25.11";
     nix-on-droid = {
-      url = "github:nix-community/nix-on-droid/";
+      url = "github:nix-community/nix-on-droid/release-24.05";
+      inputs.nixpkgs.follows = "nixpkgs-droid";
+      # Override to not use 24.05
+      inputs.home-manager.follows = "home-manager-droid";
+    };
+    # Temporary fix until nix-on-droid merges PR #529 (proot-termux update)
+    # See: https://github.com/nix-community/nix-on-droid/issues/495
+    nixpkgs-droid.url = "github:NixOS/nixpkgs/5d874ac46894c896119bce68e758e9e80bdb28f1";
+    home-manager-droid = {
+      url = "github:nix-community/home-manager/4de84265d7ec7634a69ba75028696d74de9a44a7";
       inputs.nixpkgs.follows = "nixpkgs-droid";
     };
-
   };
 
   outputs = { nixpkgs, home-manager, ... }@inputs:

@@ -21,11 +21,10 @@
         "type": "github"
       }
     },
-    "home-manager_2": {
+    "home-manager-droid": {
       "inputs": {
         "nixpkgs": [
-          "nix-on-droid",
-          "nixpkgs"
+          "nixpkgs-droid"
         ]
       },
       "locked": {
@@ -39,6 +38,7 @@
       "original": {
         "owner": "nix-community",
         "repo": "home-manager",
+        "rev": "4de84265d7ec7634a69ba75028696d74de9a44a7",
         "type": "github"
       }
     },
@@ -64,10 +64,7 @@
           "nix-on-droid",
           "nixpkgs"
         ],
-        "nmd": [
-          "nix-on-droid",
-          "nmd"
-        ],
+        "nmd": "nmd",
         "nmt": "nmt"
       },
       "locked": {
@@ -86,25 +83,28 @@
     },
     "nix-on-droid": {
       "inputs": {
-        "home-manager": "home-manager_2",
+        "home-manager": [
+          "home-manager-droid"
+        ],
         "nix-formatter-pack": "nix-formatter-pack",
         "nixpkgs": [
           "nixpkgs-droid"
         ],
         "nixpkgs-docs": "nixpkgs-docs",
         "nixpkgs-for-bootstrap": "nixpkgs-for-bootstrap",
-        "nmd": "nmd"
+        "nmd": "nmd_2"
       },
       "locked": {
-        "lastModified": 1765031149,
-        "narHash": "sha256-4ZtlnCp4blhsjGnQIxAXDAj7nCJKy7tozoBRtklmwcU=",
+        "lastModified": 1720396533,
+        "narHash": "sha256-UFzk/hZWO1VkciIO5UPaSpJN8s765wsngUSvtJM6d5Q=",
         "owner": "nix-community",
         "repo": "nix-on-droid",
-        "rev": "55b6449b4582a4ba3ce712543c973360a026db7d",
+        "rev": "f3d3b8294039f2f9a8fb7ea82c320f29c6b0fe25",
         "type": "github"
       },
       "original": {
         "owner": "nix-community",
+        "ref": "release-24.05",
         "repo": "nix-on-droid",
         "type": "github"
       }
@@ -143,17 +143,17 @@
     },
     "nixpkgs-droid": {
       "locked": {
-        "lastModified": 1781509190,
-        "narHash": "sha256-uJZs9Di8I6ciTp6jiojj0HzlNpBkud8ax5aT/O5aJkw=",
-        "owner": "nixos",
+        "lastModified": 1708172716,
+        "narHash": "sha256-3M94oln0b61m3dUmLyECCA9hYAHXZEszM4saE3CmQO4=",
+        "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "d6df3513510aa548c83868fd22bfddd0a8c0a0d4",
+        "rev": "5d874ac46894c896119bce68e758e9e80bdb28f1",
         "type": "github"
       },
       "original": {
-        "owner": "nixos",
-        "ref": "nixos-25.11",
+        "owner": "NixOS",
         "repo": "nixpkgs",
+        "rev": "5d874ac46894c896119bce68e758e9e80bdb28f1",
         "type": "github"
       }
     },
@@ -174,6 +174,22 @@
       }
     },
     "nmd": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1666190571,
+        "narHash": "sha256-Z1hc7M9X6L+H83o9vOprijpzhTfOBjd0KmUTnpHAVjA=",
+        "owner": "rycee",
+        "repo": "nmd",
+        "rev": "b75d312b4f33bd3294cd8ae5c2ca8c6da2afc169",
+        "type": "gitlab"
+      },
+      "original": {
+        "owner": "rycee",
+        "repo": "nmd",
+        "type": "gitlab"
+      }
+    },
+    "nmd_2": {
       "inputs": {
         "nixpkgs": [
           "nix-on-droid",
@@ -237,6 +253,7 @@
     "root": {
       "inputs": {
         "home-manager": "home-manager",
+        "home-manager-droid": "home-manager-droid",
         "nix-flatpak": "nix-flatpak",
         "nix-on-droid": "nix-on-droid",
         "nixpkgs": "nixpkgs",

@@ -12,7 +12,8 @@ let
 
 # Evil hack to use the regular import as a module while also configuring/extending it
 # https://discourse.nixos.org/t/import-list-in-configuration-nix-vs-import-function/11372/8
-in lib.traceVal (lib.recursiveUpdate
+in lib.traceValFn (v: v.config.environment.packages) 
+  (lib.recursiveUpdate
   {
     config.packageSets = {
       desktopApplications.enable = false;

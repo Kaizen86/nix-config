@@ -31,7 +31,7 @@ in {
   # Set your time zone
   #time.timeZone = "Europe/Berlin";
 
-  home-manager.config = lib.attrsets.recursiveUpdate homeCfg gitCfg;
+  home-manager.config = homeCfg; #lib.attrsets.recursiveUpdate homeCfg gitCfg;
   #home-manager.useGlobalPkgs = true; # don't need this i think...
   home-manager.useUserPackages = true;
 }

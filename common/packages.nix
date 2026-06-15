@@ -17,7 +17,7 @@ let
         rsync
         strace
         tree
-        unrar
+        #unrar
         unzip
         vim # *epic electric guitar riff*
         wget
@@ -101,8 +101,8 @@ let
         ncdu # NCurses Disk Usage
         nix-output-monitor # nom for short. omnomnom
         nmap
-        pay-respects # Bad command corrector
-        python315
+        #pay-respects # Bad command corrector
+        python313
         screen # Detachable sessions with names
         speedtest-cli
         #sshfs
