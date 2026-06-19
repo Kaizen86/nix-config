@@ -111,7 +111,7 @@ let
     };
 
     androidTools = {
-      enable = false;
+      enable = false; # Opt-in
       description = "Programs which communicate with Android devices over ADB";
       pkgs = [
         adbfs-rootless # Mount filesystem via ADB and FUSE
@@ -146,7 +146,7 @@ in with lib; {
       enable = mkOption {
         type = types.bool;
         inherit description;
-        default = true;
+        default = enable;
       };
       pkgs = mkOption {
         type = types.listOf types.package;
