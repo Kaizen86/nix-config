@@ -28,6 +28,8 @@
   # Define hostname.
   networking.hostName = "laptop";
 
+  services.printing.enable = true;
+
   # Enable Natural Scrolling
   # TODO: Move this into a modules/home.nix module for organisation
   home-manager.users.kaizen.programs.plasma.input.touchpads = [
@@ -47,6 +49,7 @@
     git.config.user.signingkey = "8142D3E03705FD1A";
 
     steam.enable = true;
+    orca-slicer.enable = true;
   };
 
   # Install packages
@@ -57,10 +60,6 @@
     nil # Nix language server (TODO: put this into a dev-tools module)
     openvpn networkmanager-openvpn # Needed for Surfshark
   ];
-
-  programs.orca-slicer.enable = true;
-
-  services.printing.enable = true;
 
   # Roblox
   services.flatpak.enable = true;
