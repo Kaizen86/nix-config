@@ -42,11 +42,7 @@
         inputs.nix-flatpak.nixosModules.nix-flatpak
       ];
 
-      customLib = import ./lib { inherit nixpkgs; };
-
-      specialArgs = {
-        inherit inputs customLib;
-      };
+      customLib = import ./lib { lib = nixpkgs.lib; };
 
     in {
       nixosConfigurations = builtins.listToAttrs
@@ -54,7 +50,7 @@
           (path: {
             name = builtins.baseNameOf path;
             value = nixpkgs.lib.nixosSystem {
-              inherit specialArgs;
+              specialArgs = { inherit inputs customLib; };
               modules = modules ++ [ path ];
             };
           })
