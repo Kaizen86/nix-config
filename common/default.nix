@@ -5,11 +5,11 @@
 { lib, pkgs, ... }:
 
 {
-  imports =
-    [
-      ./packages.nix
-      ./user
-    ] ++ lib.filesystem.listFilesRecursive ./modules;
+  imports = [
+    ./modules
+    ./user
+    ./packages.nix
+  ];
 
   # Enable flakes :)
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
