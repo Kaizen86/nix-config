@@ -30,5 +30,10 @@ in {
         (builtins.filter (p: p.enable)
         cfgValues);
     };
+
+    # If KTailctl is installed, it only makes sense to install Tailscale as a dependency
+    services.tailscale = lib.mkIf cfg.ktailctl.enable {
+      enable = true;
+    };
   };
 }
