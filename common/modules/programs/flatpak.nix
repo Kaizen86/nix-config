@@ -1,7 +1,8 @@
 { config, lib, pkgs, ... }:
 
 let
-  cfg = config.programs;
+  cfg = config.programs.flatpaks;
+
   mkFlatpakOption = name: id: {
     enable = lib.mkEnableOption name;
     id = lib.mkOption {
@@ -10,19 +11,24 @@ let
     };
   };
 
+  cfgValues = builtins.attrValues cfg;
+  anyFlatpakEnabled = builtins.any (i: i==true)
+    (map (f: f.enable)
+    cfgValues);
+
 in {
-  options.programs = {
+  options.programs.flatpaks = {
     surfshark = mkFlatpakOption "Surfshark" "com.surfshark.Surfshark";
     ktailctl = mkFlatpakOption "KTailctl" "org.fkoehler.KTailctl";
   };
 
-  config = lib.mkIf (cfg.surfshark.enable || cfg.ktailctl.enable) {
+  config = lib.mkIf anyFlatpakEnabled {
     services.flatpak = {
       enable = true;
       uninstallUnmanaged = lib.mkDefault true;
-      packages = lib.lists.concatMap
-        (c: if c.enable then [c.id] else [])
-        [cfg.surfshark cfg.ktailctl];
+      packages = map (p: p.id)
+        (builtins.filter (p: p.enable)
+        cfgValues);
     };
   };
 }

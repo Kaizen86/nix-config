@@ -160,4 +160,14 @@ in with lib; {
       attrValues
       (filterAttrs (n: opt: opt.enable) cfg)
     );
+
+  # I would like these enabled by default, and this file seems like a sensible place to put that.
+  config.programs.flatpaks = {
+    surfshark.enable = true;
+    ktailctl.enable = true;
+  };
+
+  # TODO: Some programs have their own modules, but I don't know if/how they can be integrated into the concept of package sets.
+  # Package sets refer to environment.systemPackages, so maybe it's best to not complicate it by mixing program modules in.
+  # Come back to this when I've had more time to think about it
 }
