@@ -4,8 +4,8 @@ let
   orca = config.programs.orca-slicer;
 in {
   options.programs = {
-    bambu-studio.enable = lib.mkEnableOption "Install Bambu Studio";
-    orca-slicer.enable = lib.mkEnableOption "Install Orca Slicer";
+    bambu-studio.enable = lib.mkEnableOption "Bambu Studio";
+    orca-slicer.enable = lib.mkEnableOption "Orca Slicer";
   };
 
   config.environment.systemPackages = 

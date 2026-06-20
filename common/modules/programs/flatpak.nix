@@ -4,9 +4,10 @@ let
   cfg = config.programs.flatpaks;
 
   mkFlatpakOption = name: id: {
-    enable = lib.mkEnableOption name;
+    enable = lib.mkEnableOption "Flatpak version of ${name}";
     id = lib.mkOption {
       type = lib.types.str;
+      description = "Flatpak ID to use when installing ${name}";
       default = id;
     };
   };
