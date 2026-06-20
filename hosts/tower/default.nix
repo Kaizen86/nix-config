@@ -1,5 +1,5 @@
 { customLib, ... }:
 
 {
-  imports = customLib.fs.listFilesExcluding ./. [ "default.nix" ];
+  imports = customLib.fs.listNixModulesRecursive ./.;
 }

@@ -60,5 +60,16 @@ rec {
   listDirs  = readDirByType "directory";
   listFilesExcluding = readDirByTypeExcluding "regular";
   listDirsExcluding  = readDirByTypeExcluding "directory";
+
+  # Returns a flattened list of .nix files recursively, except for default.nix
+  # Useful for getting all Nix modules under a directory
+  listNixModulesRecursive = (searchpath:
+    builtins.filter
+      (filepath:
+        (name: lib.strings.hasSuffix ".nix" name && name != "default.nix")
+        (builtins.baseNameOf filepath)
+      )
+      (lib.filesystem.listFilesRecursive searchpath)
+  );
 }
 
