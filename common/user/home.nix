@@ -131,6 +131,8 @@
     ".vimrc".source = dotfiles/vimrc;
   };
 
+  xdg.configFile."mimeapps.list".source = dotfiles/mimeapps.list;
+
   # Home Manager can also manage your environment variables through
   # 'home.sessionVariables'. If you don't want to manage your shell through Home
   # Manager then you have to manually source 'hm-session-vars.sh' located at
@@ -167,47 +169,11 @@
     initExtra = builtins.readFile ./dotfiles/bashrc;
   };
 
-  xdg.mimeApps = {
-    enable = true;
-
-    associations.added = {
-      "audio/flac" = [ "umpv.desktop" "mpv.desktop" "vlc.desktop" "audacity.desktop" "org.kde.elisa.desktop" ];
-      "audio/vnd.wave" = [ "umpv.desktop" " mpv.desktop" " audacity.desktop" " org.kde.elisa.desktop" " vlc.desktop"];
-      "text/plain" = [ "org.kde.kate.desktop" "writer.desktop" "okularApplication_txt.desktop" "org.kde.kwrite.desktop" "codium.desktop" ];
-      "x-scheme-handler/bitwarden" = "bitwarden.desktopBitwarden.desktop";
-      "x-scheme-handler/curseforge" = "org.prismlauncher.PrismLauncher.desktop";
-      "x-scheme-handler/sidequest" = "SideQuest.desktop";
-      "x-scheme-handler/tg" = "org.telegram.desktop.desktop";
-      "x-scheme-handler/tonsite" = "org.telegram.desktop.desktop";
-      "x-scheme-handler/heroic" = "com.heroicgameslauncher.hgl.desktop";
-    };
-
-    defaultApplications = {
-      "audio/flac" = "umpv.desktop";
-      "audio/vnd.wave" = "umpv.desktop";
-      "text/plain" = "org.kde.kate.desktop";
-      "x-scheme-handler/bitwarden" = "bitwarden.desktop";
-      "x-scheme-handler/curseforge" = "org.prismlauncher.PrismLauncher.desktop";
-      "x-scheme-handler/sidequest" = "SideQuest.desktop";
-      "x-scheme-handler/tg" = "org.telegram.desktop.desktop";
-      "x-scheme-handler/tonsite" = "org.telegram.desktop.desktop";
-      "x-scheme-handler/heroic" = "com.heroicgameslauncher.hgl.desktop";
-
-      # Default browser
-      "text/html" = "firefox.desktop";
-      "x-scheme-handler/http" = "firefox.desktop";
-      "x-scheme-handler/https" = "firefox.desktop";
-      "x-scheme-handler/about" = "firefox.desktop";
-      "x-scheme-handler/unknown" = "firefox.desktop";
-    };
-  };
-
   # TODO: Put this into its own file somehow; it's getting crowded in here!
   # This may involve a refactor... Currently the import chain looks like this:
   # default.nix -> main-user.nix -> home.nix
   # Adding another link to the chain would be too messy for my liking...
   # Organising things with a folder or extending default.nix would be preferable.
-
   # Adapted from github:nix-community/plasma-manager/examples/home.nix
   programs.plasma = {
     enable = true;
