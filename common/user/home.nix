@@ -29,22 +29,21 @@
     (customLib.fs.listFiles ./dotfiles/config))
   );
 
-  # TODO manage with a Nix module
-  /*
-  home.file = {
-    ".ssh/config".text = ''
-      Host punyoracle
-      Hostname 145.241.222.171
-      Port 58913
-      User kaizen
-
-      Host rpi
-      Hostname 192.168.1.50
-      Port 58913
-      User kaizen
-    '';
+  programs.ssh = {
+    enable = true;
+    settings = {
+      punyoracle = {
+        HostName = "145.241.222.171";
+        Port = 58913;
+        User = "kaizen";
+      };
+      rpi = {
+        HostName = "192.168.1.50";
+        Port = 58913;
+        User = "kaizen";
+      };
+    };
   };
-  */
 
   # The home.packages option allows you to install Nix packages into your
   # environment.
