@@ -1,4 +1,4 @@
-{ pkgs, lib, ... }:
+{ pkgs, lib, customLib, ... }:
 
 {
   # Let Home Manager install and manage itself.
@@ -9,14 +9,42 @@
   home.username = "kaizen";
   home.homeDirectory = "/home/kaizen";
 
-  # This value determines the Home Manager release that your configuration is
-  # compatible with. This helps avoid breakage when a new Home Manager release
-  # introduces backwards incompatible changes.
-  #
-  # You should not change this value, even if you update Home Manager. If you do
-  # want to update the value, then make sure to first check the Home Manager
-  # release notes.
-  home.stateVersion = "23.11"; # Please read the comment before changing.
+  # Symlink plain dotfiles
+  # e.g dotfiles/face.icon -> ~/.face.icon
+  home.file = builtins.listToAttrs (
+    (map (file: {
+      name = "." + builtins.baseNameOf file;
+      value.source = file;
+    })
+    (customLib.fs.listFiles ./dotfiles))
+  );
+
+  # Symlink plain xdg config files
+  # e.g dotfiles/config/mimeapps.list -> ~/.config/mimeapps.list
+  xdg.configFile = builtins.listToAttrs (
+    (map (file: {
+      name = builtins.baseNameOf file;
+      value.source = file;
+    })
+    (customLib.fs.listFiles ./dotfiles/config))
+  );
+
+  # TODO manage with a Nix module
+  /*
+  home.file = {
+    ".ssh/config".text = ''
+      Host punyoracle
+      Hostname 145.241.222.171
+      Port 58913
+      User kaizen
+
+      Host rpi
+      Hostname 192.168.1.50
+      Port 58913
+      User kaizen
+    '';
+  };
+  */
 
   # The home.packages option allows you to install Nix packages into your
   # environment.
@@ -101,38 +129,6 @@
 
   ];
 
-  # Home Manager is pretty good at managing dotfiles. The primary way to manage
-  # plain files is through 'home.file'.
-  home.file = {
-    # # Building this configuration will create a copy of 'dotfiles/screenrc' in
-    # # the Nix store. Activating the configuration will then make '~/.screenrc' a
-    # # symlink to the Nix store copy.
-    # ".screenrc".source = dotfiles/screenrc;
-    ".face.icon".source = dotfiles/avatar.png;
-
-    # # You can also set the file content immediately.
-    # ".gradle/gradle.properties".text = ''
-    #   org.gradle.console=verbose
-    #   org.gradle.daemon.idletimeout=3600000
-    # '';
-
-    ".ssh/config".text = ''
-      Host punyoracle
-      Hostname 145.241.222.171
-      Port 58913
-      User kaizen
-
-      Host rpi
-      Hostname 192.168.1.50
-      Port 58913
-      User kaizen
-    '';
-
-    ".vimrc".source = dotfiles/vimrc;
-  };
-
-  xdg.configFile."mimeapps.list".source = dotfiles/mimeapps.list;
-
   # Home Manager can also manage your environment variables through
   # 'home.sessionVariables'. If you don't want to manage your shell through Home
   # Manager then you have to manually source 'hm-session-vars.sh' located at
@@ -166,7 +162,7 @@
     # https://discourse.nixos.org/t/home-shellaliases-unable-to-set-aliases-using-home-manager/33940/4
     enable = true;
     # This gets run when the shell opens. Useful for defining functions which can't run in subshells.
-    initExtra = builtins.readFile ./dotfiles/bashrc;
+    initExtra = builtins.readFile ./text/bashrc;
   };
 
   # TODO: Put this into its own file somehow; it's getting crowded in here!
@@ -258,4 +254,12 @@
 
   };
 
+  # This value determines the Home Manager release that your configuration is
+  # compatible with. This helps avoid breakage when a new Home Manager release
+  # introduces backwards incompatible changes.
+  #
+  # You should not change this value, even if you update Home Manager. If you do
+  # want to update the value, then make sure to first check the Home Manager
+  # release notes.
+  home.stateVersion = "23.11"; # Please read the comment before changing.
 }
