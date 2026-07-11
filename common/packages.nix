@@ -99,6 +99,7 @@ let
         lynx # TUI web browser, because why not?
         minicom # Fancy serial port client
         ncdu # NCurses Disk Usage
+        nix-output-monitor # nom for short. omnomnom
         nmap
         pay-respects # Bad command corrector
         python315
