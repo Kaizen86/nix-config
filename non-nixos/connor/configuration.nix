@@ -9,14 +9,19 @@ let
     )
     (pluckCommon /user/home.nix);
 
+  nixosGitCfg = (pluckCommon /modules/programs/git.nix).config.programs.git.config;
+
   gitCfg = {
     programs.git = {
-      enable = true;
-      settings = (pluckCommon /modules/git.nix).config.programs.git.config
-        // { commit.gpgsign = false; }; # No GPG on mobile, thx
+        enable = true;
+        # Thankfully the options can be passed through here without modification
+        extraConfig = nixosGitCfg // {
+          commit.gpgsign = false; # No GPG on mobile, thx
+      };
     };
   };
 
+  patchedHomeCfg = lib.attrsets.recursiveUpdate homeCfg gitCfg;
 in {
   # Backup etc files instead of failing to activate generation if a file already exists in /etc
   environment.etcBackupExtension = ".bak";
@@ -32,7 +37,7 @@ in {
   # Set your time zone
   #time.timeZone = "Europe/Berlin";
 
-  home-manager.config = homeCfg; #lib.attrsets.recursiveUpdate homeCfg gitCfg;
+  home-manager.config = patchedHomeCfg;
   #home-manager.useGlobalPkgs = true; # don't need this i think...
   home-manager.useUserPackages = true;
 }
