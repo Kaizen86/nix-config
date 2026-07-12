@@ -4,7 +4,8 @@ let
   homeCfg = lib.filterAttrsRecursive
     (name: value:
       # Some home-manager configuration keys are not valid in nix-on-droid, so filter them out before ingesting
-      !builtins.elem name [ "username" "homeDirectory" "plasma" ]
+      # FIXME Find a solution for ssh configs
+      !builtins.elem name [ "username" "homeDirectory" "ssh" "plasma" ]
     )
     (pluckCommon /user/home.nix);
 
@@ -12,7 +13,7 @@ let
     programs.git = {
       enable = true;
       settings = (pluckCommon /modules/git.nix).config.programs.git.config
-	    // { commit.gpgsign = false; }; # No GPG on mobile, thx
+        // { commit.gpgsign = false; }; # No GPG on mobile, thx
     };
   };
 

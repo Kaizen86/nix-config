@@ -4,7 +4,7 @@ let
   # hack: relative imports! eww
   pluckCommon = relpath: import
     (../../common + relpath)
-	inputs;
+    inputs;
 
   extendedInputs = inputs // {
     inherit pluckCommon;

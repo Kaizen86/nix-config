@@ -8,12 +8,21 @@ let
       description = "Only the essentials, never leave $HOME without them :)";
       pkgs = [
         binutils
+        diffutils
+        findutils
+        gawk # Used by bash autocompletes
+        git # nix flake dependency
+        gnugrep
+        gnused
+        gnutar
+        gzip
         gnupg # TODO Enable+configure elsewhere
         htop
         killall
         lsof
         man man-db man-pages
         nano nanorc # Just in case
+        openssh
         rsync
         strace
         tree
@@ -101,7 +110,7 @@ let
         ncdu # NCurses Disk Usage
         nix-output-monitor # nom for short. omnomnom
         nmap
-        #pay-respects # Bad command corrector
+        #p7zip
         python313
         screen # Detachable sessions with names
         speedtest-cli
@@ -135,6 +144,7 @@ let
         s-tui # Fancy TUI graphs for system temperature
         #testdisk # Data recovery tool
         usbutils
+        util-linux
       ];
     };
   };

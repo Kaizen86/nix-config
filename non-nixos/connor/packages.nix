@@ -1,67 +1,34 @@
-{ lib, pkgs, pluckCommon, ... }:
+{ config, lib, pkgs, ... }:
 
-let
-  imported = pluckCommon /packages.nix;
-  # Rename systemPackages -> packages
-  patched = imported // {
-    config.environment = builtins.removeAttrs 
-      imported.config.environment [ "systemPackages" ] // {
-        packages=imported.config.environment.systemPackages; 
-      };
+{
+  # Regular import so it can read our packageSets
+  # Unfortunately this incurs a bunch of shitcode...
+  imports = [ ../../common/packages.nix ];
+
+  # Hack to catch the result so I can rename it
+  options.environment.systemPackages = lib.mkOption {
+    type = lib.types.listOf lib.types.package;
+    description = "Glue between nix-on-droid and common/pavkages.nix";
+    default = [];
+    visible = false;
+  };
+  # Another hack to catch some flatpak configurationo
+  # TODO should enable them in common/default.nix
+  options.programs = lib.mkOption {};
+
+
+  # Restrict what should be installed on this device
+  # Finally, some normal fucking code lmao
+  config.packageSets = {
+    desktopApplications.enable = false;
+    fontsAndCursors.enable = false;
+    systemTools.enable = false;
   };
 
-# Evil hack to use the regular import as a module while also configuring/extending it
-# https://discourse.nixos.org/t/import-list-in-configuration-nix-vs-import-function/11372/8
-in lib.traceValFn (v: v.config.environment.packages) 
-  (lib.recursiveUpdate
-  {
-    config.packageSets = {
-      desktopApplications.enable = false;
-      fontsAndCursors.enable = false;
-      androidTools.enable = false;
-      systemTools.enable = false;
-    };
-  
-    # Simply install just the packages
-    config.environment.packages = with pkgs; [
-      curl
-      diffutils
-      #duf
-      #exif
-      findutils
-      gawk # Used by bash autocompletes
-      gcc
-      #gdb
-      gnugrep
-      #gnumake
-      #gnupg
-      gnused
-      gnutar
-      gzip
-      hollywood
-      #jq
-      #lftp
-      #mono # Run .NET programs under Linux
-      ncurses # Provides clear and reset commands
-      openssh
-      #openssl
-      p7zip
-      pay-respects
-      #pinentry # Authentication for GPG
-      rsync
-      rustup
-      #screen # Detachable sessions with names
-      #speedtest-cli
-      #sshfs
-      #sysbench
-      #tzdata
-      #unrar
-      util-linux
-      wget
-      #xz
-      yt-dlp
-    ];
-  }
-  patched
-)
+  # Rebind the output to the correct variable
+  config.environment.packages = with pkgs; config.environment.systemPackages ++ [
+    # Anything extra goes here
+    ncurses # Provides clear and reset commands
+  ];
+}
 
