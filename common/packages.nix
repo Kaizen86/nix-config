@@ -34,6 +34,17 @@ let
       ];
     };
 
+    # TODO Hey, you know what would be cool?
+    # Nested package sets.
+    # Then you could have something like:
+    # graphical = {
+    #   desktopApplications = { ... };
+    #   fonts = { ... };
+    #   cursors = { ... };
+    # };
+    # Then, if you don't want anything graphical;
+    # graphical.enable = false;
+
     desktopApplications = {
       description = "Graphical programs";
       pkgs = [
@@ -149,9 +160,14 @@ let
     };
   };
 
+  # TODO is packageSets really the best name?
   cfg = config.packageSets;
 
 in with lib; {
+  # TODO refactor lambda to a mkSetOption function
+  # Perhaps it could have a syntax like so?
+  # base = mkSetOption { desc... } [ foo bar ];
+
   options.packageSets =
     lib.mapAttrs (n: {description, pkgs, enable?true}: {
       enable = mkOption {

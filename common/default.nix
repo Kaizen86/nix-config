@@ -20,7 +20,7 @@
   services = {
     # Make power button _always_ shutdown system
     # FIXME This doesn't work??
-	# wow is that a CamelCase in my Nix? who put that there >w<
+    # wow is that a CamelCase in my Nix? who put that there >w<
     logind.settings.Login.powerKey = "poweroff";
 
     # X11 windowing system
