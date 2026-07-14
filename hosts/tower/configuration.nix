@@ -60,6 +60,12 @@
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
 
+  services.nix-serve = {
+  	enable = true;
+	nginx.enable = true;
+	nginx.secretKeyFile = "/tmp/nix-cache-priv-key";
+  };
+
   # Open ports in the firewall.
   networking.firewall.allowedTCPPorts = [
     22 8080
