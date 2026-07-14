@@ -5,7 +5,7 @@ if [ -z "$package" ]; then
 	exit 1
 fi
 
-nix eval --impure --raw --pretty --expr "
+nix eval --impure --raw --expr "
 	let
 	  nixpkgs = import <nixpkgs> {};
 	  lib = nixpkgs.lib;
