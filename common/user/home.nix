@@ -15,8 +15,7 @@
     (map (file: {
       name = "." + builtins.baseNameOf file;
       value.source = file;
-    })
-    (customLib.fs.listFiles ./dotfiles))
+    }) (customLib.fs.listFiles ./dotfiles))
   );
 
   # Symlink plain xdg config files
@@ -25,8 +24,7 @@
     (map (file: {
       name = builtins.baseNameOf file;
       value.source = file;
-    })
-    (customLib.fs.listFiles ./dotfiles/config))
+    }) (customLib.fs.listFiles ./dotfiles/config))
   );
 
   programs.ssh = {
@@ -61,72 +59,12 @@
     # # fonts?
     # (pkgs.nerdfonts.override { fonts = [ "FantasqueSansMono" ]; })
 
-    # # You can also create simple shell scripts directly inside your
-    # # configuration. For example, this adds a command 'my-hello' to your
-    # # environment:
-    # (pkgs.writeShellScriptBin "my-hello" ''
-    #   echo "Hello, ${config.home.username}!"
-    # '')
-
-    # Often I want to try out a program by installing it ephemerally.
-    # This function immediately starts the program with arguments after it finishes downloading.
-    # Optionally allows specifying a different command name by passing --
-    (pkgs.writeShellScriptBin "nix-tryout" ''
-        #!/usr/bin/env bash
-        # First argument is always package to use
-        package="$1"
-        if [ -z "$package" ]; then
-            echo No package specified
-            exit 1
-        fi
-        # Parse extra arguments
-        shift
-        case "$1" in
-            "--")
-                shift
-                command="$1"
-                shift
-                ;;
-            *)
-                command="$package"
-                ;;
-        esac
-        args="$@"
-
-        # Check if this package is unfree
-        unfree=$(nix-instantiate --eval --expr "(import <nixpkgs> {}).$package.meta.unfree")
-        # Set magic environment variable if necessary
-        if [ $unfree == true ]; then
-            echo This package is unfree, setting NIXPKGS_ALLOW_UNFREE=1 and proceeding...
-            export NIXPKGS_ALLOW_UNFREE=1
-        fi
-        # Run it
-        nix shell --impure nixpkgs#$package --command $command $args
-        exit $?
-    '')
-
-    # Display meta information about a package
-    (pkgs.writeShellScriptBin "nix-query" ''
-        package=$1
-        if [ -z "$package" ]; then
-            echo No package specified
-            exit 1
-        fi
-
-        nix eval --impure --raw --pretty --expr "
-            let
-              nixpkgs = import <nixpkgs> {};
-              lib = nixpkgs.lib;
-            in
-              lib.generators.toPretty {} nixpkgs.$package.meta"
-    '')
-
-    # Pipe grep output to less, with colours enabled
-    (pkgs.writeShellScriptBin "grepless" ''
-        grep --color=always -rn "$@" | less -R
-    '')
-
-  ];
+  ] ++ (map
+    (p: (pkgs.writeShellScriptBin
+      (lib.removeSuffix ".sh" (builtins.baseNameOf p))
+      (builtins.readFile p)
+	)) (customLib.fs.listFiles ./text/shell-scripts)
+  );
 
   # Home Manager can also manage your environment variables through
   # 'home.sessionVariables'. If you don't want to manage your shell through Home
