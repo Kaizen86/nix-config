@@ -23,6 +23,7 @@ let
         man man-db man-pages
         nano nanorc # Just in case
         openssh
+        ps
         rsync
         strace
         tree
@@ -108,6 +109,7 @@ let
       description = "Non-essential CLI programs, but I generally like to have them around";
       pkgs = [
         bat # Like cat but with syntax highlighting :)
+        curl
         dig # DNS diagnosics
         dos2unix
         ffmpeg
