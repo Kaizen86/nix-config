@@ -24,6 +24,24 @@ function cdup() {
 	done
 }
 
+function ssh-auth() {
+	# Use a consistent socket path for the agent
+	agent_sock="/tmp/ssh-agent.sock"
+
+	# Check if the socket is still responding, if not, spawn/reset it
+	ssh-add -l &>/dev/null
+	if [ $? -eq 2 ]; then
+		[ -S "$agent_sock" ] && rm -f "$agent_sock"
+		eval $(ssh-agent -sa "$agent_sock")
+	else
+		echo ssh-agent is already running
+	fi
+	ssh-add ~/.ssh/id*[^.pub]
+}
+# Stop agent (if any) on nix-on-droid when the session ends
+# This seems to overwrite the original behaviour, so also `read` to mimic the pause after logout
+trap '[ $USER == nix-on-droid -a $SHLVL -eq 1 -a ! -z $SSH_AGENT_PID ] && eval $(ssh-agent -k)' EXIT
+
 # PS1 is set here so it overrides config.programs.bash.promptInit
 # (which we cannot set from home-manager)
 # This prompt produces the following:
