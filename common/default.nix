@@ -69,23 +69,4 @@
 
   # Enable RealtimeKit so Pipewire can acquire realtime priority
   security.rtkit.enable = true;
-
-  # TODO: Move the following to some other file(s)
-
-  #Enable gpg service and add the input tty environment variable
-  programs.gnupg.agent = {
-    enable = true;
-    pinentryPackage = pkgs.pinentry-qt; # Graphical so Obsidian can prompt for password
-    enableSSHSupport = true;
-  };
-  environment.sessionVariables = rec { 
-    GPG_TTY = "$(tty)";
-  };
-
-  hardware.hackrf.enable = true; # Create udev rules for HackRF devices
-  services.udev = {
-    enable = true;
-    packages = [ pkgs.rtl-sdr ];
-  };
-  boot.blacklistedKernelModules = [ "dvb_usb_rtl28xxu" ];
 }
