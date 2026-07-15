@@ -62,8 +62,8 @@
 
   services.nix-serve = {
   	enable = true;
+	secretKeyFile = "/tmp/nix-cache-priv-key";
 	nginx.enable = true;
-	nginx.secretKeyFile = "/tmp/nix-cache-priv-key";
   };
 
   # Open ports in the firewall.
