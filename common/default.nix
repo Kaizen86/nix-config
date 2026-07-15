@@ -13,6 +13,8 @@
 
   # Enable flakes :)
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  # Allow unfree packages
+  nixpkgs.config.allowUnfree = true;
 
   main-user.enable = true;
   main-user.userName = "kaizen";
@@ -46,16 +48,10 @@
       enable = true;
       alsa.enable = true;
       alsa.support32Bit = true;
-      pulse.enable = true; # I think this is for compatibility?
-      # If you want to use JACK applications, uncomment this
-      #jack.enable = true;
-
-      # use the example session manager (no others are packaged yet so this is enabled by default,
-      # no need to redefine it in your config for now)
-      #media-session.enable = true;
+      pulse.enable = true; # Use Pipewire's emulation of PulseAudio
     };
 
-    # Disable PulseAudio because I'm using Pipewire
+    # Disable regular PulseAudio because I'm using Pipewire
     pulseaudio.enable = false;
 
     # Enable Multicast DNS to access machines by hostname
@@ -74,13 +70,6 @@
   # Enable RealtimeKit so Pipewire can acquire realtime priority
   security.rtkit.enable = true;
 
-  # Allow unfree packages
-  nixpkgs.config.allowUnfree = true;
-
-  # Some programs need SUID wrappers, can be configured further or are
-  # started in user sessions.
-  # programs.mtr.enable = true;
-  
   # TODO: Move the following to some other file(s)
 
   #Enable gpg service and add the input tty environment variable
