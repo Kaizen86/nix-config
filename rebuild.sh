@@ -9,21 +9,39 @@ set -eo pipefail
 
 # Find where this script is stored
 config_root=$(dirname "$0")
-# Command to use for nixos-rebuild, can be overridden by providing command-line argument
-# switch is the default (build+activate+add GRUB menuentry)
-# boot: build and wait for reboot to activate (good for system upgrades)
-# test: build and activate but do not add GRUB menuentry
-# repl: build and enter REPL for debugging
 rebuild_cmd=switch
 
-readback() {
+function show_help() {
+  script_name=$(basename "$0")
+  cat <<EOF
+Usage: $script_name [-uh] [args] [command]
+Wrapper around \`nixos-rebuild\` with extra functionality.
+Options:
+  -u --upgrade --update
+    Runs \`nix flake update\` first. Implies \`boot\` command.
+  -h --help
+    Show this help text.
+
+Any other arguments are passed to nixos-rebuild.
+This script also passes which command to use for nixos-rebuild.
+Here's a non-definitive list of commands:
+  switch: build+activate+add GRUB menuentry (default)
+  test: build+activate but do not add GRUB menuentry
+  boot: build then activate on next boot (good for system upgrades)
+  repl: build and enter REPL for debugging
+
+Read the nixos-rebuild documentation for a definitive list of rebuild arguments and commands.
+EOF
+}
+
+function readback() {
   cmd=$*
   # If running as root, strip any use of sudo.
   # sudo doesn't work if PAM authentication is offline, such as
   # when nixos-enter is used from the live installer to recover the system.
   if [ $(id -u) -eq 0 ]; then
     echo disabling sudo
-    cmd=$(sed 's/^sudo\s*//' <<< $cmd)
+    cmd=$(sed 's/^\s*sudo\s+//' <<< $cmd)
   fi
 
   # Echo command before running it
@@ -32,28 +50,11 @@ readback() {
   return $?
 }
 
-# Only files tracked by Git will be added to the Nix store, which nixos-rebuild uses to read the config.
-# Therefore, files not tracked by Git will appear to be invisible.
-# Show a warning if git status reports untracked files.
-pushd "$config_root" > /dev/null
-if git status | grep -q "Untracked files:"; then
-  echo -e "Heads up: some files are untracked by Git. This may cause problems if they're important.\n"
-fi
-popd > /dev/null
-
-if [ "$USER" == "nix-on-droid" ]; then
-  # Usual nixos-rebuild and nix-channel commands won't work on this host
-  echo Using nix-on-droid specific command
-  time readback nix-on-droid switch --flake "$config_root#connor" $*
-  exit $?
-fi
-
 # Parse any command-line options
 while [ $# -gt 0 ]; do
   case "$1" in
     -h|--help)
-      # TODO Add help text
-      echo "$0"
+      show_help
       exit
       ;;
     -u|--upgrade|--update)
@@ -69,6 +70,23 @@ while [ $# -gt 0 ]; do
   esac
   shift
 done
+
+# Only files tracked by Git will be added to the Nix store, which nixos-rebuild uses to read the config.
+# Therefore, files not tracked by Git will appear to be invisible.
+# Show a warning if git status reports untracked files.
+pushd "$config_root" > /dev/null
+if git status | grep -q "Untracked files:"; then
+  echo -e "Heads up: some files are untracked by Git. This may cause problems if they're important.\n"
+fi
+popd > /dev/null
+
+# Nix On Droid is a special case
+if [ "$USER" == "nix-on-droid" ]; then
+  # nixos-rebuild won't work on this host
+  echo Using nix-on-droid specific command
+  time readback nix-on-droid switch --flake "$config_root#connor" $rebuild_args
+  exit $?
+fi
 
 # Check if hostname not in hosts folder
 # This will require intervention - the flake won't know which target to build
