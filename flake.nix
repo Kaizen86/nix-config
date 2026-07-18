@@ -56,7 +56,7 @@
             name = builtins.baseNameOf path;
             value = nixpkgs.lib.nixosSystem {
               specialArgs = { inherit inputs customLib; };
-              modules = modules ++ [ path ];
+              modules = modules ++ customLib.fs.listNixModulesRecursive path;
             };
           })
           # Automatically discover host folders
