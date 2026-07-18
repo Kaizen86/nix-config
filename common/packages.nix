@@ -190,7 +190,8 @@ in with lib; {
       (filterAttrs (n: opt: opt.enable) cfg)
     );
 
-  # I would like these enabled by default, and this file seems like a sensible place to put that.
+  # I would like these enabled by default, somewhere.
+  # TODO: Maybe this isn't the best place for it?
   config.programs.flatpaks = {
     surfshark.enable = true;
     ktailctl.enable = true;
