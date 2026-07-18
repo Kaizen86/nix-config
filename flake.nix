@@ -47,21 +47,13 @@
         inputs.nix-flatpak.nixosModules.nix-flatpak
       ];
 
-      customLib = import ./lib { lib = nixpkgs.lib; };
+      lib = nixpkgs.lib;
+      customLib = import ./lib { inherit lib; };
 
     in {
-      nixosConfigurations = builtins.listToAttrs
-        (map
-          (path: {
-            name = builtins.baseNameOf path;
-            value = nixpkgs.lib.nixosSystem {
-              specialArgs = { inherit inputs customLib; };
-              modules = modules ++ customLib.fs.listNixModulesRecursive path;
-            };
-          })
-          # Automatically discover host folders
-          (customLib.fs.listDirs ./hosts)
-        );
+      nixosConfigurations = import ./hosts {
+        inherit inputs modules lib customLib;
+      };
 
       nixOnDroidConfigurations = {
         connor = inputs.nix-on-droid.lib.nixOnDroidConfiguration {
