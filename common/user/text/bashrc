@@ -1,3 +1,5 @@
+set -o vi
+
 # MaKe then Change Directory
 function mkcd() {
 	mkdir -p "$@" && cd "$@";
