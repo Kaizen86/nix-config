@@ -34,25 +34,25 @@
 
   outputs = { nixpkgs, home-manager, ... }@inputs:
     let
-      modules = [
-        ./common
-
-        home-manager.nixosModules.home-manager {
-          home-manager.useGlobalPkgs = true;
-          home-manager.useUserPackages = true;
-          home-manager.sharedModules = with inputs; [
-            plasma-manager.homeModules.plasma-manager
-          ];
-        }
-        inputs.nix-flatpak.nixosModules.nix-flatpak
-      ];
-
       lib = nixpkgs.lib;
       customLib = import ./lib { inherit lib; };
 
     in {
       nixosConfigurations = import ./hosts {
-        inherit inputs modules lib customLib;
+        inherit inputs lib customLib;
+        modules = [
+          ./common
+
+          home-manager.nixosModules.home-manager {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.sharedModules = with inputs; [
+              plasma-manager.homeModules.plasma-manager
+            ];
+          }
+
+          inputs.nix-flatpak.nixosModules.nix-flatpak
+        ];
       };
 
       nixOnDroidConfigurations = {
