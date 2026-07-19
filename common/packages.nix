@@ -74,6 +74,7 @@ let
         #krita
         libreoffice
         #lutris
+        meld # File comparison tool
         mpv # Simple video player
         obs-studio #v4l2loopback-dkms # NOTE idk if OBS still needs the virtual webcam driver
         obsidian
