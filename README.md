@@ -32,9 +32,8 @@ These are my mental notes on how to add a new NixOS machine to this repo. If thi
      - (replace `newhost` with a unique identifier, of course)
 - Edit `./nixos/hosts/newhost/configuration.nix` to:
      - Set `networking.hostName` to `newhost` (important!)
-     - Set `programs.git.config.user.signingkey` to the GPG public key fingerprint, for Git commits
-- Copy `default.nix` from another host into `newhost`
-     - TODO remove this requirement; it's silly
+     - Set `programs.git.config.user.signingkey` to the GPG public key fingerprint, for signing Git commits
+     - Remove the `imports` (all .nix files in a host folder get imported automatically)
 - Track changes with `git add hosts` (otherwise `hosts/newhost` won't be in the Nix store)
 - Run `./rebuild.sh boot`
 - If that worked, commit changes and push:
@@ -48,8 +47,9 @@ These are my mental notes on how to add a new NixOS machine to this repo. If thi
 # Workflow
 When making a change to the config, this is best practice:
 1. `git add` any new files to track them, otherwise Nix will get upset at you.
-2. Run either `./rebuild.sh test` or `nix flake check` to make sure the change works.
+2. Run `./rebuild.sh test` to make sure the change works.
 3. Once you're happy with a change, `git commit` it.
-4. Repeat for however many separate changes you're making.
-5. Once you've run `./rebuild.sh` and are entirely happy none of the commits need amending, `git push` them so all devices can use the new config.
+4. Repeat for however many "separate" changes you're making.
+  - General rule of thumb for defining "separate" is either changes in a single file, or a feature across one or more files.
+5. Once you've run `./rebuild.sh` to save a new system generation, and are entirely happy none of the commits need amending, `git push` them so all devices can use the new config.
 
