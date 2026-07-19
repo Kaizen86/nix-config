@@ -70,7 +70,7 @@
     (p: (pkgs.writeShellScriptBin
       (lib.removeSuffix ".sh" (builtins.baseNameOf p))
       (builtins.readFile p)
-	)) (customLib.fs.listFiles ./text/shell-scripts)
+    )) (customLib.fs.listFiles ./text/shell-scripts)
   );
 
   # Home Manager can also manage your environment variables through

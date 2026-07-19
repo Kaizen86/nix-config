@@ -61,9 +61,9 @@
   services.openssh.enable = true;
 
   services.nix-serve = {
-  	enable = true;
-	secretKeyFile = "/tmp/nix-cache-priv-key";
-	nginx.enable = true;
+    enable = true;
+    secretKeyFile = "/tmp/nix-cache-priv-key";
+    nginx.enable = true;
   };
 
   # Open ports in the firewall.
