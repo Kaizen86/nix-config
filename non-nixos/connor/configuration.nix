@@ -5,7 +5,7 @@ let
     (name: value:
       # Some home-manager configuration keys are not valid in nix-on-droid, so filter them out before ingesting
       # FIXME Find a solution for ssh configs
-      !builtins.elem name [ "username" "homeDirectory" "ssh" "plasma" ]
+      !builtins.elem name [ "username" "homeDirectory" "ssh" "imports" ]
     )
     (pluckCommon /user/home.nix);
 
