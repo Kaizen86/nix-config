@@ -41,7 +41,6 @@ function ssh-auth() {
 	ssh-add ~/.ssh/id*[^.pub]
 }
 # Stop agent (if any) on nix-on-droid when the session ends
-# This seems to overwrite the original behaviour, so also `read` to mimic the pause after logout
 trap '[ $USER == nix-on-droid -a $SHLVL -eq 1 -a ! -z $SSH_AGENT_PID ] && eval $(ssh-agent -k)' EXIT
 
 # PS1 is set here so it overrides config.programs.bash.promptInit
