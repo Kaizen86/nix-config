@@ -30,20 +30,6 @@
 
   services.printing.enable = true;
 
-  # Enable Natural Scrolling
-  # TODO: Move this into a modules/home.nix module for organisation
-  home-manager.users.kaizen.programs.plasma.input.touchpads = [
-    {
-      enable = true;
-      name = "ETPS/2 Elantech Touchpad";
-      vendorId = "0002";
-      productId = "000e";
-
-      naturalScroll = true;
-    }
-  ];
-
-
   programs = {
     # Set GPG key
     git.config.user.signingkey = "8142D3E03705FD1A";
