@@ -9,6 +9,10 @@ function mkcd() {
 function git() {
 	# Identify path to git executable to avoid infinite recursion
 	local git="$(type -P git)"
+	if [ ! -e "$git" ]; then
+		echo Could not locate Git executable
+		return 1
+	fi
 
 	# Run Git and check exit code
 	"$git" "$@"; local git_exit=$?
