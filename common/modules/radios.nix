@@ -5,6 +5,7 @@ let
 
 in {
   options.ham-radio.enable = lib.mkEnableOption "HackRF+RTLSDR support";
+  # TODO add option to install graphical software
 
   config = lib.mkIf cfg.enable {
     hardware.hackrf.enable = true; # Create udev rules for HackRF devices
