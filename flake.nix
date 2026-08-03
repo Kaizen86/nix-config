@@ -58,7 +58,10 @@
       nixOnDroidConfigurations = {
         connor = inputs.nix-on-droid.lib.nixOnDroidConfiguration {
            pkgs = import inputs.nixpkgs-droid { system = "aarch64-linux"; };
-           extraSpecialArgs = { inherit customLib; };
+           extraSpecialArgs = {
+             inherit customLib;
+             newPkgs = import nixpkgs { system = "aarch64-linux"; };
+           };
            # I have attempted to include ./common for connor host but it just isn't happening. This makes sense; it's not a NixOS system.
            # I did at least manage to get its tweaked version of home-manager working for most user preferences. (the home.nix config import is in non-nixos/connor/configuration.nix)
            modules = [ ./non-nixos/connor ];

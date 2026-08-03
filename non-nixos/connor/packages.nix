@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, newPkgs, ... }:
 
 {
   # Regular import so it can read our packageSets
@@ -26,9 +26,13 @@
   };
 
   # Rebind the output to the correct variable
-  config.environment.packages = with pkgs; config.environment.systemPackages ++ [
+  config.environment.packages = config.environment.systemPackages
+  ++ (with pkgs; [
     # Anything extra goes here
     ncurses # Provides clear and reset commands
-  ];
+  ]) ++ map lib.hiPrio (with newPkgs; [
+    cargo rustc # Reduce download size of flakes
+    yt-dlp # Needs to be regularly updated
+  ]);
 }
 
