@@ -1,4 +1,4 @@
-# Find all the TODO messages in the current git repository, under the current working dkrectory, sorted by the commit's date.
+# Find all the "to-do" messages in the current git repository, under the current working directory, sorted by the commit's date.
 # Uses bash parameter expansion or rematches wherever possible to improve performance
 set -uo pipefail
 tab=$'\t'
@@ -9,7 +9,7 @@ function search_gitrepo() {
 	while read result; do
 		exitcode=0
 		# Extract the first two fields
-		result="${result%:$1}" # Remove search term
+		result="${result%:*}" # Remove search term
 		filepath="${result%:*}" # Get first field
 		line_num=${result#*:} # Get second field
 		# Ask git for information about the line in this file
@@ -21,7 +21,7 @@ function search_gitrepo() {
 		# Pass to caller
 		echo $date $filepath $content
 	# Use git grep to only search tracked files
-	done < <(git grep -inHo "$1")
+	done < <(git grep -Iino "$1")
 
 	return $exitcode
 }
