@@ -113,6 +113,7 @@ let
         curl
         dig # DNS diagnosics
         dos2unix
+        fd # Better find
         ffmpeg
         file
         gallery-dl
@@ -126,6 +127,7 @@ let
         nmap
         #p7zip
         python313
+        ripgrep # Better grep
         screen # Detachable sessions with names
         speedtest-cli
         #sshfs
