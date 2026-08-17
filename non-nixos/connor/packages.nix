@@ -8,7 +8,7 @@
   # Hack to catch the result so I can rename it
   options.environment.systemPackages = lib.mkOption {
     type = lib.types.listOf lib.types.package;
-    description = "Glue between nix-on-droid and common/pavkages.nix";
+    description = "Glue between nix-on-droid and common/packages.nix";
     default = [];
     visible = false;
   };
@@ -31,8 +31,9 @@
     # Anything extra goes here
     ncurses # Provides clear and reset commands
   ]) ++ map lib.hiPrio (with newPkgs; [
+    # Things which simply must be up-to-date
     cargo rustc # Reduce download size of flakes
-    yt-dlp # Needs to be regularly updated
+    yt-dlp # Websites are a moving target
   ]);
 }
 
