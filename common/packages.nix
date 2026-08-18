@@ -52,7 +52,7 @@ let
         alsaequal # Equaliser
         arduino-ide
         audacity
-        #bitwarden-desktop # FIXME: https://github.com/NixOS/nixpkgs/issues/526914
+        bitwarden-desktop # FIXME: https://github.com/NixOS/nixpkgs/issues/526914
         pkgsRocm.blender # Enable HIP (AMD GPU) support
         cool-retro-term
         deja-dup
