@@ -9,18 +9,27 @@ set -eo pipefail
 
 # Find where this script is stored
 config_root=$(dirname "$0")
-rebuild_cmd=switch
+
+# Set default behaviours
+operation=switch
+use_nom=false
 
 function show_help() {
   script_name=$(basename "$0")
+  # TODO extend the description
   cat <<EOF
-Usage: $script_name [-uh] [args] [command]
+Usage: $script_name [options] [rebuild args] [command]
 Wrapper around \`nixos-rebuild\` with extra functionality.
+
 Options:
-  -u --upgrade --update
-    Runs \`nix flake update\` first. Implies \`boot\` command.
-  -h --help
+  -h  --help
     Show this help text.
+
+  --nom
+    Use nix-output-monitor to pretty-print verbose information.
+
+  -u  --upgrade  --update
+    Runs \`nix flake update\` first. Implies \`boot\` command.
 
 Any other arguments are passed to nixos-rebuild.
 This script also passes which command to use for nixos-rebuild.
@@ -59,13 +68,16 @@ while [ $# -gt 0 ]; do
       ;;
     -u|--upgrade|--update)
       readback nix flake update
-      rebuild_cmd=boot # Don't switch immediately
+      operation=boot # Don't switch immediately
+      ;;
+    --nom)
+      use_nom=true
       ;;
     -*)
       rebuild_args+=" $1"
       ;;
     *)
-      rebuild_cmd="$1"
+      operation="$1"
       ;;
   esac
   shift
@@ -110,11 +122,30 @@ else
   unset attribute
 fi
 
-# Rebuild the system and pass any additional arguments
-time readback sudo nixos-rebuild $rebuild_cmd --flake "$config_root$attribute" $rebuild_args
-rebuild_exit=$?
+# Command to rebuild the system and pass any additional arguments
+rebuild_cmd="nixos-rebuild $operation --flake $config_root$attribute $rebuild_args"
 
-if [ $rebuild_cmd == "boot" ]; then
+# Verbose (Nix Output Monitor) or regular mode
+if [ "$use_nom" == "true" ]; then
+  # Verbose mode
+  # First check if Nix Output Monitor is available
+  if command -v nom >/dev/null 2>&1; then
+    echo sudo $rebuild_cmd # keep read-back tidy
+    sudo bash -c "$rebuild_cmd --log-format internal-json -v |& nom --json"
+    rebuild_exit=$?
+  else
+    echo Error: nix-output-monitor is not installed.
+    exit 1
+  fi
+
+else
+  # Regular mode
+  time readback sudo $rebuild_cmd
+  rebuild_exit=$?
+fi
+
+
+if [ $operation == "boot" ]; then
   echo System will use new configuration on reboot!
 fi
 
