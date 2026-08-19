@@ -109,6 +109,25 @@
     initExtra = builtins.readFile ./text/bashrc;
   };
 
+
+  programs.vscodium = {
+    enable = true;
+
+    profiles.NixAndRust = {
+      userSettings = {
+        "git.openRepositoryInParentFolders" = "always";
+        "git.ignoreLimitWarning" = true;
+        "editor.inlayHints.fontSize" = 11;
+      };
+      extensions = with pkgs.vscode-extensions; [
+        vadimcn.vscode-lldb
+        rust-lang.rust-analyzer
+        arrterian.nix-env-selector
+        jnoortheen.nix-ide
+      ];
+    };
+  };
+
   # This value determines the Home Manager release that your configuration is
   # compatible with. This helps avoid breakage when a new Home Manager release
   # introduces backwards incompatible changes.
