@@ -4,8 +4,14 @@ let
   homeCfg = lib.filterAttrsRecursive
     (name: value:
       # Some home-manager configuration keys are not valid in nix-on-droid, so filter them out before ingesting
-      # FIXME Find a solution for ssh configs
-      !builtins.elem name [ "username" "homeDirectory" "ssh" "imports" ]
+      !builtins.elem name [
+        "imports"
+        "username"
+        "homeDirectory"
+        # FIXME Find a solution for ssh configs
+        "ssh"
+        "vscodium"
+      ]
     )
     (pluckCommon /user/home.nix);
 
