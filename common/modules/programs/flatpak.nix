@@ -23,7 +23,7 @@ in {
     ktailctl = mkFlatpakOption "KTailctl" "org.fkoehler.KTailctl";
   };
 
-  config = lib.mkIf anyFlatpakEnabled {
+  config = (lib.mkIf anyFlatpakEnabled {
     services.flatpak = {
       enable = true;
       uninstallUnmanaged = lib.mkDefault true;
@@ -35,6 +35,12 @@ in {
     # If KTailctl is installed, it only makes sense to install Tailscale as a dependency
     services.tailscale = lib.mkIf cfg.ktailctl.enable {
       enable = true;
+    };
+  }) // {
+    # I would also like these enabled by default.
+    config.programs.flatpaks = {
+      surfshark.enable = mkDefault true;
+      ktailctl.enable = mkDefault true;
     };
   };
 }
