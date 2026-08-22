@@ -1,4 +1,4 @@
-{ config, lib, pkgs, newPkgs, ... }:
+{ config, lib, pkgs, ... }:
 
 {
   # Regular import so it can read our packageSets
@@ -30,10 +30,7 @@
   ++ (with pkgs; [
     # Anything extra goes here
     ncurses # Provides clear and reset commands
-  ]) ++ map lib.hiPrio (with newPkgs; [
-    # Things which simply must be up-to-date
     cargo rustc # Reduce download size of flakes
-    yt-dlp # Websites are a moving target
   ]);
 }
 
