@@ -8,26 +8,26 @@ let
         "imports"
         "username"
         "homeDirectory"
-        # FIXME Find a solution for ssh configs
-        "ssh"
-        "vscodium"
       ]
     )
     (pluckCommon /user/home.nix);
 
+  # NixOS modules aren't implemented on NOD, so we configure Git through home-manager instead.
   nixosGitCfg = (pluckCommon /modules/programs/git.nix).config.programs.git.config;
 
-  gitCfg = {
+  homeOverrides = {
     programs.git = {
         enable = true;
         # Thankfully the options can be passed through here without modification
-        extraConfig = nixosGitCfg // {
+        settings = nixosGitCfg // {
           commit.gpgsign = false; # No GPG on mobile, thx
       };
     };
+    programs.vscodium.enable = false;
   };
 
-  patchedHomeCfg = lib.attrsets.recursiveUpdate homeCfg gitCfg;
+  patchedHomeCfg = lib.attrsets.recursiveUpdate homeCfg homeOverrides;
+
 in {
   # Backup etc files instead of failing to activate generation if a file already exists in /etc
   environment.etcBackupExtension = ".bak";
