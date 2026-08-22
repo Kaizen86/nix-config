@@ -12,10 +12,6 @@
     default = [];
     visible = false;
   };
-  # Another hack to catch some flatpak configurationo
-  # TODO should enable them in common/default.nix
-  options.programs = lib.mkOption {};
-
 
   # Restrict what should be installed on this device
   # Finally, some normal fucking code lmao
