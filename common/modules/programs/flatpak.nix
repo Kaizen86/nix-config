@@ -38,7 +38,7 @@ in {
     };
   }) // {
     # I would also like these enabled by default.
-    config.programs.flatpaks = {
+    config.programs.flatpaks = with lib; {
       surfshark.enable = mkDefault true;
       ktailctl.enable = mkDefault true;
     };
