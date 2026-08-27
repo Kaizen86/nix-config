@@ -67,7 +67,7 @@ while [ $# -gt 0 ]; do
       exit
       ;;
     -u|--upgrade|--update)
-      readback nix flake update
+      time readback nix flake update
       operation=boot # Don't switch immediately
       ;;
     --nom)
@@ -96,8 +96,31 @@ popd > /dev/null
 if [ "$USER" == "nix-on-droid" ]; then
   # nixos-rebuild won't work on this host
   echo Using nix-on-droid specific command
-  time readback nix-on-droid switch --flake "$config_root#connor" $rebuild_args
-  exit $?
+
+  # Verbose (Nix Output Monitor) or regular mode
+  if [ "$use_nom" == "true" ]; then
+    # Verbose mode
+    # First check if Nix Output Monitor is available
+    if command -v nom >/dev/null 2>&1; then
+      nod_build="nix build --impure $config_root#nixOnDroidConfigurations.connor.activationPackage $rebuild_args"
+	  echo $nod_build # Keep read-back tidy
+      $nom_build --log-format internal-json -v |& nom --json
+
+      ./result/activate
+      rebuild_exit=$?
+      rm result
+      exit $rebuild_exit
+
+    else
+      echo Error: nix-output-monitor is not installed.
+      exit 1
+    fi
+
+  else
+    # Regular mode
+    time readback nix-on-droid switch "$config_root#connor" $rebuild_args
+    exit $?
+  fi
 fi
 
 # Check if hostname not in hosts folder
@@ -130,7 +153,7 @@ if [ "$use_nom" == "true" ]; then
   # Verbose mode
   # First check if Nix Output Monitor is available
   if command -v nom >/dev/null 2>&1; then
-    echo sudo $rebuild_cmd # keep read-back tidy
+    echo sudo $rebuild_cmd # Keep read-back tidy
     sudo bash -c "$rebuild_cmd --log-format internal-json -v |& nom --json"
     rebuild_exit=$?
   else
