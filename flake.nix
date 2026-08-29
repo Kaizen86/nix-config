@@ -9,7 +9,8 @@
     };
 
     plasma-manager = {
-      url = "github:nix-community/plasma-manager";
+      # Use my fork until the pull request is approved
+      url = "github:Kaizen86/plasma-manager/add-dolphin-app";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.home-manager.follows = "home-manager";
     };

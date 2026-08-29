@@ -1,4 +1,4 @@
-{ lib, ... }:
+{ config, lib, ... }:
 
 {
   # Adapted from github:nix-community/plasma-manager/examples/home.nix
@@ -82,6 +82,44 @@
         ];
       }
     ];
+  };
 
+
+  programs.dolphin = {
+    enable = true;
+
+    interface = {
+      foldersAndTabs = {
+        startupLocation = config.home.homeDirectory;
+        launchInNewTab = true;
+
+        window.fullPath = true;
+        tabs.openAtEnd = true;
+        splitView.close = "inactive";
+      };
+
+      panels.information.dateFormat = "short";
+
+      bars = {
+        status = "full";
+        location = {
+          editable = true;
+          showFullPath = true;
+        };
+      };
+    };
+
+    view = {
+      general = {
+        browseArchives = true;
+        dragOpenFolders = true;
+        hoverForInfo = true;
+        backgroundDoubleClick.action = "showHiddenFiles";
+      };
+      contentDisplay = {
+        relativeDates = true;
+        permissionsStyle = "combined";
+      };
+    };
   };
 }

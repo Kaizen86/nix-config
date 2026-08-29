@@ -200,15 +200,16 @@
         ]
       },
       "locked": {
-        "lastModified": 1785762349,
-        "narHash": "sha256-jZhZkzAwc7f3exzcTDJWP2WCAchCv0iNC3UF/QsahdQ=",
-        "owner": "nix-community",
+        "lastModified": 1788004257,
+        "narHash": "sha256-+0wHgv+5SeXiMeBPVeLkqXXLQbR/cjNBVK5p5y4NGRw=",
+        "owner": "Kaizen86",
         "repo": "plasma-manager",
-        "rev": "a19a2a029fa180911bd89c554dca1616e10f4c1d",
+        "rev": "34cb69c38e7f07affceba9278e2a2ecaef84063c",
         "type": "github"
       },
       "original": {
-        "owner": "nix-community",
+        "owner": "Kaizen86",
+        "ref": "add-dolphin-app",
         "repo": "plasma-manager",
         "type": "github"
       }
