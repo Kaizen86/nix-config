@@ -13,7 +13,7 @@ function search_gitrepo() {
 		filepath="${result%:*}" # Get first field
 		line_num=${result#*:} # Get second field
 		# Ask git for information about the line in this file
-		blame=$(git blame --date=short -cL $line_num,$line_num "$filepath")
+		blame=$(git blame -CCC --date=short -cL $line_num,$line_num "$filepath")
 		# Extract the date and content
 		date=${blame#*$tab*$tab} # Remove first 2 fields
 		date=${date%%$tab*} # Remove all after 3rd field
