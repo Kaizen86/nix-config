@@ -30,22 +30,29 @@
     }) (customLib.fs.listFiles ./dotfiles/config))
   );
 
-  # FIXME: evaluation warning: kaizen profile: `programs.ssh` default values will be removed in the future.
-  # Consider setting `programs.ssh.enableDefaultConfig` to false,
-  # and manually set the default values you want to keep at
-  # `programs.ssh.settings."*"`.
   programs.ssh = {
     enable = true;
-    settings = {
+    enableDefaultConfig = false; # true is deprecated
+    settings = let
+      me = "kaizen";
+      e621 = lib.fromHexString "0xe621";
+    in {
+      "*" = {
+        # Default settings
+        ServerAliveCountMax = 3;
+        ServerAliveInterval = 20;
+      };
+
+      # Host-specific settings
       punyoracle = {
         HostName = "145.241.222.171";
-        Port = 58913;
-        User = "kaizen";
+        Port = e621;
+        User = me;
       };
       rpi = {
         HostName = "192.168.1.50";
-        Port = 58913;
-        User = "kaizen";
+        Port = e621;
+        User = me;
       };
     };
   };
