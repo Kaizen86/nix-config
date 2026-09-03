@@ -118,7 +118,7 @@ if [ "$USER" == "nix-on-droid" ]; then
 
   else
     # Regular mode
-    time readback nix-on-droid switch "$config_root#connor" $rebuild_args
+    time readback nix-on-droid switch --flake "$config_root#connor" $rebuild_args
     exit $?
   fi
 fi
