@@ -2,11 +2,11 @@
 set -eu
 
 if [ "$USER" == "nix-on-droid" ]; then
-  echo Unsupported
-  exit 1
+  flake=".#nixOnDroidConfigurations.connor.config.environment.path"
+else
+  flake=".#nixOnDroidConfigurations.$(hostname).config.system.build.toplevel"
 fi
 
-flake=".#nixosConfigurations.$(hostname).config.system.build.toplevel"
 nix build --print-out-paths --no-link $flake
 nix run github:utdemir/nix-tree -- $flake
 
