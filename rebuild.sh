@@ -18,8 +18,8 @@ function show_help() {
   script_name=$(basename "$0")
   # TODO extend the description
   cat <<EOF
-Usage: $script_name [options] [rebuild args] [command]
-Wrapper around \`nixos-rebuild\` with extra functionality.
+Usage: $script_name [options] [command]
+Wrapper around \`nixos-rebuild\` with extra functionality for comfort.
 
 Options:
   -h  --help
@@ -29,15 +29,17 @@ Options:
     Use nix-output-monitor to pretty-print verbose information.
 
   -u  --upgrade  --update
-    Runs \`nix flake update\` first. Implies \`boot\` command.
+    Runs \`nix flake update\` first and commits the new flake.lock
+    Implies \`boot\` command.
 
-Any other arguments are passed to nixos-rebuild.
+Any other options are passed to nixos-rebuild.
+
 This script also passes which command to use for nixos-rebuild.
 Here's a non-definitive list of commands:
   switch: build+activate+add GRUB menuentry (default)
   test: build+activate but do not add GRUB menuentry
   boot: build then activate on next boot (good for system upgrades)
-  repl: build and enter REPL for debugging
+  repl: build then enter REPL for debugging
 
 Read the nixos-rebuild documentation for a definitive list of rebuild arguments and commands.
 EOF
