@@ -84,6 +84,14 @@ while [ $# -gt 0 ]; do
   shift
 done
 
+if [ "$use_nom" == "true" ]; then
+  # First check if Nix Output Monitor is available
+  if ! command -v nom >/dev/null 2>&1; then
+    echo Error: nix-output-monitor is not installed.
+    exit 1
+  fi
+fi
+
 # Only files tracked by Git will be added to the Nix store, which nixos-rebuild uses to read the config.
 # Therefore, files not tracked by Git will appear to be invisible.
 # Show a warning if git status reports untracked files.
@@ -101,21 +109,14 @@ if [ "$USER" == "nix-on-droid" ]; then
   # Verbose (Nix Output Monitor) or regular mode
   if [ "$use_nom" == "true" ]; then
     # Verbose mode
-    # First check if Nix Output Monitor is available
-    if command -v nom >/dev/null 2>&1; then
-      nod_build="nix build --impure $config_root#nixOnDroidConfigurations.connor.activationPackage $rebuild_args"
-	  echo $nod_build # Keep read-back tidy
-      $nom_build --log-format internal-json -v |& nom --json
+    nod_build="nix build --impure $config_root#nixOnDroidConfigurations.connor.activationPackage $rebuild_args"
+    echo $nod_build # Keep read-back tidy
+    $nod_build --log-format internal-json -v |& nom --json
 
-      ./result/activate
-      rebuild_exit=$?
-      rm result
-      exit $rebuild_exit
-
-    else
-      echo Error: nix-output-monitor is not installed.
-      exit 1
-    fi
+    ./result/activate
+    rebuild_exit=$?
+    rm result
+    exit $rebuild_exit
 
   else
     # Regular mode
@@ -152,15 +153,9 @@ rebuild_cmd="nixos-rebuild $operation --flake $config_root$attribute $rebuild_ar
 # Verbose (Nix Output Monitor) or regular mode
 if [ "$use_nom" == "true" ]; then
   # Verbose mode
-  # First check if Nix Output Monitor is available
-  if command -v nom >/dev/null 2>&1; then
-    echo sudo $rebuild_cmd # Keep read-back tidy
-    sudo bash -c "$rebuild_cmd --log-format internal-json -v |& nom --json"
-    rebuild_exit=$?
-  else
-    echo Error: nix-output-monitor is not installed.
-    exit 1
-  fi
+  echo sudo $rebuild_cmd # Keep read-back tidy
+  sudo bash -c "$rebuild_cmd --log-format internal-json -v |& nom --json"
+  rebuild_exit=$?
 
 else
   # Regular mode
