@@ -68,6 +68,7 @@ while [ $# -gt 0 ]; do
       ;;
     -u|--upgrade|--update)
       time readback nix flake update
+      git commit -m "Update flake to $(date -I)" flake.lock
       operation=boot # Don't switch immediately
       ;;
     --nom)
