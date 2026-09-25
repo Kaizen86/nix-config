@@ -19,6 +19,7 @@ in
     users.users.${cfg.userName} = {
       isNormalUser = true;
       description = "Kaizen";
+      hashedPassword = "$y$j9T$3UMDcHyYZe0hJMU7TJIcM.$LyUivn3726ae5kHr1blHJhS7CFS.ybQ9dw/CbKoT3P3";
       extraGroups = [ 
         "networkmanager" # Grant permission to change network settings
         "wheel" # Grant permission to execute sudo
