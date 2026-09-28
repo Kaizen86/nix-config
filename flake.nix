@@ -47,6 +47,9 @@
         ];
       };
 
+      # Default output for `nix build` makes a custom .iso
+      packages.x86_64-linux.default = inputs.self.nixosConfigurations.iso.config.system.build.isoImage;
+
       nixOnDroidConfigurations = {
         connor = inputs.nix-on-droid.lib.nixOnDroidConfiguration {
            pkgs = import inputs.nixpkgs { system = "aarch64-linux"; };
