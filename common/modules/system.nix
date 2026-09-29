@@ -1,4 +1,4 @@
-{ ... }:
+{ lib, ... }:
 
 let
   locale = "en_GB.UTF-8";
@@ -30,7 +30,7 @@ in {
   };
 
   # Configure console keymap
-  console.keyMap = "uk";
+  console.keyMap = lib.mkDefault "uk";
 
   # Enable networking service
   networking.networkmanager.enable = true;

@@ -25,6 +25,9 @@
     };
   };
 
+  # Use mechanical keyboard layout for TTYs
+  console.keyMap = "us";
+
   # Tell wayland to use AMD drivers
   services.xserver.videoDrivers = [ "amdgpu" ];
 
