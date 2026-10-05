@@ -1,6 +1,37 @@
-{ config, lib, ... }:
+{ config, lib, nixosConfig, ... }:
 
-{
+let
+  # Check whether a particular package is installed on the system
+  have = p: builtins.elem p nixosConfig.environment.systemPackages;
+  sets = nixosConfig.packageSets;
+
+  # See /run/current-system/sw/share/applications for a list of IDs
+  # key:value is id:pinned
+  # In a list so order is retained
+  applicationOrder = [
+    { "preferred://filemanager" = true; }
+    # Supposed to work but doesn't?
+    # https://discuss.kde.org/t/any-documentation-for-preferred-uri-schema/30689/5
+    #{ "preferred://terminal" = true; }
+    { "applications:org.kde.konsole.desktop" = true; }
+    { "preferred://browser" = true; }
+    { "applications:org.kde.kate.desktop" = sets.desktopApplications.enable; }
+    { "applications:discord.desktop" = sets.desktopApplications.enable; }
+    { "applications:steam.desktop" = nixosConfig.programs.steam.enable; }
+    { "applications:org.telegram.desktop.desktop" = sets.desktopApplications.enable; }
+    { "applications:obsidian.desktop" = sets.desktopApplications.enable; }
+  ];
+
+  # List of installed app IDs
+  pinnedApplications = builtins.concatLists (
+    map
+      (i: lib.attrNames (
+	    lib.filterAttrs (n: v: v) i)
+      )
+      applicationOrder
+  );
+
+in {
   # Adapted from github:nix-community/plasma-manager/examples/home.nix
   programs.plasma = {
     enable = true;
@@ -43,21 +74,8 @@
 
           # Taskbar
           {
-            iconTasks = {
-              # Declaratively pin applications, yEAAA!!
-              # See /run/current-system/sw/share/applications for a list
-              launchers = [
-                "preferred://filemanager"
-                #"preferred://terminal" # Supposed to work but doesn't? https://discuss.kde.org/t/any-documentation-for-preferred-uri-schema/30689/5
-                "applications:org.kde.konsole.desktop"
-                "preferred://browser"
-                "applications:org.kde.kate.desktop"
-                "applications:discord.desktop"
-                "applications:steam.desktop"
-                "applications:org.telegram.desktop.desktop"
-                "applications:obsidian.desktop"
-              ];
-            };
+            # Declaratively pin applications, yEAAA!!
+            iconTasks.launchers = pinnedApplications;
           }
 
           # Margin separator before the system tray
