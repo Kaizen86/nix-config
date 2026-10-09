@@ -31,6 +31,7 @@ let
       applicationOrder
   );
 
+  mkDefault = lib.mkDefault;
 in {
   # Adapted from github:nix-community/plasma-manager/examples/home.nix
   programs.plasma = {
@@ -41,7 +42,7 @@ in {
       # Use Posy's cursors (installed via environment.systemPackages)
       cursor = {
         theme = "Posy_Cursor_Black";
-        size = 32; # Normal size, please
+        size = mkDefault 32; # Normal size, please
       };
 
       # Select items when single-clicking, not open
@@ -51,7 +52,7 @@ in {
     session.sessionRestore.restoreOpenApplicationsOnLogin = "whenSessionWasManuallySaved";
 
     # Meta+Shift+K
-    input.keyboard.layouts = lib.mkDefault [
+    input.keyboard.layouts = mkDefault [
       { layout = "gb"; }
     ];
 
