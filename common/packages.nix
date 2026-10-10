@@ -112,6 +112,7 @@ let
         curl
         dig # DNS diagnosics
         dos2unix
+        fastfetch # Bragging rights dispenser
         fd # Better find
         ffmpeg
         file
