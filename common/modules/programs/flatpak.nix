@@ -3,6 +3,7 @@
 let
   cfg = config.programs.flatpaks;
 
+  # Create pair of options for each flatpak
   mkFlatpakOption = name: id: {
     enable = lib.mkEnableOption "Flatpak version of ${name}";
     id = lib.mkOption {

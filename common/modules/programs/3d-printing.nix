@@ -8,6 +8,7 @@ in {
     orca-slicer.enable = lib.mkEnableOption "Orca Slicer";
   };
 
+  # TODO: There's probably a cleaner way to write this?
   config.environment.systemPackages = 
     (if bambu.enable then [ pkgs.bambu-studio ] else []) ++
     (if orca.enable  then [ pkgs.orca-slicer ]  else []);

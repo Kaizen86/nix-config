@@ -9,6 +9,7 @@ in {
   };
 
   config = {
+    # This helps configure a system for sharing its Nix store over the local network
     services.nginx = lib.mkIf cfg.enable {
       enable = true;
       recommendedProxySettings = true;

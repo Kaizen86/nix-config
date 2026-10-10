@@ -1,16 +1,14 @@
 { config, lib, nixosConfig, ... }:
 
 let
-  # Check whether a particular package is installed on the system
-  have = p: builtins.elem p nixosConfig.environment.systemPackages;
   sets = nixosConfig.packageSets;
 
   # See /run/current-system/sw/share/applications for a list of IDs
   # key:value is id:pinned
-  # In a list so order is retained
+  # Using a list so order is retained
   applicationOrder = [
     { "preferred://filemanager" = true; }
-    # Supposed to work but doesn't?
+    # TODO Supposed to work but doesn't?
     # https://discuss.kde.org/t/any-documentation-for-preferred-uri-schema/30689/5
     #{ "preferred://terminal" = true; }
     { "applications:org.kde.konsole.desktop" = true; }

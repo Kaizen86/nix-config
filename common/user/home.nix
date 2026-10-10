@@ -23,13 +23,18 @@
 
   xdg = (
     let
+      # Given some top-level directory, return the relative path of an item as a string.
+      # e.g: relativeTo ./. ./foo/bar -> "foo/bar"
       relativeTo = (root: item: 
-      builtins.substring
-        (builtins.stringLength (toString root) + 1)
-        (-1)
-        (toString item)
+        builtins.substring
+          (builtins.stringLength (toString root) + 1)
+          (-1)
+          (toString item)
       );
-      
+
+      # Produce nameValuePairs of relative paths to file contents, under some directory.
+      # Suitable for xdg configFile/dataFile/cacheFile/stateFile (and perhaps more).
+      # e.g discoverFiles ./foo -> [{ name="bar/baz.txt"; value.source=./foo/bar/baz.txt; }]
       discoverFiles = (dir:
         builtins.listToAttrs (
           (map (file: {
@@ -75,44 +80,16 @@
     };
   };
 
-  # The home.packages option allows you to install Nix packages into your
-  # environment.
-  home.packages = [
-    #pkgs.firefox
-    #pkgs.kate
-    #pkgs.thunderbird
-    # # Adds the 'hello' command to your environment. It prints a friendly
-    # # "Hello, world!" when run.
-    # pkgs.hello
-
-    # # It is sometimes useful to fine-tune packages, for example, by applying
-    # # overrides. You can do that directly here, just don't forget the
-    # # parentheses. Maybe you want to install Nerd Fonts with a limited number of
-    # # fonts?
-    # (pkgs.nerdfonts.override { fonts = [ "FantasqueSansMono" ]; })
-
-  ] ++ (map
+  # Discover and add shell scripts automatically
+  home.packages = (map
     (p: (pkgs.writeShellScriptBin
       (lib.removeSuffix ".sh" (builtins.baseNameOf p))
       (builtins.readFile p)
-    )) (customLib.fs.listFiles ./text/shell-scripts)
+    ))
+    (customLib.fs.listFiles ./text/shell-scripts)
   );
 
-  # Home Manager can also manage your environment variables through
-  # 'home.sessionVariables'. If you don't want to manage your shell through Home
-  # Manager then you have to manually source 'hm-session-vars.sh' located at
-  # either
-  #
-  #  ~/.nix-profile/etc/profile.d/hm-session-vars.sh
-  #
-  # or
-  #
-  #  ~/.local/state/nix/profiles/profile/etc/profile.d/hm-session-vars.sh
-  #
-  # or
-  #
-  #  /etc/profiles/per-user/kaizen/etc/profile.d/hm-session-vars.sh
-  #
+  # Environment variables set at login
   home.sessionVariables = {
     EDITOR = "vim";
   };
@@ -120,7 +97,6 @@
   home.shellAliases = {
     ffmpeg = "ffmpeg -hide_banner";
     ffprobe = "ffprobe -hide_banner";
-    ssh-load = "eval $(ssh-agent) && ssh-add";
     music-dl = "yt-dlp -ciwx --audio-format flac --embed-thumbnail --add-metadata -o \%\(title\)s.\%\(ext\)s";
     open = "xdg-open";
     xxd = "xxd -a";
@@ -138,6 +114,8 @@
   programs.vscodium = {
     enable = true;
 
+    # Now if only I could banish the useless Default profile.
+    # Sigh... Even here, Microsoft's poor decisions are inescapable.
     profiles.NixAndRust = {
       userSettings = {
         "git.openRepositoryInParentFolders" = "always";
