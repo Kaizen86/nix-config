@@ -25,6 +25,8 @@
 	displayManager.defaultSession = "";
     displayManager.sddm.enable = false;
   };
+  # Obligatory silliness on login
+  home-manager.users.kaizen.programs.bash.initExtra = "fastfetch";
 
   # Suppress warning about new default for this option
   # TODO remove when 26.11 is released
