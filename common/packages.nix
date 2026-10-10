@@ -16,7 +16,6 @@ let
         gnused
         gnutar
         gzip
-        gnupg # TODO Enable+configure elsewhere
         htop
         killall
         lsof
