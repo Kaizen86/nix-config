@@ -38,11 +38,11 @@
     };
 
     # Enable the Plasma desktop environment
-    desktopManager.plasma6.enable = true;
+    desktopManager.plasma6.enable = lib.mkDefault true;
 
     # Enable the KDE Plasma Desktop Environment as default option.
-    displayManager.sddm.enable = true;
-    displayManager.defaultSession = "plasma";
+    displayManager.sddm.enable = lib.mkDefault true;
+    displayManager.defaultSession = lib.mkDefault "plasma";
 
     pipewire = {
       enable = true;
