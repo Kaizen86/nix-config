@@ -21,14 +21,32 @@
     }) (customLib.fs.listFiles ./dotfiles))
   );
 
-  # Symlink plain xdg config files
-  # e.g dotfiles/config/mimeapps.list -> ~/.config/mimeapps.list
-  xdg.configFile = builtins.listToAttrs (
-    (map (file: {
-      name = builtins.baseNameOf file;
-      value.source = file;
-    }) (customLib.fs.listFiles ./dotfiles/config))
-  );
+  xdg = (
+    let
+      relativeTo = (root: item: 
+      builtins.substring
+        (builtins.stringLength (toString root) + 1)
+        (-1)
+        (toString item)
+      );
+      
+      discoverFiles = (dir:
+        builtins.listToAttrs (
+          (map (file: {
+            name = relativeTo dir file;
+            value.source = file;
+          }) (lib.filesystem.listFilesRecursive dir))
+        )
+      );
+    in {
+      # Symlink xdg configuration files
+      # e.g dotfiles/config/mimeapps.list -> ~/.config/mimeapps.list
+      configFile = discoverFiles ./dotfiles/config;
+
+      # Symlink xdg data files
+      # e.g dotfiles/local/foo/bar.bin -> ~/.local/share/foo/bar.bin
+      dataFile = discoverFiles ./dotfiles/local;
+  });
 
   programs.ssh = {
     enable = true;
