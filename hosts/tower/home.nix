@@ -20,8 +20,6 @@
     programs.plasma = {
       # Mechanical keyboard is ANSI US layout
       input.keyboard.layouts = [{ layout = "us"; }];
-      # Make cursor a bit smaller
-      workspace.cursor.size = 24;
     };
   };
 }

@@ -40,7 +40,7 @@ in {
       # Use Posy's cursors (installed via environment.systemPackages)
       cursor = {
         theme = "Posy_Cursor_Black";
-        size = mkDefault 32; # Normal size, please
+        size = 32; # Normal size, please
       };
 
       # Select items when single-clicking, not open
