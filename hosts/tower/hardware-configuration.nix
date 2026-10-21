@@ -13,9 +13,20 @@
   boot.kernelModules = [ "kvm-amd" ];
   boot.extraModulePackages = [ ];
 
-  # Forward kernel and grub messages to the serial port
-  boot.kernelParams = [ "console=ttyS0,115200n8" ];
+  boot.kernelParams = [
+    # Reserve bad memory address; 0x747bed9f8 has a bit stuck to 1 :(
+    # Add memmap kernel parameter so Linux won't try to use that address.
+    # Note: badram is obsolete and may only be in Ubuntu. Mainline Linux does not support it.
+    # For safety, I'm reserving 256 bytes near the address.
+    # Supposedly the smallest size is one page (4K), but it seems to accept smaller sizes too.
+    # Also, the $ is escaped so GRUB doesn't eat it while parsing the kernel cmdline
+    "memmap=0xff\\$0x747bed970"
+
+    # Forward kernel messages to the serial port
+    "console=ttyS0,115200n8"
+  ];
   /*
+  # Forward grub messages to the serial port
   boot.loader.grub.extraConfig = "
     serial --speed=115200 --unit=0 --word=8 --parity=no --stop=1
     terminal_input serial
