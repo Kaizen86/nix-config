@@ -22,7 +22,7 @@
     };
     xserver.enable = lib.mkForce false;
     desktopManager.plasma6.enable = false;
-	displayManager.defaultSession = "";
+    displayManager.defaultSession = "";
     displayManager.sddm.enable = false;
   };
   # Obligatory silliness on login

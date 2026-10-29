@@ -24,7 +24,7 @@ let
   pinnedApplications = builtins.concatLists (
     map
       (i: lib.attrNames (
-	    lib.filterAttrs (n: v: v) i)
+        lib.filterAttrs (n: v: v) i)
       )
       applicationOrder
   );
