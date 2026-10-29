@@ -1,4 +1,4 @@
-{ pkgs, lib, pluckCommon, ... }:
+{ pkgs, lib, pluckCommon, ... }@inputs:
 
 let
   homeCfg = lib.filterAttrsRecursive
@@ -12,26 +12,7 @@ let
     )
     (pluckCommon /user/home.nix);
 
-  # NixOS modules aren't implemented on NOD, so we configure Git through home-manager instead.
-  nixosGitCfg = (pluckCommon /modules/programs/git.nix).config.programs.git.config;
-
-  homeOverrides = {
-    programs.git = {
-        enable = true;
-        # Thankfully the options can be passed through here without modification
-        settings = nixosGitCfg // {
-          commit.gpgsign = false; # No GPG on mobile, thx
-      };
-    };
-    programs.vscodium.enable = false;
-
-    # mDNS is not available, so add my PC to ssh manually
-	# RPi is already tracked due to its wacky port number
-	programs.ssh.settings.tower = {
-      HostName  = "192.168.1.69";
-      User = "kaizen";
-    };
-  };
+  homeOverrides = import ./home.nix inputs;
 
   patchedHomeCfg = lib.attrsets.recursiveUpdate homeCfg homeOverrides;
 
