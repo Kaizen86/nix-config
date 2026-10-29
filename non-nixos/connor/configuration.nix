@@ -24,6 +24,13 @@ let
       };
     };
     programs.vscodium.enable = false;
+
+    # mDNS is not available, so add my PC to ssh manually
+	# RPi is already tracked due to its wacky port number
+	programs.ssh.settings.tower = {
+      HostName  = "192.168.1.69";
+      User = "kaizen";
+    };
   };
 
   patchedHomeCfg = lib.attrsets.recursiveUpdate homeCfg homeOverrides;
