@@ -15,7 +15,14 @@
       core.autoclrf = "input"; # Converts CRLF to LF when pulling
 
       alias = {
+        # Shortcuts for my most common commands
+        d = "diff";
+        ds = "diff --staged";
+        s = "status";
+        # High-level view of branches
         tree = "log --oneline --all --graph";
+        # Who decided to create such a long flag?
+        rebase-keepdate = "rebase --committer-date-is-author-date";
         # Credit to @supraerror on the Nix Cult Discord server lmaooo
         bs = ''!git commit -m "$(curl -s --connect-timeout 4 https://www.whatthecommit.com/index.txt || echo 'wip')"'';
       };
