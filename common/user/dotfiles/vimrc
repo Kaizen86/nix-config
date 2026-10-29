@@ -55,3 +55,9 @@ command! Wq :wq
 :set hlsearch
 :nnoremap <CR> :nohlsearch<CR><CR>
 
+" Indentation rules for Nix files
+au BufNewFile,BufReadPost *.nix {
+	set tabstop=2
+	set shiftwidth=2
+	set expandtab
+}
