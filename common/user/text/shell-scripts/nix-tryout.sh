@@ -22,7 +22,7 @@ fi
 args="$@"
 
 # Check if this package is unfree
-unfree=$(nix-instantiate --eval --expr "(import <nixpkgs> {}).$package.meta.unfree")
+unfree=$(nix eval "nixpkgs#$package.meta.unfree")
 # Set magic environment variable if necessary
 if [ $unfree == true ]; then
 	echo This package is unfree, setting NIXPKGS_ALLOW_UNFREE=1 and proceeding...
