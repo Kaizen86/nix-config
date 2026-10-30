@@ -97,7 +97,7 @@
   home.shellAliases = {
     ffmpeg = "ffmpeg -hide_banner";
     ffprobe = "ffprobe -hide_banner";
-    music-dl = "yt-dlp -ciwx --audio-format flac --embed-thumbnail --add-metadata -o \%\(title\)s.\%\(ext\)s";
+    music-dl = "yt-dlp -ciwx --audio-format mp3 --embed-thumbnail --add-metadata -o '\%\(title\)s.\%\(ext\)s'";
     ncdu = "ncdu --color=dark";
     open = "xdg-open";
     xxd = "xxd -a";
