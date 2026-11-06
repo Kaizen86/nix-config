@@ -9,6 +9,9 @@
     "kernel.sysrq" = 1;
   };
 
+  # Show stars when typing password
+  security.sudo.extraConfig = "Defaults pwfeedback";
+
   # Set your time zone.
   time.timeZone = "Europe/London";
 
