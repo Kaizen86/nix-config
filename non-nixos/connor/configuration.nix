@@ -20,6 +20,10 @@ in {
   # Backup etc files instead of failing to activate generation if a file already exists in /etc
   environment.etcBackupExtension = ".bak";
 
+  # Set nix channel to locked version
+  #nix.nixPath = [ "nixpkgs=${pkgs.outPath}" ];
+  nix.nixPath = [ "nixpkgs=flake:nixpkgs" ];
+
   # Read the changelog before changing this value
   system.stateVersion = "24.05";
 
