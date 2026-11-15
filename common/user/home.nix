@@ -100,6 +100,7 @@
     music-dl = "yt-dlp -ciwx --audio-format mp3 --embed-thumbnail --add-metadata -o '\%\(title\)s.\%\(ext\)s'";
     ncdu = "ncdu --color=dark";
     open = "xdg-open";
+    py = "python";
     xxd = "xxd -a";
   };
 
