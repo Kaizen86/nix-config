@@ -134,6 +134,18 @@
     };
   };
 
+  programs.thunderbird = {
+    enable = true;
+    profiles.default = {
+      isDefault = true;
+      settings = {
+        "mail.pane_config.dynamic" = 2; # View > Layout > Vertical View
+        "mail.threadpane.listview" = 1; # Settings > Appearance > Message List > Table view
+        "mail.shell.checkDefaultClient" = false;
+      };
+    };
+  };
+
   # This value determines the Home Manager release that your configuration is
   # compatible with. This helps avoid breakage when a new Home Manager release
   # introduces backwards incompatible changes.
