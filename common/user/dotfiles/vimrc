@@ -56,6 +56,7 @@ cnoreabbrev vt :Vterm
 nnoremap <F3> :Vterm<CR>
 
 " Sometimes I hold Shift for slightly too long after pressing Colon
+command! Q :q
 command! W :w
 command! WQ :wq
 command! Wq :wq
