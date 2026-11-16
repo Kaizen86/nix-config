@@ -123,6 +123,7 @@
         "git.openRepositoryInParentFolders" = "always";
         "git.ignoreLimitWarning" = true;
         "editor.inlayHints.fontSize" = 11;
+        "rust-analyzer.check.command" = "clippy";
       };
       extensions = with pkgs.vscode-extensions; [
         vadimcn.vscode-lldb
