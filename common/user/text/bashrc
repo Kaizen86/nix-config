@@ -30,6 +30,8 @@ function cdup() {
 	done
 }
 
+# This might actually be a terrible idea anything which is not nix-on-droid
+# The SSH keys seem to get stored forever on x86-64 systems? That's not at all what I want!
 function ssh-auth() {
 	# Use a consistent socket path for the agent
 	agent_sock="/tmp/ssh-agent.sock"
@@ -52,8 +54,12 @@ trap '[ $USER == nix-on-droid -a $SHLVL -eq 1 -a ! -z $SSH_AGENT_PID ] && eval $
 # This prompt produces the following:
 # [username@hostname:~/folder]
 # $
-#export PROMPT_COMMAND="[ ! -z $SHLVL ] && [ $SHLVL -gt 1 ] && export PS1_CMD1=\" ($SHLVL)\""
-#export PS1="\n\[\e[32;1m\][\u@\h:\w]${PS1_CMD1}\n\[\e[0m\]\$ "
+# And in sub-shells, it shows how many shells deep you are:
+# [username@hostname:~/folder] (2)
+# $
+# Having the directory path *before* the prompt marker always seemed odd to me.
+# For long directory paths, the prompt is pushed way over to the right and can wrap onto a new line quickly.
+# Why?? Why not dedicate a line to any useful information and allow the prompt to stay left?
 
 function _prompt_command() {
 	[ -z $1 ] && lvl=0 || lvl=$1
