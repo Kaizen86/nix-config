@@ -14,8 +14,9 @@ in {
       };
     };
 
-    # Where we're going, we don't need IDEs...
+    # Don't install GUI programs
     vscodium.enable = false;
+    thunderbird.enable = false;
 
     # mDNS is not available, so add my PC to ssh manually
     # RPi is already tracked due to its wacky port number
