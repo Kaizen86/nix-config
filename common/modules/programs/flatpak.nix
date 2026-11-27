@@ -26,6 +26,12 @@ in {
 
   config = lib.mkMerge [
     (lib.mkIf anyFlatpakEnabled {
+      xdg.portal = {
+        enable = true;
+        extraPortals = [ pkgs.kdePackages.xdg-desktop-portal-kde ];
+        config.common.default = [ "kde" ];
+      };
+
       services.flatpak = {
         enable = true;
         uninstallUnmanaged = lib.mkDefault true;
